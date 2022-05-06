@@ -1,7 +1,10 @@
 const express = require("express");
-const mongoose = require("express");
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const app = express();
+
+const posts = require("./routes/posts");
+const users = require("./routes/users");
 
 dotenv.config();
 
@@ -14,3 +17,5 @@ app.listen(3000, () => {
 });
 
 app.use(express.json());
+app.use("/api/posts", posts);
+app.use("/api/users", users);

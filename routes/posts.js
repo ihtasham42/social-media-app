@@ -1,10 +1,12 @@
-const express = require("mongoose");
+const express = require("express");
 const router = express.Router();
-const postController = require("../controllers/postControllers");
+const postControllers = require("../controllers/postControllers");
 
-router.get("/", postController.getPosts);
-router.post("/", postController.createPost);
+router.get("/", postControllers.getPosts);
+router.post("/", postControllers.createPost);
 
-router.get("/:id", postController.getPost);
-router.patch("/:id", postController.updatePost);
-router.delete("/:id", postController.deletePost);
+router.get("/:id", postControllers.getPost);
+router.patch("/:id", postControllers.updatePost);
+router.delete("/:id", postControllers.deletePost);
+
+module.exports = router;

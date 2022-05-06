@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Post = require("../models/Post");
+const User = require("../models/User");
 
 const createPost = async (req, res) => {
   try {
@@ -12,12 +13,12 @@ const createPost = async (req, res) => {
     const post = await Post.create({
       title,
       content,
-      poster: userId,
+      poster: mongoose.Types.ObjectId(userId),
     });
 
     res.json(post);
   } catch (err) {
-    return res.status(500).json(err);
+    return res.status(500).json(err.message);
   }
 };
 
@@ -37,20 +38,24 @@ const getPost = async (req, res) => {
 
     return res.json(post);
   } catch (err) {
-    return res.status(500).json(err);
+    return res.status(500).json(err.message);
   }
 };
 
 const updatePost = async (req, res) => {
   try {
-    const postId = req.param.id;
-    const { title, content } = req.param.body;
+    const postId = req.params.id;
+    const { title, content } = req.body;
 
     if (!(postId && title && content)) {
       return res.status(400).send("No post id provided");
     }
 
-    const post = await Post.findByIdAndUpdate({ title, content }, postId);
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      { title, content },
+      { new: true }
+    );
 
     if (!post) {
       return res.status(400).send("No post found");
@@ -58,13 +63,13 @@ const updatePost = async (req, res) => {
 
     return res.json(post);
   } catch (err) {
-    return res.status(500).json(err);
+    return res.status(500).json(err.message);
   }
 };
 
 const deletePost = async (req, res) => {
   try {
-    const postId = req.param.id;
+    const postId = req.params.id;
 
     if (!postId) {
       return res.status(400).send("No post id provided");
@@ -78,7 +83,7 @@ const deletePost = async (req, res) => {
 
     return res.json(post);
   } catch (err) {
-    return res.status(500).json(err);
+    return res.status(500).json(err.message);
   }
 };
 
@@ -88,7 +93,7 @@ const getPosts = async (req, res) => {
 
     return res.json(posts);
   } catch (err) {
-    return res.status(500).json(err);
+    return res.status(500).json(err.message);
   }
 };
 
