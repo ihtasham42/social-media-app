@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   try {
@@ -16,14 +17,34 @@ const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    return res.json(user);
+    const token = jwt.sign(user._id, process.env.TOKEN_KEY);
+
+    return res.json(token);
   } catch (err) {
     return res.status(500).json(err.message);
   }
 };
 
 const login = async (req, res) => {
-  const { username, password } = req.body;
+  try {
+    const { email, password } = req.body;
+
+    if (!(email && password)) {
+      return res.status(400).send("All input required");
+    }
+
+    const user = await User.findOne({ email });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!(user && isPasswordValid)) {
+      return res.status(400).send("Invalid email or password");
+    }
+
+    return res.json(user);
+  } catch (err) {
+    return res.status(500).json(err.message);
+  }
 };
 
 module.exports = {
