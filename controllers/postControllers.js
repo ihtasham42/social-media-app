@@ -4,16 +4,16 @@ const User = require("../models/User");
 
 const createPost = async (req, res) => {
   try {
-    const { title, content, userId } = req.body;
+    const { title, content, user } = req.body;
 
-    if (!(title && content && userId)) {
+    if (!(title && content)) {
       return res.status(400).send("No post id provided");
     }
 
     const post = await Post.create({
       title,
       content,
-      poster: mongoose.Types.ObjectId(userId),
+      poster: user._id,
     });
 
     res.json(post);

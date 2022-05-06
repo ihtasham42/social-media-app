@@ -17,3 +17,5 @@ const verifyToken = (req, res, next) => {
     return res.status(500).json(err.message);
   }
 };
+
+module.exports = { verifyToken };
