@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const PostSchema = mongoose.Schema(
+const PostSchema = new mongoose.Schema(
   {
     poster: {
       type: mongoose.Types.ObjectId,
@@ -17,3 +17,5 @@ const PostSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+module.exports = mongoose.model("post", PostSchema);
