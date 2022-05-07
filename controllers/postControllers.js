@@ -142,6 +142,68 @@ const getPosts = async (req, res) => {
   }
 };
 
+const likePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const { userId } = req.body;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(400).send("Post not found");
+    }
+
+    if (post.likes.includes(userId)) {
+      return res.status(400).send("Post is already liked");
+    }
+
+    const likedPost = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $push: { likes: userId },
+      },
+      { new: true }
+    );
+
+    console.log(likedPost);
+
+    return res.json(likedPost);
+  } catch (err) {
+    return res.json(err.message);
+  }
+};
+
+const dislikePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const { userId } = req.body;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(400).send("Post not found");
+    }
+
+    if (!post.likes.includes(userId)) {
+      return res.status(400).send("Post is not liked");
+    }
+
+    const dislikedPost = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $pull: { likes: userId },
+      },
+      { new: true }
+    );
+
+    console.log(dislikedPost);
+
+    return res.json(dislikedPost);
+  } catch (err) {
+    return res.json(err.message);
+  }
+};
+
 module.exports = {
   getPost,
   getPosts,
@@ -149,4 +211,6 @@ module.exports = {
   createPost,
   updatePost,
   deletePost,
+  likePost,
+  dislikePost,
 };
