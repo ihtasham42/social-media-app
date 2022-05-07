@@ -6,6 +6,7 @@ const app = express();
 const posts = require("./routes/posts");
 const users = require("./routes/users");
 const comments = require("./routes/comments");
+const conversations = require("./routes/conversations");
 
 dotenv.config();
 
@@ -25,3 +26,4 @@ app.use(express.json());
 app.use("/api/posts", posts);
 app.use("/api/users", users);
 app.use("/api/comments", comments);
+app.use("/api/conversations", conversations);

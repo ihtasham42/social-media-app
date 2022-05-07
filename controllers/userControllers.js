@@ -17,7 +17,7 @@ const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
+    const token = jwt.sign({ user }, process.env.TOKEN_KEY);
 
     return res.json(token);
   } catch (err) {
