@@ -61,7 +61,7 @@ const getMessages = async (req, res) => {
 
     const messages = await Message.find({
       conversation: conversation._id,
-    });
+    }).sort("-createdAt");
 
     return res.json(messages);
   } catch (err) {
