@@ -30,6 +30,12 @@ const getUserPosts = async (req, res) => {
     const userId = req.params.id;
     const page = req.query.page;
 
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).send("User provided does not exist");
+    }
+
     const posts = await paginate(
       Post.find({ poster: userId }).sort("-createdAt"),
       page,

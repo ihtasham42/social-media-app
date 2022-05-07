@@ -6,14 +6,24 @@ const CommentSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "user",
     },
+    post: {
+      type: mongoose.Types.ObjectId,
+      ref: "post",
+    },
     content: {
       type: String,
       required: true,
     },
-    reply: {
+    parent: {
       type: mongoose.Types.ObjectId,
       ref: "comment",
     },
+    likes: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "user",
+      },
+    ],
   },
   { timestamps: true }
 );
