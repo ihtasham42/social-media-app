@@ -10,4 +10,6 @@ router.get("/:id", verifyToken, postControllers.getPost);
 router.patch("/:id", verifyToken, postControllers.updatePost);
 router.delete("/:id", verifyToken, postControllers.deletePost);
 
+router.get("/user_posts/:id", verifyToken, postControllers.getUserPosts);
+
 module.exports = router;

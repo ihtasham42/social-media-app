@@ -21,7 +21,7 @@ const register = async (req, res) => {
 
     return res.json(token);
   } catch (err) {
-    return res.status(500).json(err.message);
+    return res.status(400).json(err.message);
   }
 };
 
@@ -45,7 +45,7 @@ const login = async (req, res) => {
 
     return res.json(token);
   } catch (err) {
-    return res.status(500).json(err.message);
+    return res.status(400).json(err.message);
   }
 };
 

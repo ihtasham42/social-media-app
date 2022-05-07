@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const Post = require("../models/Post");
 const User = require("../models/User");
+const paginate = require("../util/paginate");
+
+const pageSize = 10;
 
 const createPost = async (req, res) => {
   try {
@@ -18,7 +21,24 @@ const createPost = async (req, res) => {
 
     res.json(post);
   } catch (err) {
-    return res.status(500).json(err.message);
+    return res.status(400).json(err.message);
+  }
+};
+
+const getUserPosts = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const page = req.query.page;
+
+    const posts = await paginate(
+      Post.find({ poster: userId }).sort("-createdAt"),
+      page,
+      pageSize
+    );
+
+    return res.json(posts);
+  } catch (err) {
+    return res.status(400).json(err.message);
   }
 };
 
@@ -38,7 +58,7 @@ const getPost = async (req, res) => {
 
     return res.json(post);
   } catch (err) {
-    return res.status(500).json(err.message);
+    return res.status(400).json(err.message);
   }
 };
 
@@ -61,11 +81,15 @@ const updatePost = async (req, res) => {
       return res.status(400).send("Not authorized to do this");
     }
 
-    await post.update({ title, content }, { new: true });
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      { title, content },
+      { new: true }
+    );
 
-    return res.json({ ...post.toJSON(), title, content });
+    return res.json(updatedPost);
   } catch (err) {
-    return res.status(500).json(err.message);
+    return res.status(400).json(err.message);
   }
 };
 
@@ -92,23 +116,30 @@ const deletePost = async (req, res) => {
 
     return res.json(post);
   } catch (err) {
-    return res.status(500).json(err.message);
+    return res.status(400).json(err.message);
   }
 };
 
 const getPosts = async (req, res) => {
   try {
-    const posts = await Post.find().sort("-createdAt");
+    const page = req.query.page;
+
+    const posts = await paginate(
+      Post.find().sort("-createdAt"),
+      page,
+      pageSize
+    );
 
     return res.json(posts);
   } catch (err) {
-    return res.status(500).json(err.message);
+    return res.status(400).json(err.message);
   }
 };
 
 module.exports = {
   getPost,
   getPosts,
+  getUserPosts,
   createPost,
   updatePost,
   deletePost,
