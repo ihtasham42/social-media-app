@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 
 const createComment = async (req, res) => {
   try {
-    const { content, commentId, postId, userId } = req.body;
+    const { content, parentId, postId, userId } = req.body;
 
     const comment = await Comment.create({
       content,
-      parent: commentId,
+      parent: parentId,
       post: postId,
       commenter: userId,
     });
@@ -28,15 +28,14 @@ const getPostComments = async (req, res) => {
     let rootComments = [];
 
     for (let i = 0; i < comments.length; i++) {
-      const comment = comments[i];
-      comment.children = [];
+      let comment = comments[i];
       commentParents[comment._id] = comment;
     }
 
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i];
       if (comment.parent) {
-        const commentParent = commentParents[comment._id];
+        let commentParent = commentParents[comment.parent];
         commentParent.children = [...commentParent.children, comment];
       } else {
         rootComments = [...rootComments, comment];
@@ -61,4 +60,4 @@ const getUserComments = async (req, res) => {
   }
 };
 
-module.exports = {};
+module.exports = { createComment, getPostComments, getUserComments };
