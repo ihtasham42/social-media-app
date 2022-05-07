@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
       return res.status(400).send("No token given");
     }
 
-    const userId = jwt.decode(token, process.env.TOKEN_KEY);
+    const { userId } = jwt.decode(token, process.env.TOKEN_KEY);
 
     req.body.userId = userId;
 

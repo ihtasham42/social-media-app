@@ -17,7 +17,7 @@ const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    const token = jwt.sign(user._id, process.env.TOKEN_KEY);
+    const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
     return res.json(token);
   } catch (err) {
@@ -41,7 +41,9 @@ const login = async (req, res) => {
       return res.status(400).send("Invalid email or password");
     }
 
-    return res.json(user);
+    const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
+
+    return res.json(token);
   } catch (err) {
     return res.status(500).json(err.message);
   }

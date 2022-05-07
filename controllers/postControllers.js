@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 const createPost = async (req, res) => {
   try {
-    const { title, content, user } = req.body;
+    const { title, content, userId } = req.body;
 
     if (!(title && content)) {
       return res.status(400).send("No post id provided");
@@ -13,7 +13,7 @@ const createPost = async (req, res) => {
     const post = await Post.create({
       title,
       content,
-      poster: user._id,
+      poster: userId,
     });
 
     res.json(post);
@@ -45,23 +45,25 @@ const getPost = async (req, res) => {
 const updatePost = async (req, res) => {
   try {
     const postId = req.params.id;
-    const { title, content } = req.body;
+    const { title, content, userId } = req.body;
 
     if (!(postId && title && content)) {
       return res.status(400).send("No post id provided");
     }
 
-    const post = await Post.findByIdAndUpdate(
-      postId,
-      { title, content },
-      { new: true }
-    );
+    const post = await Post.findById(postId);
 
     if (!post) {
       return res.status(400).send("No post found");
     }
 
-    return res.json(post);
+    if (post.poster != userId) {
+      return res.status(400).send("Not authorized to do this");
+    }
+
+    await post.update({ title, content }, { new: true });
+
+    return res.json({ ...post.toJSON(), title, content });
   } catch (err) {
     return res.status(500).json(err.message);
   }
@@ -70,16 +72,23 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const postId = req.params.id;
+    const { userId } = req.body;
 
     if (!postId) {
       return res.status(400).send("No post id provided");
     }
 
-    const post = await Post.findByIdAndDelete(postId);
+    const post = await Post.findById(postId);
 
     if (!post) {
       return res.status(400).send("No post found");
     }
+
+    if (post.poster != userId) {
+      return res.status(400).send("Not authorized to do this");
+    }
+
+    await post.delete();
 
     return res.json(post);
   } catch (err) {
