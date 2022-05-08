@@ -207,6 +207,24 @@ const unlikePost = async (req, res) => {
   }
 };
 
+const getUserLikedPosts = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if (req.body.userId != userId) {
+      return res.status(400).send("Not authorized to do this");
+    }
+
+    const userPosts = await Post.find({
+      likes: { $in: [userId] },
+    });
+
+    return res.json(userPosts);
+  } catch (err) {
+    return res.status(400).json(err.message);
+  }
+};
+
 module.exports = {
   getPost,
   getPosts,
