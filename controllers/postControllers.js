@@ -215,11 +215,11 @@ const getUserLikedPosts = async (req, res) => {
       return res.status(400).send("Not authorized to do this");
     }
 
-    const userPosts = await Post.find({
+    const likedPosts = await Post.find({
       likes: { $in: [userId] },
     });
 
-    return res.json(userPosts);
+    return res.json(likedPosts);
   } catch (err) {
     return res.status(400).json(err.message);
   }
@@ -234,4 +234,5 @@ module.exports = {
   deletePost,
   likePost,
   unlikePost,
+  getUserLikedPosts,
 };
