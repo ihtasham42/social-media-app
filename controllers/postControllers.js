@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Post = require("../models/Post");
 const User = require("../models/User");
+const Comment = require("../models/Comment");
 const paginate = require("../util/paginate");
 
 const pageSize = 10;
@@ -120,6 +121,8 @@ const deletePost = async (req, res) => {
 
     await post.delete();
 
+    await Comment.deleteMany({ post: post._id });
+
     return res.json(post);
   } catch (err) {
     return res.status(400).json(err.message);
@@ -131,7 +134,7 @@ const getPosts = async (req, res) => {
     const page = req.query.page;
 
     const posts = await paginate(
-      Post.find().sort("-createdAt"),
+      Post.find().sort("-createdAt").populate("poster likes", "email"),
       page,
       pageSize
     );
@@ -161,6 +164,7 @@ const likePost = async (req, res) => {
       postId,
       {
         $push: { likes: userId },
+        $inc: { likeCount: 1 },
       },
       { new: true }
     );
@@ -173,7 +177,7 @@ const likePost = async (req, res) => {
   }
 };
 
-const dislikePost = async (req, res) => {
+const unlikePost = async (req, res) => {
   try {
     const postId = req.params.id;
     const { userId } = req.body;
@@ -188,17 +192,16 @@ const dislikePost = async (req, res) => {
       return res.status(400).send("Post is not liked");
     }
 
-    const dislikedPost = await Post.findByIdAndUpdate(
+    const unlikedPost = await Post.findByIdAndUpdate(
       postId,
       {
         $pull: { likes: userId },
+        $inc: { likeCount: -1 },
       },
       { new: true }
     );
 
-    console.log(dislikedPost);
-
-    return res.json(dislikedPost);
+    return res.json(unlikedPost);
   } catch (err) {
     return res.json(err.message);
   }
@@ -212,5 +215,5 @@ module.exports = {
   updatePost,
   deletePost,
   likePost,
-  dislikePost,
+  unlikePost,
 };

@@ -20,6 +20,10 @@ const PostSchema = new mongoose.Schema(
         ref: "user",
       },
     ],
+    likeCount: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
