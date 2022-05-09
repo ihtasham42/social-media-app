@@ -15,8 +15,12 @@ const Navbar = () => {
       direction="row"
       alignItems="center"
       justifyContent="space-between"
-      sx={{ mx: 2, my: 3 }}
-      marginBottom={1}
+      sx={{
+        mb: 3,
+        py: 2,
+        borderBottom: 1,
+        borderColor: "divider",
+      }}
       spacing={2}
     >
       <Typography variant="h4" mr={1}>

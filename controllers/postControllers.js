@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Post = require("../models/Post");
 const User = require("../models/User");
 const Comment = require("../models/Comment");
+const PostLike = require("../models/PostLike");
 const paginate = require("../util/paginate");
 
 const pageSize = 10;
@@ -156,20 +157,24 @@ const likePost = async (req, res) => {
       return res.status(400).send("Post not found");
     }
 
-    if (post.likes.includes(userId)) {
+    const existingPostLike = await PostLike.find({ postId, userId });
+
+    if (existingPostLike) {
       return res.status(400).send("Post is already liked");
     }
 
     const likedPost = await Post.findByIdAndUpdate(
       postId,
       {
-        $push: { likes: userId },
         $inc: { likeCount: 1 },
       },
       { new: true }
     );
 
-    console.log(likedPost);
+    const postLike = await PostLike.create({
+      postId,
+      userId,
+    });
 
     return res.json(likedPost);
   } catch (err) {
@@ -188,14 +193,15 @@ const unlikePost = async (req, res) => {
       return res.status(400).send("Post not found");
     }
 
-    if (!post.likes.includes(userId)) {
+    const existingPostLike = await PostLike.deleteOne({ postId, userId });
+
+    if (!existingPostLike) {
       return res.status(400).send("Post is not liked");
     }
 
     const unlikedPost = await Post.findByIdAndUpdate(
       postId,
       {
-        $pull: { likes: userId },
         $inc: { likeCount: -1 },
       },
       { new: true }
@@ -215,9 +221,7 @@ const getUserLikedPosts = async (req, res) => {
       return res.status(400).send("Not authorized to do this");
     }
 
-    const likedPosts = await Post.find({
-      likes: { $in: [userId] },
-    });
+    const likedPosts = await PostLike.find({ userId });
 
     return res.json(likedPosts);
   } catch (err) {
