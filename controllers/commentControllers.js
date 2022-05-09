@@ -1,9 +1,18 @@
 const Comment = require("../models/Comment");
 const mongoose = require("mongoose");
+const Post = require("../models/Post");
 
 const createComment = async (req, res) => {
   try {
     const { content, parentId, postId, userId } = req.body;
+
+    const post = await Post.findByIdAndUpdate(postId, {
+      $inc: { commentCount: 1 },
+    });
+
+    if (!post) {
+      return res.status(400).send("Post not found");
+    }
 
     const comment = await Comment.create({
       content,

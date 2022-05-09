@@ -6,7 +6,10 @@ const ClickableCard = (props) => {
 
   return (
     <Card sx={{ padding: 0 }}>
-      <CardActionArea sx={{ padding: theme.spacing(2) }}>
+      <CardActionArea
+        sx={{ padding: theme.spacing(2) }}
+        onClick={props.onClick}
+      >
         {props.children}
       </CardActionArea>
     </Card>
