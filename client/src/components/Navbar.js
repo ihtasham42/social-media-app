@@ -4,6 +4,7 @@ import {
   Stack,
   TextField,
   Typography,
+  Link,
 } from "@mui/material";
 import React from "react";
 import "react-icons/ai";
@@ -24,7 +25,9 @@ const Navbar = () => {
       spacing={2}
     >
       <Typography variant="h4" mr={1}>
-        PostIt
+        <Link href="/" color="inherit" underline="none">
+          PostIt
+        </Link>
       </Typography>
       <TextField
         size="small"

@@ -1,22 +1,19 @@
-import { Container, Grid, Stack } from "@mui/material";
+import { Container, Grid, Link, Typography } from "@mui/material";
 import React from "react";
 import Navbar from "../components/Navbar";
-import PostBar from "../components/PostBar";
 import PostCard from "../components/PostCard";
 import Sidebar from "../components/Sidebar";
 
-const ExploreView = () => {
+const PostView = () => {
   return (
     <Container>
       <Navbar />
+      <Typography sx={{ mb: 2 }}>
+        <Link href="/"> Go back to posts</Link>
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={8}>
-          <Stack spacing={2}>
-            <PostBar />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-          </Stack>
+          <PostCard />
         </Grid>
         <Grid item xs={4}>
           <Sidebar />
@@ -26,4 +23,4 @@ const ExploreView = () => {
   );
 };
 
-export default ExploreView;
+export default PostView;
