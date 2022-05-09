@@ -18,7 +18,10 @@ const PostCard = (props) => {
   return (
     <Card sx={{ padding: 0 }}>
       <HorizontalStack spacing={0} alignItems="initial">
-        <Box padding={theme.spacing(1)} sx={{ backgroundColor: "grey.100" }}>
+        <Box
+          padding={theme.spacing(1)}
+          sx={{ backgroundColor: "grey.100", width: "50px" }}
+        >
           <LikeBox />
         </Box>
         <CardActionArea sx={{ padding: theme.spacing(2) }}>

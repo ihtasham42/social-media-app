@@ -120,7 +120,7 @@ const deletePost = async (req, res) => {
       return res.status(400).send("Not authorized to do this");
     }
 
-    await post.delete();
+    await Post.findByIdAndDelete(postId);
 
     await Comment.deleteMany({ post: post._id });
 

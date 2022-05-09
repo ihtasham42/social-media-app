@@ -1,10 +1,13 @@
-import { Container, Grid, Link, Typography } from "@mui/material";
+import { Card, Container, Grid, Link, Stack, Typography } from "@mui/material";
 import React from "react";
+import Comment from "../components/Comment";
 import Navbar from "../components/Navbar";
 import PostCard from "../components/PostCard";
 import Sidebar from "../components/Sidebar";
 
 const PostView = () => {
+  const comments = [1, [1, [1, [1, [1]]]], 3];
+
   return (
     <Container>
       <Navbar />
@@ -13,7 +16,15 @@ const PostView = () => {
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={8}>
-          <PostCard />
+          <Stack spacing={2}>
+            <PostCard />
+            {comments &&
+              comments.map((comment, i) => (
+                <Card sx={{ padding: 0 }}>
+                  <Comment replies={comment} />
+                </Card>
+              ))}
+          </Stack>
         </Grid>
         <Grid item xs={4}>
           <Sidebar />
