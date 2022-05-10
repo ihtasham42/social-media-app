@@ -6,7 +6,30 @@ import PostCard from "../components/PostCard";
 import Sidebar from "../components/Sidebar";
 
 const PostView = () => {
-  const comments = [1, [1, [1, [1, [1]]]], 3];
+  const comments = [
+    {
+      content: "some text",
+      children: [
+        {
+          content: "some text",
+          children: [],
+        },
+        {
+          content: "some text",
+          children: [
+            {
+              content: "some text",
+              children: [],
+            },
+            {
+              content: "some text",
+              children: [],
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
   return (
     <Container>
@@ -20,9 +43,7 @@ const PostView = () => {
             <PostCard />
             {comments &&
               comments.map((comment, i) => (
-                <Card sx={{ padding: 0 }}>
-                  <Comment replies={comment} />
-                </Card>
+                <Comment comment={comment} key={i} depth={0} />
               ))}
           </Stack>
         </Grid>

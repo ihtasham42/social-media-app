@@ -9,6 +9,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import { AiFillMessage } from "react-icons/ai";
 import LikeBox from "./LikeBox";
+import PostContentBox from "./PostContentBox";
 import HorizontalStack from "./util/HorizontalStack";
 
 const PostCard = (props) => {
@@ -24,9 +25,9 @@ const PostCard = (props) => {
         >
           <LikeBox />
         </Box>
-        <CardActionArea sx={{ padding: theme.spacing(2) }}>
+        <PostContentBox clickable={preview}>
           <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-            By Ihtasham - 04/02/2022
+            By Ihtasham - 11/02/2022
           </Typography>
           <Typography variant="h5" gutterBottom sx={{ overflow: "hidden" }}>
             Post Title
@@ -53,7 +54,7 @@ const PostCard = (props) => {
               5 comments
             </Typography>
           </HorizontalStack>
-        </CardActionArea>
+        </PostContentBox>
       </HorizontalStack>
     </Card>
   );

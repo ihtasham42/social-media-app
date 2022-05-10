@@ -13,9 +13,9 @@ const ExploreView = () => {
         <Grid item xs={8}>
           <Stack spacing={2}>
             <PostBar />
-            <PostCard />
-            <PostCard />
-            <PostCard />
+            <PostCard preview="primary" />
+            <PostCard preview="primary" />
+            <PostCard preview="primary" />
           </Stack>
         </Grid>
         <Grid item xs={4}>
