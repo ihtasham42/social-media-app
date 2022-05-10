@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import theme from "./theme";
 import PostView from "./views/PostView";
 import CreatePostView from "./views/CreatePostView";
+import ProfileView from "./views/ProfileView";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<ExploreView />} />
           <Route path="/posts/:id" element={<PostView />} />
           <Route path="/posts/create" element={<CreatePostView />} />
+          <Route path="/users/:id" element={<ProfileView />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

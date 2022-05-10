@@ -1,4 +1,11 @@
-import { Button, Card, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Button,
+  Card,
+  IconButton,
+  Link,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
@@ -34,7 +41,10 @@ const Comment = (props) => {
         <HorizontalStack justifyContent="space-between">
           <HorizontalStack>
             <Typography variant="subtitle2" color="text.secondary">
-              By Ihtasham - 04/02/2022
+              <Link color="inherit" underline="hover" href="/users/1">
+                By Username
+              </Link>{" "}
+              - 04/02/2022
             </Typography>
             <IconButton
               color="primary"

@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardActionArea,
-  Icon,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Card, Link, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { AiFillMessage } from "react-icons/ai";
@@ -27,7 +21,16 @@ const PostCard = (props) => {
         </Box>
         <PostContentBox clickable={preview}>
           <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-            By Ihtasham - 11/02/2022
+            <Link
+              color="inherit"
+              underline="hover"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              By Username
+            </Link>
+            - 11/02/2022
           </Typography>
           <Typography variant="h5" gutterBottom sx={{ overflow: "hidden" }}>
             Post Title
