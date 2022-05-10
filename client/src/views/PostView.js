@@ -5,6 +5,7 @@ import React from "react";
 import Comment from "../components/Comment";
 import Editor from "../components/Editor";
 import GoBack from "../components/GoBack";
+import GridLayout from "../components/GridLayout";
 import Navbar from "../components/Navbar";
 import PostCard from "../components/PostCard";
 import Sidebar from "../components/Sidebar";
@@ -56,12 +57,12 @@ const PostView = () => {
     <Container>
       <Navbar />
       <GoBack />
-      <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <Stack spacing={2}>
+      <GridLayout
+        left={
+          <>
+            {" "}
             <PostCard />
             <Editor rows={5} label="What are your thoughts on this post?" />
-
             {comments.length > 0 ? (
               comments.map((comment, i) => (
                 <Comment comment={comment} key={i} depth={0} />
@@ -83,12 +84,10 @@ const PostView = () => {
                 </Box>
               </Box>
             )}
-          </Stack>
-        </Grid>
-        <Grid item xs={4}>
-          <Sidebar />
-        </Grid>
-      </Grid>
+          </>
+        }
+        right={<Sidebar />}
+      />
     </Container>
   );
 };

@@ -1,5 +1,7 @@
 import { Container, Grid, Stack } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
+import GridLayout from "../components/GridLayout";
 import Navbar from "../components/Navbar";
 import PostBar from "../components/PostBar";
 import PostCard from "../components/PostCard";
@@ -9,19 +11,17 @@ const ExploreView = () => {
   return (
     <Container>
       <Navbar />
-      <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <Stack spacing={2}>
+      <GridLayout
+        left={
+          <>
             <PostBar />
             <PostCard preview="primary" />
             <PostCard preview="primary" />
             <PostCard preview="primary" />
-          </Stack>
-        </Grid>
-        <Grid item xs={4}>
-          <Sidebar />
-        </Grid>
-      </Grid>
+          </>
+        }
+        right={<Sidebar />}
+      />
     </Container>
   );
 };

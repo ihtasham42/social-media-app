@@ -35,13 +35,13 @@ const Navbar = () => {
         sx={{ flexGrow: 1, maxWidth: 300 }}
       />
       <Stack direction="row" alignItems="center" spacing={1}>
-        <IconButton>
+        <IconButton href="/">
           <AiFillHome />
         </IconButton>
         <IconButton>
           <AiFillMessage />
         </IconButton>
-        <IconButton>
+        <IconButton href="/users/1">
           <Avatar sx={{ width: 25, height: 25 }} />
         </IconButton>
       </Stack>

@@ -27,6 +27,7 @@ const PostCard = (props) => {
               onClick={(e) => {
                 e.stopPropagation();
               }}
+              href="/users/1"
             >
               By Username
             </Link>
