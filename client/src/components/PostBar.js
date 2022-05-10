@@ -1,10 +1,18 @@
-import { Card, Select, Stack, TextField, Typography } from "@mui/material";
-import React from "react";
+import {
+  Card,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import HorizontalStack from "./util/HorizontalStack";
 
 const PostBar = () => {
   const navigate = useNavigate();
+  const [sortBy, setSortBy] = useState("latest");
 
   return (
     <Card>
@@ -22,7 +30,16 @@ const PostBar = () => {
         />
         <HorizontalStack spacing={1}>
           <Typography>Sort by:</Typography>
-          <Select size="small" sx={{ minWidth: 150 }}></Select>
+          <Select
+            size="small"
+            value={sortBy}
+            sx={{ minWidth: 150 }}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <MenuItem value={"latest"}>Latest</MenuItem>
+            <MenuItem value={"likes"}>Likes</MenuItem>
+            <MenuItem value={"oldest"}>Oldest</MenuItem>
+          </Select>
         </HorizontalStack>
       </Stack>
     </Card>
