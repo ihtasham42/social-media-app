@@ -1,13 +1,15 @@
-import { Card, IconButton, Typography, useTheme } from "@mui/material";
+import { Button, Card, IconButton, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
+import Editor from "./Editor";
 import HorizontalStack from "./util/HorizontalStack";
 
 const Comment = (props) => {
   const theme = useTheme();
   const { comment, depth } = props;
   const [minimised, setMinimised] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   let style = {
     backgroundColor: theme.palette.grey[100],
@@ -20,25 +22,40 @@ const Comment = (props) => {
   }
 
   return (
-    <Card sx={style}>
+    <Box sx={style}>
       <Box
         sx={{
-          px: theme.spacing(2),
-          pt: theme.spacing(2),
+          pl: theme.spacing(2),
+          pt: theme.spacing(1),
           pb: theme.spacing(1),
+          pr: 1,
         }}
       >
-        <HorizontalStack>
-          <Typography variant="subtitle2" color="text.secondary">
-            By Ihtasham - 04/02/2022
-          </Typography>
-          <IconButton color="primary" onClick={() => setMinimised(!minimised)}>
-            {minimised ? (
-              <AiOutlinePlus size={15} />
-            ) : (
-              <AiOutlineLine size={15} />
-            )}
-          </IconButton>
+        <HorizontalStack justifyContent="space-between">
+          <HorizontalStack>
+            <Typography variant="subtitle2" color="text.secondary">
+              By Ihtasham - 04/02/2022
+            </Typography>
+            <IconButton
+              color="primary"
+              onClick={() => setMinimised(!minimised)}
+            >
+              {minimised ? (
+                <AiOutlinePlus size={15} />
+              ) : (
+                <AiOutlineLine size={15} />
+              )}
+            </IconButton>
+          </HorizontalStack>
+          {!minimised && (
+            <Button
+              variant="text"
+              size="small"
+              onClick={() => setEditing(!editing)}
+            >
+              {!editing ? <div>Reply</div> : <div>Cancel</div>}
+            </Button>
+          )}
         </HorizontalStack>
         {!minimised && (
           <Box>
@@ -51,6 +68,14 @@ const Comment = (props) => {
               elementum iaculis bibendum. Orci varius natoque penatibus et
               magnis dis parturient montes, nascetur ridiculus mus.
             </Typography>
+            {editing && !minimised && (
+              <Box sx={{ mt: 2 }}>
+                <Editor
+                  rows={5}
+                  label="What are your thoughts on this comment?"
+                />
+              </Box>
+            )}
             {comment.children && (
               <Box sx={{ pt: theme.spacing(2) }}>
                 {comment.children.map((reply, i) => (
@@ -61,7 +86,7 @@ const Comment = (props) => {
           </Box>
         )}
       </Box>
-    </Card>
+    </Box>
   );
 };
 
