@@ -5,12 +5,16 @@ import {
   TextField,
   Typography,
   Link,
+  Button,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import "react-icons/ai";
 import { AiFillHome, AiFillMessage } from "react-icons/ai";
+import HorizontalStack from "./util/HorizontalStack";
 
 const Navbar = () => {
+  const [user, setUser] = useState();
+
   return (
     <Stack
       direction="row"
@@ -34,7 +38,7 @@ const Navbar = () => {
         label="Search for posts..."
         sx={{ flexGrow: 1, maxWidth: 300 }}
       />
-      <Stack direction="row" alignItems="center" spacing={1}>
+      <HorizontalStack>
         <IconButton href="/">
           <AiFillHome />
         </IconButton>
@@ -44,7 +48,9 @@ const Navbar = () => {
         <IconButton href="/users/1">
           <Avatar sx={{ width: 25, height: 25 }} />
         </IconButton>
-      </Stack>
+        <Button variant="text">Sign Up</Button>
+        <Button variant="text">Login</Button>
+      </HorizontalStack>
     </Stack>
   );
 };

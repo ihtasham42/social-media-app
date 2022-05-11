@@ -13,12 +13,12 @@ const ExploreView = () => {
       <Navbar />
       <GridLayout
         left={
-          <>
+          <Stack spacing={2}>
             <PostBar />
             <PostCard preview="primary" />
             <PostCard preview="primary" />
             <PostCard preview="primary" />
-          </>
+          </Stack>
         }
         right={<Sidebar />}
       />

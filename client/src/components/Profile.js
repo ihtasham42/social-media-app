@@ -1,5 +1,6 @@
 import { Avatar, Card, Stack, Typography } from "@mui/material";
 import React from "react";
+import Footer from "./Footer";
 
 const Profile = () => {
   return (

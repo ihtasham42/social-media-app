@@ -59,8 +59,7 @@ const PostView = () => {
       <GoBack />
       <GridLayout
         left={
-          <>
-            {" "}
+          <Stack spacing={2}>
             <PostCard />
             <Editor rows={5} label="What are your thoughts on this post?" />
             {comments.length > 0 ? (
@@ -84,7 +83,7 @@ const PostView = () => {
                 </Box>
               </Box>
             )}
-          </>
+          </Stack>
         }
         right={<Sidebar />}
       />
