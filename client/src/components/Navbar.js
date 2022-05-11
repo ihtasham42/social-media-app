@@ -42,14 +42,25 @@ const Navbar = () => {
         <IconButton href="/">
           <AiFillHome />
         </IconButton>
-        <IconButton>
-          <AiFillMessage />
-        </IconButton>
-        <IconButton href="/users/1">
-          <Avatar sx={{ width: 25, height: 25 }} />
-        </IconButton>
-        <Button variant="text">Sign Up</Button>
-        <Button variant="text">Login</Button>
+        {user ? (
+          <>
+            <IconButton>
+              <AiFillMessage />
+            </IconButton>
+            <IconButton href="/users/1">
+              <Avatar sx={{ width: 25, height: 25 }} />
+            </IconButton>
+          </>
+        ) : (
+          <>
+            <Button variant="text" sx={{ minWidth: 80 }} href="/signup">
+              Sign Up
+            </Button>
+            <Button variant="text" sx={{ minWidth: 65 }} href="/login">
+              Login
+            </Button>
+          </>
+        )}
       </HorizontalStack>
     </Stack>
   );

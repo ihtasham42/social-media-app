@@ -9,6 +9,7 @@ import theme from "./theme";
 import PostView from "./views/PostView";
 import CreatePostView from "./views/CreatePostView";
 import ProfileView from "./views/ProfileView";
+import LoginView from "./views/LoginView";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/posts/:id" element={<PostView />} />
           <Route path="/posts/create" element={<CreatePostView />} />
           <Route path="/users/:id" element={<ProfileView />} />
+          <Route path="/login" element={<LoginView />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
