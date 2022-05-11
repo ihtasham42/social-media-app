@@ -6,6 +6,7 @@ import Comment from "../components/Comment";
 import Editor from "../components/Editor";
 import GoBack from "../components/GoBack";
 import GridLayout from "../components/GridLayout";
+import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import PostCard from "../components/PostCard";
 import Sidebar from "../components/Sidebar";
@@ -51,6 +52,37 @@ const PostView = () => {
         },
       ],
     },
+    {
+      content: "some text",
+      children: [
+        {
+          content: "some text",
+          children: [
+            {
+              content: "some text",
+              children: [],
+            },
+          ],
+        },
+        {
+          content: "some text",
+          children: [],
+        },
+      ],
+    },
+    {
+      content: "some text",
+      children: [],
+    },
+    {
+      content: "some text",
+      children: [
+        {
+          content: "some text",
+          children: [],
+        },
+      ],
+    },
   ];
 
   return (
@@ -62,10 +94,14 @@ const PostView = () => {
           <Stack spacing={2}>
             <PostCard />
             <Editor rows={5} label="What are your thoughts on this post?" />
+
             {comments.length > 0 ? (
-              comments.map((comment, i) => (
-                <Comment comment={comment} key={i} depth={0} />
-              ))
+              <>
+                {comments.map((comment, i) => (
+                  <Comment comment={comment} key={i} depth={0} />
+                ))}
+                <Loading />
+              </>
             ) : (
               <Box
                 display="flex"

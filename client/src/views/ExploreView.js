@@ -1,7 +1,14 @@
-import { Container, Grid, Stack } from "@mui/material";
+import {
+  CircularProgress,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import GridLayout from "../components/GridLayout";
+import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import PostBar from "../components/PostBar";
 import PostCard from "../components/PostCard";
@@ -18,6 +25,7 @@ const ExploreView = () => {
             <PostCard preview="primary" />
             <PostCard preview="primary" />
             <PostCard preview="primary" />
+            <Loading />
           </Stack>
         }
         right={<Sidebar />}
