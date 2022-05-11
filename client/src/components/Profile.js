@@ -9,7 +9,10 @@ const Profile = () => {
         <Avatar sx={{ height: 150, width: 150, mb: 2 }} />
         <Typography variant="h5">Ihtasham</Typography>
         <Typography color="text.secondary">
-          Total Likes: <b>1500</b>
+          Likes <b>1500</b>
+        </Typography>
+        <Typography color="text.secondary">
+          Posts <b>17</b>
         </Typography>
       </Stack>
     </Card>

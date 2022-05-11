@@ -10,6 +10,7 @@ import PostView from "./views/PostView";
 import CreatePostView from "./views/CreatePostView";
 import ProfileView from "./views/ProfileView";
 import LoginView from "./views/LoginView";
+import SignupView from "./views/SignupView";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/posts/create" element={<CreatePostView />} />
           <Route path="/users/:id" element={<ProfileView />} />
           <Route path="/login" element={<LoginView />} />
+          <Route path="/signup" element={<SignupView />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
