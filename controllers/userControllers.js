@@ -50,7 +50,13 @@ const login = async (req, res) => {
   }
 };
 
+const follow = (req, res) => {};
+
+const unfollow = (req, res) => {};
+
 module.exports = {
   register,
   login,
+  follow,
+  unfollow,
 };
