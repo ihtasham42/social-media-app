@@ -3,16 +3,16 @@ import {
   Checkbox,
   Container,
   FormControlLabel,
+  Link,
   Stack,
   TextField,
   Typography,
-  Link,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import Copyright from "../components/Copyright";
+import Copyright from "../Copyright";
 
-const SignupView = () => {
+const LoginView = () => {
   return (
     <Container maxWidth={"xs"} sx={{ mt: 6 }}>
       <Stack alignItems="center">
@@ -22,26 +22,18 @@ const SignupView = () => {
           </Link>
         </Typography>
         <Typography variant="h5" gutterBottom>
-          Sign Up
+          Login
         </Typography>
         <Typography color="text.secondary">
-          Already have an account? <Link href="/login">Login</Link>
+          Don't have an account yet? <Link href="/signup">Sign Up</Link>
         </Typography>
         <Box component="form">
-          <TextField
-            label="Username"
-            fullWidth
-            margin="normal"
-            autoFocus
-            required
-            id="username"
-            name="username"
-          />
           <TextField
             label="Email Address"
             fullWidth
             margin="normal"
             autoComplete="email"
+            autoFocus
             required
             id="email"
             name="email"
@@ -55,8 +47,12 @@ const SignupView = () => {
             id="email"
             name="email"
           />
+          <FormControlLabel
+            control={<Checkbox name="remember" color="primary" />}
+            label="Remember me"
+          />
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
-            Sign Up
+            Login
           </Button>
         </Box>
         <Box sx={{ mt: 3 }}>
@@ -67,4 +63,4 @@ const SignupView = () => {
   );
 };
 
-export default SignupView;
+export default LoginView;

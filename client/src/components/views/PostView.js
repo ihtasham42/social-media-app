@@ -1,15 +1,15 @@
 import { useTheme } from "@emotion/react";
-import { Container, Grid, Link, Stack, Typography } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import Comment from "../components/Comment";
-import Editor from "../components/Editor";
-import GoBack from "../components/GoBack";
-import GridLayout from "../components/GridLayout";
-import Loading from "../components/Loading";
-import Navbar from "../components/Navbar";
-import PostCard from "../components/PostCard";
-import Sidebar from "../components/Sidebar";
+import Comment from "../Comment";
+import Editor from "../Editor";
+import GoBack from "../GoBack";
+import GridLayout from "../GridLayout";
+import Loading from "../Loading";
+import Navbar from "../Navbar";
+import PostCard from "../PostCard";
+import Sidebar from "../Sidebar";
 
 const PostView = () => {
   const theme = useTheme();

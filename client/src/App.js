@@ -3,14 +3,16 @@ import "react-icons";
 import "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import ExploreView from "./views/ExploreView";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import theme from "./theme";
-import PostView from "./views/PostView";
-import CreatePostView from "./views/CreatePostView";
-import ProfileView from "./views/ProfileView";
-import LoginView from "./views/LoginView";
-import SignupView from "./views/SignupView";
+
+import PostView from "./components/views/PostView";
+import CreatePostView from "./components/views/CreatePostView";
+import ProfileView from "./components/views/ProfileView";
+import LoginView from "./components/views/LoginView";
+import SignupView from "./components/views/SignupView";
+import ExploreView from "./components/views/ExploreView";
 
 function App() {
   return (

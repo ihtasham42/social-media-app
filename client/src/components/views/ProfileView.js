@@ -1,16 +1,16 @@
-import { Card, Container, Grid, Stack, Typography } from "@mui/material";
+import { Card, Container, Stack } from "@mui/material";
 import React from "react";
-import ContentSelect from "../components/ContentSelect";
-import Footer from "../components/Footer";
-import GoBack from "../components/GoBack";
-import GridLayout from "../components/GridLayout";
-import MobileProfile from "../components/MobileProfile";
-import Navbar from "../components/Navbar";
-import PostBar from "../components/PostBar";
-import PostCard from "../components/PostCard";
-import Profile from "../components/Profile";
-import SortBySelect from "../components/SortBySelect";
-import HorizontalStack from "../components/util/HorizontalStack";
+
+import ContentSelect from "../ContentSelect";
+import Footer from "../Footer";
+import GoBack from "../GoBack";
+import GridLayout from "../GridLayout";
+import MobileProfile from "../MobileProfile";
+import Navbar from "../Navbar";
+import PostCard from "../PostCard";
+import Profile from "../Profile";
+import SortBySelect from "../SortBySelect";
+import HorizontalStack from "../util/HorizontalStack";
 
 const ProfileView = () => {
   return (
