@@ -1,6 +1,6 @@
 const getPosts = async () => {
   try {
-    const res = await fetch("/api/posts");
+    const res = await fetch("");
   } catch (err) {
     console.log(err);
   }

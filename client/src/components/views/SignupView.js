@@ -8,9 +8,15 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
+import { signup } from "../../api/users";
+import { isLoggedIn, loginUser, logoutUser } from "../../helpers/authHelper";
+import { useNavigate } from "react-router-dom";
 import Copyright from "../Copyright";
 
 const SignupView = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
   const [state, setState] = useState({
     username: "",
     email: "",
@@ -23,15 +29,30 @@ const SignupView = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const data = await signup(state);
+    if (data.error) {
+      setError(data.error);
+    } else {
+      loginUser(data);
+      console.log(data);
+
+      navigate("/");
+    }
   };
 
-  useEffect(() => {
-    console.log(state);
-  });
+  const handleLogout = async (e) => {
+    logoutUser();
+    console.log(isLoggedIn());
+  };
 
   return (
     <Container maxWidth={"xs"} sx={{ mt: 6 }}>
       <Stack alignItems="center">
+        <Button onClick={handleLogout}>Logout</Button>
+
+        {error && <Typography color="red">{error}</Typography>}
+
         <Typography variant="h2" color="text.secondary" sx={{ mb: 6 }}>
           <Link href="/" color="inherit" underline="none">
             PostIt
@@ -43,7 +64,7 @@ const SignupView = () => {
         <Typography color="text.secondary">
           Already have an account? <Link href="/login">Login</Link>
         </Typography>
-        <Box component="form">
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
             label="Username"
             fullWidth
@@ -69,18 +90,13 @@ const SignupView = () => {
             fullWidth
             required
             margin="normal"
-            autoComplete="email"
-            id="email"
-            name="email"
+            autoComplete="password"
+            id="password"
+            name="password"
+            type="password"
             onChange={handleChange}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ my: 2 }}
-            onSubmit={handleSubmit}
-          >
+          <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
             Sign Up
           </Button>
         </Box>

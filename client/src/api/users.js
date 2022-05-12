@@ -1,7 +1,10 @@
 const signup = async (user) => {
   try {
-    const res = await fetch("/api/register", {
-      method: "GET",
+    const res = await fetch("http://localhost:4000/api/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(user),
     });
     return await res.json();
@@ -13,7 +16,7 @@ const signup = async (user) => {
 const login = async (user) => {
   try {
     const res = await fetch("/api/login", {
-      method: "GET",
+      method: "POST",
       body: JSON.stringify(user),
     });
     return await res.json();

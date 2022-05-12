@@ -10,11 +10,10 @@ import {
 import React, { useState } from "react";
 import "react-icons/ai";
 import { AiFillHome, AiFillMessage } from "react-icons/ai";
+import { isLoggedIn } from "../helpers/authHelper";
 import HorizontalStack from "./util/HorizontalStack";
 
 const Navbar = () => {
-  const [user, setUser] = useState();
-
   return (
     <Stack
       direction="row"
@@ -42,7 +41,7 @@ const Navbar = () => {
         <IconButton href="/">
           <AiFillHome />
         </IconButton>
-        {user ? (
+        {isLoggedIn() ? (
           <>
             <IconButton>
               <AiFillMessage />

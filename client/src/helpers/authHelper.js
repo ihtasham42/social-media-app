@@ -2,12 +2,12 @@ const isLoggedIn = () => {
   return JSON.parse(localStorage.getItem("token"));
 };
 
-const logIn = (token) => {
+const loginUser = (token) => {
   return localStorage.setItem("token", JSON.stringify(token));
 };
 
-const logOut = () => {
+const logoutUser = () => {
   localStorage.removeItem("token");
 };
 
-export { logIn, isLoggedIn, logOut };
+export { loginUser, isLoggedIn, logoutUser };
