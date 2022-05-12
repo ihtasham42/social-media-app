@@ -66,7 +66,7 @@ const follow = async (req, res) => {
 
     return res.status(200).json({ data: follow });
   } catch (err) {
-    return res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: "Failed to follow user" });
   }
 };
 
@@ -85,7 +85,19 @@ const unfollow = async (req, res) => {
 
     return res.status(200).json({ data: existingFollow });
   } catch (err) {
-    return res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: "Failed to unfollow user" });
+  }
+};
+
+const getFollowers = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const followers = await Follow.find({ followingId: userId });
+
+    return res.status(200).json({ data: followers });
+  } catch (err) {
+    return res.status(400).json({ error: "Failed to get followers" });
   }
 };
 
@@ -94,4 +106,6 @@ module.exports = {
   login,
   follow,
   unfollow,
+  getFollowers,
+  getFollowing,
 };

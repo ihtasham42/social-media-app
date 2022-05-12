@@ -10,7 +10,11 @@ router.post(
   userControllers.register
 );
 router.post("/login", userControllers.login);
-routers.post("/follow/:id", verifyToken, userControllers.follow);
-routes.post("/unfollow/:id", verifyToken, userControllers.unfollow);
+
+router.post("/follow/:id", verifyToken, userControllers.follow);
+router.delete("/unfollow/:id", verifyToken, userControllers.unfollow);
+
+router.get("/followers/:id", userControllers.getFollowers);
+router.get("/following/:id", userControllers.getFollowing);
 
 module.exports = router;
