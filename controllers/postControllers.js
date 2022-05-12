@@ -31,7 +31,7 @@ const getUserPosts = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(400).json({ error: "User does not exist" });
+      throw new Error("User does not exist");
     }
 
     const posts = await paginate(
@@ -42,7 +42,7 @@ const getUserPosts = async (req, res) => {
 
     return res.json(posts);
   } catch (err) {
-    return res.status(400).json({ error: "Failed to get user's posts" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -53,7 +53,7 @@ const getPost = async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).json({ error: "Post does not exist" });
+      throw new Error("Post does not exist");
     }
 
     return res.json(post);
@@ -70,11 +70,11 @@ const updatePost = async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).json({ error: "Post does not exist" });
+      throw new Error("Post does not exist");
     }
 
     if (post.poster != userId) {
-      return res.status(400).json({ error: "Not authorized to update post" });
+      throw new Error("Not authorized to update post");
     }
 
     const updatedPost = await Post.findByIdAndUpdate(
@@ -97,11 +97,11 @@ const deletePost = async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).json({ error: "Post does not exist" });
+      throw new Error("Post does not exist");
     }
 
     if (post.poster != userId) {
-      return res.status(400).json({ error: "Not authorized to update post" });
+      throw new Error("Not authorized to update post");
     }
 
     await post.remove();
@@ -138,13 +138,13 @@ const likePost = async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).json({ error: "Post does not exist" });
+      throw new Error("Post does not exist");
     }
 
     const existingPostLike = await PostLike.find({ postId, userId });
 
     if (existingPostLike) {
-      return res.status(400).send("Post is already liked");
+      throw new Error("Post is already liked");
     }
 
     const likedPost = await Post.findByIdAndUpdate(
@@ -174,13 +174,13 @@ const unlikePost = async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).json({ error: "Post does not exist" });
+      throw new Error("Post does not exist");
     }
 
     const existingPostLike = await PostLike.deleteOne({ postId, userId });
 
     if (!existingPostLike) {
-      return res.status(400).send("Post is not liked");
+      throw new Error("Post is already not liked");
     }
 
     const unlikedPost = await Post.findByIdAndUpdate(
@@ -202,7 +202,7 @@ const getUserLikedPosts = async (req, res) => {
     const userId = req.params.id;
 
     if (req.body.userId != userId) {
-      return res.status(400).send("Not authorized to do this");
+      throw new Error("Not authorized to do this");
     }
 
     const likedPosts = await PostLike.find({ userId });

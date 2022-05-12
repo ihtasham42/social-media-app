@@ -16,7 +16,7 @@ import Copyright from "../Copyright";
 
 const SignupView = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const [state, setState] = useState({
     username: "",
@@ -33,7 +33,7 @@ const SignupView = () => {
 
     const data = await signup(state);
     if (data.error) {
-      setError(data.error);
+      setServerError(data.error);
     } else {
       loginUser(data);
       navigate("/");
@@ -86,9 +86,9 @@ const SignupView = () => {
             type="password"
             onChange={handleChange}
           />
-          {error && (
+          {serverError && (
             <Alert sx={{ mb: 1, mt: 2 }} variant="filled" severity="error">
-              {error}
+              {serverError}
             </Alert>
           )}
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
