@@ -19,7 +19,7 @@ const createPost = async (req, res) => {
 
     res.json(post);
   } catch (err) {
-    return res.status(400).json({ error: "Failed to create post" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -58,7 +58,7 @@ const getPost = async (req, res) => {
 
     return res.json(post);
   } catch (err) {
-    return res.status(400).json({ error: "Failed to get post" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -85,7 +85,7 @@ const updatePost = async (req, res) => {
 
     return res.json(updatedPost);
   } catch (err) {
-    return res.status(400).json({ error: "Failed to update post" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -110,7 +110,7 @@ const deletePost = async (req, res) => {
 
     return res.json(post);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -126,7 +126,7 @@ const getPosts = async (req, res) => {
 
     return res.json(posts);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -162,7 +162,7 @@ const likePost = async (req, res) => {
 
     return res.json(likedPost);
   } catch (err) {
-    return res.json(err.message);
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -193,7 +193,7 @@ const unlikePost = async (req, res) => {
 
     return res.json(unlikedPost);
   } catch (err) {
-    return res.json(err.message);
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -209,7 +209,7 @@ const getUserLikedPosts = async (req, res) => {
 
     return res.json(likedPosts);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: err.message });
   }
 };
 

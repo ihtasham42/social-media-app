@@ -10,10 +10,18 @@ import {
 import React, { useState } from "react";
 import "react-icons/ai";
 import { AiFillHome, AiFillMessage } from "react-icons/ai";
-import { isLoggedIn } from "../helpers/authHelper";
+import { useNavigate } from "react-router-dom";
+import { isLoggedIn, logoutUser } from "../helpers/authHelper";
 import HorizontalStack from "./util/HorizontalStack";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async (e) => {
+    logoutUser();
+    navigate("/");
+  };
+
   return (
     <Stack
       direction="row"
@@ -49,6 +57,7 @@ const Navbar = () => {
             <IconButton href="/users/1">
               <Avatar sx={{ width: 25, height: 25 }} />
             </IconButton>
+            <Button onClick={handleLogout}>Logout</Button>
           </>
         ) : (
           <>

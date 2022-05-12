@@ -9,6 +9,12 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+
+    if (existingUser) {
+      throw new Error("Email and username must be unique");
+    }
+
     const user = await User.create({
       username,
       email,
@@ -19,7 +25,7 @@ const register = async (req, res) => {
 
     return res.json(token);
   } catch (err) {
-    return res.status(400).json({ error: "Failed to register user" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -32,14 +38,14 @@ const login = async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!(user && isPasswordValid)) {
-      return res.status(400).json({ error: "User or password does not exist" });
+      throw new Error("User or password does not exist");
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
     return res.json(token);
   } catch (err) {
-    return res.status(400).json({ error: "Failed to login user" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -51,14 +57,14 @@ const follow = async (req, res) => {
     const existingFollow = await Follow.find({ userId, followingId });
 
     if (existingFollow) {
-      return res.status(400).json({ error: "Already following this user" });
+      throw new Error("Already following this user");
     }
 
     const follow = await Follow.create({ userId, followingId });
 
     return res.status(200).json({ data: follow });
   } catch (err) {
-    return res.status(400).json({ error: "Failed to follow user" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -70,14 +76,14 @@ const unfollow = async (req, res) => {
     const existingFollow = await Follow.find({ userId, followingId });
 
     if (!existingFollow) {
-      return res.status(400).json({ error: "Not following this user" });
+      throw new Error("Not already following user");
     }
 
     await existingFollow.remove();
 
     return res.status(200).json({ data: existingFollow });
   } catch (err) {
-    return res.status(400).json({ error: "Failed to unfollow user" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -89,7 +95,7 @@ const getFollowers = async (req, res) => {
 
     return res.status(200).json({ data: followers });
   } catch (err) {
-    return res.status(400).json({ error: "Failed to get followers" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -101,7 +107,7 @@ const getFollowing = async (req, res) => {
 
     return res.status(200).json({ data: following });
   } catch (err) {
-    return res.status(400).json({ error: "Failed to get following" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
