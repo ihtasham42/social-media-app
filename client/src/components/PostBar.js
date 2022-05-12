@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import HorizontalStack from "./util/HorizontalStack";
+import SortBySelect from "./SortBySelect";
 
 const PostBar = () => {
   const navigate = useNavigate();
@@ -28,19 +29,7 @@ const PostBar = () => {
           label="Create a post..."
           onClick={() => navigate("/posts/create")}
         />
-        <HorizontalStack spacing={1}>
-          <Typography>Sort by:</Typography>
-          <Select
-            size="small"
-            value={sortBy}
-            sx={{ minWidth: 150 }}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <MenuItem value={"latest"}>Latest</MenuItem>
-            <MenuItem value={"likes"}>Likes</MenuItem>
-            <MenuItem value={"oldest"}>Oldest</MenuItem>
-          </Select>
-        </HorizontalStack>
+        <SortBySelect />
       </Stack>
     </Card>
   );

@@ -6,7 +6,7 @@ const Profile = () => {
   return (
     <Card>
       <Stack alignItems="center" spacing={1}>
-        <Avatar sx={{ height: 150, width: 150, mb: 2 }} />
+        <Avatar sx={{ height: 150, width: 150, mb: 1 }} />
         <Typography variant="h5">Ihtasham</Typography>
         <Typography color="text.secondary">
           Likes <b>1500</b>

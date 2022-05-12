@@ -1,5 +1,6 @@
 import { Card, Container, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
+import ContentSelect from "../components/ContentSelect";
 import Footer from "../components/Footer";
 import GoBack from "../components/GoBack";
 import GridLayout from "../components/GridLayout";
@@ -24,7 +25,10 @@ const ProfileView = () => {
 
             <Stack spacing={2}>
               <Card>
-                <SortBySelect />
+                <HorizontalStack spacing={2}>
+                  <SortBySelect />
+                  <ContentSelect />
+                </HorizontalStack>
               </Card>
               <PostCard preview="primary" />
               <PostCard preview="primary" />
