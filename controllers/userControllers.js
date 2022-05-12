@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Follow = require("../models/Follow");
 
 const register = async (req, res) => {
   try {
@@ -50,9 +51,43 @@ const login = async (req, res) => {
   }
 };
 
-const follow = (req, res) => {};
+const follow = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const followingId = req.params.id;
 
-const unfollow = (req, res) => {};
+    const existingFollow = await Follow.find({ userId, followingId });
+
+    if (existingFollow) {
+      return res.status(400).json({ error: "Already following this user" });
+    }
+
+    const follow = await Follow.create({ userId, followingId });
+
+    return res.status(200).json({ data: follow });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
+const unfollow = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const followingId = req.params.id;
+
+    const existingFollow = await Follow.find({ userId, followingId });
+
+    if (!existingFollow) {
+      return res.status(400).json({ error: "Not following this user" });
+    }
+
+    await existingFollow.remove();
+
+    return res.status(200).json({ data: existingFollow });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
 
 module.exports = {
   register,
