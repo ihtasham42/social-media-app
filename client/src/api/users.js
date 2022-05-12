@@ -15,4 +15,4 @@ const login = async () => {
   }
 };
 
-export { signup };
+export { signup, login };
