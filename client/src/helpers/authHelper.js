@@ -10,4 +10,4 @@ const logOut = (token) => {
   localStorage.removeItem("token");
 };
 
-export { logIn, isLoggedIn };
+export { logIn, isLoggedIn, logOut };
