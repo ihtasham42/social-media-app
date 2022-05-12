@@ -1,16 +1,19 @@
 import { Avatar, Card, Link, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 import { AiFillMessage } from "react-icons/ai";
 import ContentDetails from "./ContentDetails";
 
 import LikeBox from "./LikeBox";
+import Editor from "./Editor";
 import PostContentBox from "./PostContentBox";
 import HorizontalStack from "./util/HorizontalStack";
 
 const PostCard = (props) => {
   const { preview } = props;
+
   const theme = useTheme();
+  const [editing, setEditing] = useState(false);
 
   return (
     <Card sx={{ padding: 0 }}>
@@ -27,17 +30,21 @@ const PostCard = (props) => {
             Post Title
           </Typography>
 
-          {preview !== "secondary" && (
-            <Typography gutterBottom sx={{}}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-              volutpat elit ipsum, sit amet facilisis nulla auctor blandit. Cras
-              ipsum diam, ultrices eu nisl quis, scelerisque aliquet elit.
-              Aliquam ligula est, blandit a sem eget, tempor scelerisque urna.
-              Cras vitae ex pharetra, faucibus arcu sed, commodo odio. Vivamus
-              elementum iaculis bibendum. Orci varius natoque penatibus et
-              magnis dis parturient montes, nascetur ridiculus mus.
-            </Typography>
-          )}
+          {preview !== "secondary" &&
+            (editing ? (
+              <Editor />
+            ) : (
+              <Typography gutterBottom sx={{}}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
+                volutpat elit ipsum, sit amet facilisis nulla auctor blandit.
+                Cras ipsum diam, ultrices eu nisl quis, scelerisque aliquet
+                elit. Aliquam ligula est, blandit a sem eget, tempor scelerisque
+                urna. Cras vitae ex pharetra, faucibus arcu sed, commodo odio.
+                Vivamus elementum iaculis bibendum. Orci varius natoque
+                penatibus et magnis dis parturient montes, nascetur ridiculus
+                mus.
+              </Typography>
+            ))}
 
           <HorizontalStack>
             <AiFillMessage />
