@@ -38,4 +38,20 @@ const deletePost = async () => {
   }
 };
 
-export { getPost, createPost, updatePost, deletePost };
+const likePost = async () => {
+  try {
+    const res = await fetch("/api/posts");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const unlikePost = async () => {
+  try {
+    const res = await fetch("/api/posts");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { getPost, createPost, updatePost, deletePost, likePost, unlikePost };

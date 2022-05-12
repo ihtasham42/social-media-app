@@ -1,9 +1,9 @@
 const isLoggedIn = () => {
-  return localStorage.getItem("token");
+  return JSON.parse(localStorage.getItem("token"));
 };
 
 const logIn = (token) => {
-  localStorage.setItem("token", token);
+  return localStorage.setItem("token", JSON.stringify(token));
 };
 
 const logOut = () => {
