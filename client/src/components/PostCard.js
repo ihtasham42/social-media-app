@@ -1,7 +1,9 @@
-import { Card, Link, Typography, useTheme } from "@mui/material";
+import { Avatar, Card, Link, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { AiFillMessage } from "react-icons/ai";
+import ContentDetails from "./ContentDetails";
+
 import LikeBox from "./LikeBox";
 import PostContentBox from "./PostContentBox";
 import HorizontalStack from "./util/HorizontalStack";
@@ -20,22 +22,11 @@ const PostCard = (props) => {
           <LikeBox />
         </Box>
         <PostContentBox clickable={preview}>
-          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-            <Link
-              color="inherit"
-              underline="hover"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              href="/users/1"
-            >
-              By Username
-            </Link>
-            - 11/02/2022
-          </Typography>
+          <ContentDetails />
           <Typography variant="h5" gutterBottom sx={{ overflow: "hidden" }}>
             Post Title
           </Typography>
+
           {preview !== "secondary" && (
             <Typography gutterBottom sx={{}}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce

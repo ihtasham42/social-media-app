@@ -9,6 +9,7 @@ import {
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
+import ContentDetails from "./ContentDetails";
 import Editor from "./Editor";
 import HorizontalStack from "./util/HorizontalStack";
 
@@ -40,12 +41,10 @@ const Comment = (props) => {
       >
         <HorizontalStack justifyContent="space-between">
           <HorizontalStack>
-            <Typography variant="subtitle2" color="text.secondary">
-              <Link color="inherit" underline="hover" href="/users/1">
-                By Username
-              </Link>{" "}
-              - 04/02/2022
-            </Typography>
+            <Box mt={1}>
+              <ContentDetails />
+            </Box>
+
             <IconButton
               color="primary"
               onClick={() => setMinimised(!minimised)}
