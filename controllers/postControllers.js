@@ -11,10 +11,6 @@ const createPost = async (req, res) => {
   try {
     const { title, content, userId } = req.body;
 
-    if (!(title && content)) {
-      return res.status(400).send("No post id provided");
-    }
-
     const post = await Post.create({
       title,
       content,
@@ -23,7 +19,7 @@ const createPost = async (req, res) => {
 
     res.json(post);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: "Failed to create post" });
   }
 };
 
@@ -35,7 +31,7 @@ const getUserPosts = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(400).send("User provided does not exist");
+      return res.status(400).json({ error: "User does not exist" });
     }
 
     const posts = await paginate(
@@ -46,7 +42,7 @@ const getUserPosts = async (req, res) => {
 
     return res.json(posts);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: "Failed to get user's posts" });
   }
 };
 
@@ -54,19 +50,15 @@ const getPost = async (req, res) => {
   try {
     const postId = req.params.id;
 
-    if (!postId) {
-      return res.status(400).send("No post id provided");
-    }
-
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).send("Post with provided id not found");
+      return res.status(400).json({ error: "Post does not exist" });
     }
 
     return res.json(post);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: "Failed to get post" });
   }
 };
 
@@ -75,18 +67,14 @@ const updatePost = async (req, res) => {
     const postId = req.params.id;
     const { title, content, userId } = req.body;
 
-    if (!(postId && title && content)) {
-      return res.status(400).send("No post id provided");
-    }
-
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).send("No post found");
+      return res.status(400).json({ error: "Post does not exist" });
     }
 
     if (post.poster != userId) {
-      return res.status(400).send("Not authorized to do this");
+      return res.status(400).json({ error: "Not authorized to update post" });
     }
 
     const updatedPost = await Post.findByIdAndUpdate(
@@ -97,7 +85,7 @@ const updatePost = async (req, res) => {
 
     return res.json(updatedPost);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: "Failed to update post" });
   }
 };
 
@@ -106,21 +94,17 @@ const deletePost = async (req, res) => {
     const postId = req.params.id;
     const { userId } = req.body;
 
-    if (!postId) {
-      return res.status(400).send("No post id provided");
-    }
-
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).send("No post found");
+      return res.status(400).json({ error: "Post does not exist" });
     }
 
     if (post.poster != userId) {
-      return res.status(400).send("Not authorized to do this");
+      return res.status(400).json({ error: "Not authorized to update post" });
     }
 
-    await Post.findByIdAndDelete(postId);
+    await post.remove();
 
     await Comment.deleteMany({ post: post._id });
 
@@ -154,7 +138,7 @@ const likePost = async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).send("Post not found");
+      return res.status(400).json({ error: "Post does not exist" });
     }
 
     const existingPostLike = await PostLike.find({ postId, userId });
@@ -190,7 +174,7 @@ const unlikePost = async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(400).send("Post not found");
+      return res.status(400).json({ error: "Post does not exist" });
     }
 
     const existingPostLike = await PostLike.deleteOne({ postId, userId });

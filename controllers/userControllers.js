@@ -7,10 +7,6 @@ const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    if (!(username && email && password)) {
-      return res.status(400).send("All input required");
-    }
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
@@ -23,31 +19,27 @@ const register = async (req, res) => {
 
     return res.json(token);
   } catch (err) {
-    return res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: "Failed to register user" });
   }
 };
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!(email && password)) {
-      return res.status(400).send("All input required");
-    }
-
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email, user });
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!(user && isPasswordValid)) {
-      return res.status(400).send("Invalid email or password");
+      return res.status(400).json({ error: "User or password does not exist" });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
     return res.json(token);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: "Failed to login user" });
   }
 };
 
@@ -98,6 +90,18 @@ const getFollowers = async (req, res) => {
     return res.status(200).json({ data: followers });
   } catch (err) {
     return res.status(400).json({ error: "Failed to get followers" });
+  }
+};
+
+const getFollowing = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const following = await Follow.find({ userId });
+
+    return res.status(200).json({ data: following });
+  } catch (err) {
+    return res.status(400).json({ error: "Failed to get following" });
   }
 };
 
