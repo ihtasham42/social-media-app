@@ -46,7 +46,7 @@ const SignupView = () => {
   };
 
   return (
-    <Container maxWidth={"xs"} sx={{ mt: 6 }}>
+    <Container maxWidth={"xs"} sx={{ mt: {xs: 2, md: 6} }}>
       <Stack alignItems="center">
         <Button onClick={handleLogout}>Logout</Button>
 
@@ -62,11 +62,6 @@ const SignupView = () => {
           Already have an account? <Link href="/login">Login</Link>
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
-          {error && (
-            <Alert sx={{ mb: 1, mt: 2 }} variant="filled" severity="error">
-              {error}
-            </Alert>
-          )}
           <TextField
             label="Username"
             fullWidth
@@ -98,6 +93,11 @@ const SignupView = () => {
             type="password"
             onChange={handleChange}
           />
+          {error && (
+            <Alert sx={{ mb: 1, mt: 2 }} variant="filled" severity="error">
+              {error}
+            </Alert>
+          )}
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
             Sign Up
           </Button>

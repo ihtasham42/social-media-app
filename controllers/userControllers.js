@@ -4,15 +4,16 @@ const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!(email && password)) {
+    if (!(username && email && password)) {
       return res.status(400).send("All input required");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
+      username,
       email,
       password: hashedPassword,
     });
@@ -21,7 +22,7 @@ const register = async (req, res) => {
 
     return res.json(token);
   } catch (err) {
-    return res.status(400).json({ error: "Sign up failed!" });
+    return res.status(400).json({ error: err.message });
   }
 };
 
