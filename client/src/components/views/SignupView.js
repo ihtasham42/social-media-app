@@ -5,6 +5,7 @@ import {
   TextField,
   Typography,
   Link,
+  Alert,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
@@ -35,8 +36,6 @@ const SignupView = () => {
       setError(data.error);
     } else {
       loginUser(data);
-      console.log(data);
-
       navigate("/");
     }
   };
@@ -51,8 +50,6 @@ const SignupView = () => {
       <Stack alignItems="center">
         <Button onClick={handleLogout}>Logout</Button>
 
-        {error && <Typography color="red">{error}</Typography>}
-
         <Typography variant="h2" color="text.secondary" sx={{ mb: 6 }}>
           <Link href="/" color="inherit" underline="none">
             PostIt
@@ -65,6 +62,11 @@ const SignupView = () => {
           Already have an account? <Link href="/login">Login</Link>
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
+          {error && (
+            <Alert sx={{ mb: 1, mt: 2 }} variant="filled" severity="error">
+              {error}
+            </Alert>
+          )}
           <TextField
             label="Username"
             fullWidth
