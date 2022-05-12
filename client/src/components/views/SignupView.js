@@ -7,9 +7,31 @@ import {
   Link,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { signup } from "../../api/api";
 import Copyright from "../Copyright";
+
 const SignupView = () => {
+  const [state, setState] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = await signup(state);
+  };
+
+  useEffect(() => {
+    console.log(state);
+  });
+
   return (
     <Container maxWidth={"xs"} sx={{ mt: 6 }}>
       <Stack alignItems="center">
@@ -33,6 +55,7 @@ const SignupView = () => {
             required
             id="username"
             name="username"
+            onChange={handleChange}
           />
           <TextField
             label="Email Address"
@@ -42,6 +65,7 @@ const SignupView = () => {
             required
             id="email"
             name="email"
+            onChange={handleChange}
           />
           <TextField
             label="Password"
@@ -51,8 +75,15 @@ const SignupView = () => {
             autoComplete="email"
             id="email"
             name="email"
+            onChange={handleChange}
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ my: 2 }}
+            onSubmit={handleSubmit}
+          >
             Sign Up
           </Button>
         </Box>

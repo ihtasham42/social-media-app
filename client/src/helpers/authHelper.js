@@ -6,7 +6,7 @@ const logIn = (token) => {
   localStorage.setItem("token", token);
 };
 
-const logOut = (token) => {
+const logOut = () => {
   localStorage.removeItem("token");
 };
 
