@@ -8,9 +8,9 @@ import {
   Alert,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { signup } from "../../api/users";
-import { isLoggedIn, loginUser, logoutUser } from "../../helpers/authHelper";
+import { loginUser } from "../../helpers/authHelper";
 import { useNavigate } from "react-router-dom";
 import Copyright from "../Copyright";
 
@@ -18,20 +18,21 @@ const SignupView = () => {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState("");
 
-  const [state, setState] = useState({
+  const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
 
   const handleChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = await signup(state);
+    const data = await signup(formData);
+
     if (data.error) {
       setServerError(data.error);
     } else {

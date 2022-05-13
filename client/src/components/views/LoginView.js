@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Checkbox,
   Container,
@@ -9,10 +10,38 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../api/users";
+import { loginUser } from "../../helpers/authHelper";
 import Copyright from "../Copyright";
 
 const LoginView = () => {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [serverError, setServerError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.name]: e.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = login(formData);
+    if (data.error) {
+      setServerError(data.error);
+    } else {
+      loginUser(data);
+      navigate("/");
+    }
+  };
+
   return (
     <Container maxWidth={"xs"} sx={{ mt: 6 }}>
       <Stack alignItems="center">
@@ -27,9 +56,9 @@ const LoginView = () => {
         <Typography color="text.secondary">
           Don't have an account yet? <Link href="/signup">Sign Up</Link>
         </Typography>
-        <Box component="form">
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
-            label="Email Address"
+            label="Email Address or Username"
             fullWidth
             margin="normal"
             autoComplete="email"
@@ -37,20 +66,27 @@ const LoginView = () => {
             required
             id="email"
             name="email"
+            onChange={handleChange}
           />
           <TextField
             label="Password"
             fullWidth
             required
             margin="normal"
-            autoComplete="email"
             id="email"
-            name="email"
+            name="password"
+            onChange={handleChange}
+            type="password"
           />
           <FormControlLabel
             control={<Checkbox name="remember" color="primary" />}
             label="Remember me"
           />
+          {serverError && (
+            <Alert sx={{ mb: 1, mt: 2 }} variant="filled" severity="error">
+              {serverError}
+            </Alert>
+          )}
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
             Login
           </Button>

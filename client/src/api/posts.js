@@ -54,4 +54,12 @@ const unlikePost = async () => {
   }
 };
 
-export { getPost, createPost, updatePost, deletePost, likePost, unlikePost };
+export {
+  getPost,
+  createPost,
+  updatePost,
+  deletePost,
+  getPosts,
+  likePost,
+  unlikePost,
+};

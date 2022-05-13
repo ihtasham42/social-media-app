@@ -29,6 +29,7 @@ const register = async (req, res) => {
 
     return res.json(token);
   } catch (err) {
+    console.log(err.code);
     return res.status(400).json({ error: err.message });
   }
 };

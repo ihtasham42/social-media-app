@@ -3,6 +3,7 @@ const signup = async (user) => {
     const res = await fetch("http://localhost:4000/api/users/register", {
       method: "POST",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
