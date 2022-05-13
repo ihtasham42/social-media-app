@@ -130,9 +130,11 @@ const getPosts = async (req, res) => {
     );
     /*/
 
-    const posts = await Post.find().sort("-createdAt");
-
-    console.log(1);
+    const posts = await paginate(
+      Post.find().populate("poster").sort("-createdAt"),
+      page,
+      pageSize
+    );
 
     return res.json(posts);
   } catch (err) {
