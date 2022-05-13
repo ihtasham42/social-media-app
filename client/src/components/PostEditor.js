@@ -1,31 +1,33 @@
-import { Button, Card, Stack, TextField } from "@mui/material";
+import { Button, Card, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 
-const Editor = (props) => {
-  const { rows, label } = props;
-
+const PostEditor = () => {
   return (
     <Card>
       <Stack spacing={2}>
+        <Typography variant="h5">What would you like to post today?</Typography>
         <Box component="form">
           <TextField
-            multiline
             fullWidth
-            label={label}
-            rows={rows}
+            label="Title"
             required
+            name="title"
+            margin="normal"
+          />
+          <TextField
+            fullWidth
+            label="Content"
+            multiline
+            rows={10}
             name="content"
-            sx={{
-              backgroundColor: "white",
-            }}
+            margin="normal"
           />
           <Button
             variant="outlined"
             type="submit"
             fullWidth
             sx={{
-              backgroundColor: "white",
               mt: 2,
             }}
           >
@@ -37,4 +39,4 @@ const Editor = (props) => {
   );
 };
 
-export default Editor;
+export default PostEditor;

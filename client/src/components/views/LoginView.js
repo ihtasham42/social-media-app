@@ -60,7 +60,7 @@ const LoginView = () => {
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
-            label="Email Address or Username"
+            label="Email Address"
             fullWidth
             margin="normal"
             autoComplete="email"

@@ -1,14 +1,9 @@
-import {
-  Button,
-  Card,
-  IconButton,
-  Link,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Button, IconButton, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { isLoggedIn } from "../helpers/authHelper";
 import ContentDetails from "./ContentDetails";
 import Editor from "./Editor";
 import HorizontalStack from "./util/HorizontalStack";
@@ -17,7 +12,16 @@ const Comment = (props) => {
   const theme = useTheme();
   const { comment, depth } = props;
   const [minimised, setMinimised] = useState(false);
-  const [editing, setEditing] = useState(false);
+  const [replying, setReplying] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSetReplying = () => {
+    if (isLoggedIn()) {
+      setReplying(!replying);
+    } else {
+      navigate("/login");
+    }
+  };
 
   let style = {
     backgroundColor: theme.palette.grey[100],
@@ -25,6 +29,7 @@ const Comment = (props) => {
     mb: theme.spacing(2),
     padding: theme.spacing(0),
   };
+
   if (depth % 2 === 1) {
     style.backgroundColor = "white";
   }
@@ -57,12 +62,8 @@ const Comment = (props) => {
             </IconButton>
           </HorizontalStack>
           {!minimised && (
-            <Button
-              variant="text"
-              size="small"
-              onClick={() => setEditing(!editing)}
-            >
-              {!editing ? <div>Reply</div> : <div>Cancel</div>}
+            <Button variant="text" size="small" onClick={handleSetReplying}>
+              {!replying ? <div>Reply</div> : <div>Cancel</div>}
             </Button>
           )}
         </HorizontalStack>
@@ -77,7 +78,7 @@ const Comment = (props) => {
               elementum iaculis bibendum. Orci varius natoque penatibus et
               magnis dis parturient montes, nascetur ridiculus mus.
             </Typography>
-            {editing && !minimised && (
+            {replying && !minimised && (
               <Box sx={{ mt: 2 }}>
                 <Editor
                   rows={5}
