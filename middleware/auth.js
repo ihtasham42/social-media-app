@@ -5,7 +5,7 @@ const verifyToken = (req, res, next) => {
     const token = req.headers["x-access-token"];
 
     if (!token) {
-      return res.status(400).send("No token given");
+      throw new Error("No token provided");
     }
 
     const { userId } = jwt.decode(token, process.env.TOKEN_KEY);
@@ -14,7 +14,7 @@ const verifyToken = (req, res, next) => {
 
     return next();
   } catch (err) {
-    return res.status(500).json(err.message);
+    return res.status(400).json({ error: err.message });
   }
 };
 

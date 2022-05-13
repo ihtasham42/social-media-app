@@ -13,6 +13,7 @@ import ProfileView from "./components/views/ProfileView";
 import LoginView from "./components/views/LoginView";
 import SignupView from "./components/views/SignupView";
 import ExploreView from "./components/views/ExploreView";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -22,7 +23,14 @@ function App() {
         <Routes>
           <Route path="/" element={<ExploreView />} />
           <Route path="/posts/:id" element={<PostView />} />
-          <Route path="/posts/create" element={<CreatePostView />} />
+          <Route
+            path="/posts/create"
+            element={
+              <PrivateRoute>
+                <CreatePostView />
+              </PrivateRoute>
+            }
+          />
           <Route path="/users/:id" element={<ProfileView />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/signup" element={<SignupView />} />
