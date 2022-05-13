@@ -1,6 +1,8 @@
-const getPosts = async (post) => {
+const getPosts = async (params) => {
   try {
-    const res = await fetch("http://localhost:4000/api/posts");
+    const res = await fetch("http://localhost:4000/api/posts", {
+      method: "GET",
+    });
     return await res.json();
   } catch (err) {
     console.log(err);

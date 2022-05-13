@@ -122,11 +122,17 @@ const getPosts = async (req, res) => {
   try {
     const page = req.query.page;
 
+    /*/
     const posts = await paginate(
       Post.find().sort("-createdAt").populate("poster likes", "email"),
       page,
       pageSize
     );
+    /*/
+
+    const posts = await Post.find().sort("-createdAt");
+
+    console.log(1);
 
     return res.json(posts);
   } catch (err) {
