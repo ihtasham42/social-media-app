@@ -5,8 +5,6 @@ const Comment = require("../models/Comment");
 const PostLike = require("../models/PostLike");
 const paginate = require("../util/paginate");
 
-const pageSize = 10;
-
 const createPost = async (req, res) => {
   try {
     const { title, content, userId } = req.body;
@@ -133,11 +131,12 @@ const getPosts = async (req, res) => {
     const posts = await paginate(
       Post.find().populate("poster").sort("-createdAt"),
       page,
-      pageSize
+      6
     );
 
     return res.json(posts);
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };
