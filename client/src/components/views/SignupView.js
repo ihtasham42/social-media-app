@@ -88,7 +88,7 @@ const SignupView = () => {
             type="password"
             onChange={handleChange}
           />
-          {serverError && <ErrorAlert error={serverError} />}
+          <ErrorAlert error={serverError} />
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
             Sign Up
           </Button>

@@ -13,6 +13,7 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/users";
+import ErrorAlert from "../../ErrorAlert";
 import { loginUser } from "../../helpers/authHelper";
 import Copyright from "../Copyright";
 
@@ -32,8 +33,6 @@ const LoginView = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(formData);
 
     const data = await login(formData);
     if (data.error) {
@@ -84,11 +83,7 @@ const LoginView = () => {
             control={<Checkbox name="remember" color="primary" />}
             label="Remember me"
           />
-          {serverError && (
-            <Alert sx={{ mb: 1, mt: 2 }} variant="filled" severity="error">
-              {serverError}
-            </Alert>
-          )}
+          <ErrorAlert error={serverError} />
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
             Login
           </Button>

@@ -3,9 +3,11 @@ import React from "react";
 
 const ErrorAlert = ({ error }) => {
   return (
-    <Alert sx={{ mb: 1, mt: 2 }} variant="filled" severity="error">
-      {error}
-    </Alert>
+    error && (
+      <Alert sx={{ mb: 1, mt: 2 }} variant="filled" severity="error">
+        {error}
+      </Alert>
+    )
   );
 };
 

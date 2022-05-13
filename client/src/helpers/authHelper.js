@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom";
-
 const isLoggedIn = () => {
   return JSON.parse(localStorage.getItem("token"));
 };
 
 const loginUser = (token) => {
-  return localStorage.setItem("token", JSON.stringify(token));
+  localStorage.setItem("token", JSON.stringify(token));
 };
 
 const logoutUser = () => {
