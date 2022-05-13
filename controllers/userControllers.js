@@ -36,24 +36,31 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!(username && email && password)) {
+    console.log(password);
+
+    if (!(email && password)) {
       throw new Error("All input required");
     }
 
-    const user = await User.findOne({ email, user });
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      throw new Error("Email or password incorrect");
+    }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!(user && isPasswordValid)) {
-      throw new Error("User or password does not exist");
+    if (!isPasswordValid) {
+      throw new Error("Email or password incorrect");
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
     return res.json(token);
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };

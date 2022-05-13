@@ -16,8 +16,12 @@ const signup = async (user) => {
 
 const login = async (user) => {
   try {
-    const res = await fetch("/api/login", {
+    const res = await fetch("http://localhost:4000/api/users/login", {
       method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(user),
     });
     return await res.json();

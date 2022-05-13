@@ -27,13 +27,15 @@ const LoginView = () => {
   const [serverError, setServerError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.name]: e.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = login(formData);
+    console.log(formData);
+
+    const data = await login(formData);
     if (data.error) {
       setServerError(data.error);
     } else {
