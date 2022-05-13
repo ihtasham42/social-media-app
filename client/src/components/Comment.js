@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { isLoggedIn } from "../helpers/authHelper";
+import CommentEditor from "./CommentEditor";
 import ContentDetails from "./ContentDetails";
 import Editor from "./Editor";
 import HorizontalStack from "./util/HorizontalStack";
@@ -80,10 +81,7 @@ const Comment = (props) => {
             </Typography>
             {replying && !minimised && (
               <Box sx={{ mt: 2 }}>
-                <Editor
-                  rows={5}
-                  label="What are your thoughts on this comment?"
-                />
+                <CommentEditor label="What are your thoughts on this comment?" />
               </Box>
             )}
             {comment.children && (

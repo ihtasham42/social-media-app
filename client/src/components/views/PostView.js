@@ -2,8 +2,8 @@ import { useTheme } from "@emotion/react";
 import { Container, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import CommentEditor from "../CommentEditor";
 import Comment from "../Comment";
-import Editor from "../Editor";
 import GoBack from "../GoBack";
 import GridLayout from "../GridLayout";
 import Loading from "../Loading";
@@ -93,8 +93,7 @@ const PostView = () => {
         left={
           <Stack spacing={2}>
             <PostCard />
-            <Editor rows={5} label="What are your thoughts on this post?" />
-
+            <CommentEditor label="What are your thoughts on this post?" />
             {comments.length > 0 ? (
               <>
                 {comments.map((comment, i) => (
