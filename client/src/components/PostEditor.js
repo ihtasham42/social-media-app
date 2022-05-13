@@ -1,6 +1,7 @@
 import { Button, Card, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
+import { createPost } from "../api/posts";
 
 const PostEditor = () => {
   const [formData, setFormData] = useState({
@@ -8,12 +9,19 @@ const PostEditor = () => {
     content: "",
   });
 
+  const [serverError, setServerError] = useState("");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const data = await createPost();
+    if (data.error) {
+      setServerError(data.error);
+    }
   };
 
   return (

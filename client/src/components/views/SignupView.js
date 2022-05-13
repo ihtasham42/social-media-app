@@ -13,6 +13,7 @@ import { signup } from "../../api/users";
 import { loginUser } from "../../helpers/authHelper";
 import { useNavigate } from "react-router-dom";
 import Copyright from "../Copyright";
+import ErrorAlert from "../../ErrorAlert";
 
 const SignupView = () => {
   const navigate = useNavigate();
@@ -87,11 +88,7 @@ const SignupView = () => {
             type="password"
             onChange={handleChange}
           />
-          {serverError && (
-            <Alert sx={{ mb: 1, mt: 2 }} variant="filled" severity="error">
-              {serverError}
-            </Alert>
-          )}
+          {serverError && <ErrorAlert error={serverError} />}
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
             Sign Up
           </Button>
