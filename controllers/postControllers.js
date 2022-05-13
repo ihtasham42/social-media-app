@@ -11,6 +11,10 @@ const createPost = async (req, res) => {
   try {
     const { title, content, userId } = req.body;
 
+    if (!(title && content)) {
+      throw new Error("All input required");
+    }
+
     const post = await Post.create({
       title,
       content,

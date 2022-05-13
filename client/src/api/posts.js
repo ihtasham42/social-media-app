@@ -14,9 +14,17 @@ const getPost = async () => {
   }
 };
 
-const createPost = async () => {
+const createPost = async (post) => {
   try {
-    const res = await fetch("/api/posts");
+    const res = await fetch("http://localhost:4000/api/posts/create", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    });
+    return await res.json();
   } catch (err) {
     console.log(err);
   }
