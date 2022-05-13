@@ -4,11 +4,7 @@ const userControllers = require("../controllers/userControllers");
 const { check } = require("express-validator");
 const { verifyToken } = require("../middleware/auth");
 
-router.post(
-  "/register",
-  check("username").exists().withMessage("Username required"),
-  userControllers.register
-);
+router.post("/register", userControllers.register);
 router.post("/login", userControllers.login);
 
 router.post("/follow/:id", verifyToken, userControllers.follow);

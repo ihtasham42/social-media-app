@@ -7,6 +7,10 @@ const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
+    if (!(username && email && password)) {
+      throw new Error("All input required");
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
@@ -32,6 +36,10 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+
+    if (!(username && email && password)) {
+      throw new Error("All input required");
+    }
 
     const user = await User.findOne({ email, user });
 
