@@ -78,6 +78,7 @@ const Comment = (props) => {
                 <CommentEditor
                   comment={comment}
                   addComment={addComment}
+                  setReplying={setReplying}
                   label="What are your thoughts on this comment?"
                 />
               </Box>
@@ -85,7 +86,12 @@ const Comment = (props) => {
             {comment.children && (
               <Box sx={{ pt: theme.spacing(2) }}>
                 {comment.children.map((reply, i) => (
-                  <Comment key={i} comment={reply} depth={depth + 1} />
+                  <Comment
+                    key={i}
+                    comment={reply}
+                    depth={depth + 1}
+                    addComment={addComment}
+                  />
                 ))}
               </Box>
             )}

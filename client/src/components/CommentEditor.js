@@ -13,7 +13,7 @@ import { createComment } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ErrorAlert from "./ErrorAlert";
 
-const CommentEditor = ({ label, comment, addComment }) => {
+const CommentEditor = ({ label, comment, addComment, setReplying }) => {
   const [formData, setFormData] = useState({
     content: "",
   });
@@ -40,6 +40,8 @@ const CommentEditor = ({ label, comment, addComment }) => {
     setLoading(true);
     const data = await createComment(body, params, isLoggedIn());
     setLoading(false);
+    setReplying && setReplying(false);
+
     if (data.error) {
       setError("Failed to post comment");
     } else {

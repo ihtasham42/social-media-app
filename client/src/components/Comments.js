@@ -24,10 +24,10 @@ const Comments = () => {
 
   useEffect(() => {
     fetchComments();
-  }, []);
+  }, [rerender]);
 
   const addComment = (comment) => {
-    setComments([comment, ...comments]);
+    setRerender(!rerender);
   };
 
   return comments ? (
