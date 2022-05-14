@@ -13,6 +13,7 @@ import Sidebar from "../Sidebar";
 import { useParams } from "react-router-dom";
 import { getPost } from "../../api/posts";
 import FetchFail from "../FetchFail";
+import Comments from "../Comments";
 
 const PostView = () => {
   const theme = useTheme();
@@ -97,34 +98,7 @@ const PostView = () => {
               <Box>
                 <PostCard post={post} />
                 <CommentEditor label="What are your thoughts on this post?" />
-                {comments.length > 0 ? (
-                  <>
-                    {comments.map((comment, i) => (
-                      <Comment comment={comment} key={i} depth={0} />
-                    ))}
-                    <Loading />
-                  </>
-                ) : (
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    textAlign="center"
-                    paddingY={3}
-                  >
-                    <Box>
-                      <Typography
-                        variant="h5"
-                        color="text.secondary"
-                        gutterBottom
-                      >
-                        No comments yet...
-                      </Typography>
-                      <Typography variant="body" color="text.secondary">
-                        Be the first one to comment!
-                      </Typography>
-                    </Box>
-                  </Box>
-                )}
+                <Comments />
               </Box>
             ) : error ? (
               <FetchFail />
