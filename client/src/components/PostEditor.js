@@ -8,6 +8,7 @@ import { isLoggedIn } from "../helpers/authHelper";
 
 const PostEditor = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -23,7 +24,9 @@ const PostEditor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
     const data = await createPost(formData, isLoggedIn());
+    setLoading(false);
     if (data && data.error) {
       setServerError(data.error);
     } else {
@@ -58,11 +61,12 @@ const PostEditor = () => {
             variant="outlined"
             type="submit"
             fullWidth
+            disabled={loading}
             sx={{
               mt: 2,
             }}
           >
-            Submit
+            {loading ? <>Submitting</> : <>Submit</>}
           </Button>
         </Box>
       </Stack>
