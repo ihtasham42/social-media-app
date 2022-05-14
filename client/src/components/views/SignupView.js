@@ -56,7 +56,7 @@ const SignupView = () => {
         <Typography color="text.secondary">
           Already have an account? <Link href="/login">Login</Link>
         </Typography>
-        <Box component="form" onSubmit={handleSubmit}>
+        <Box component="form" method="post" onSubmit={handleSubmit}>
           <TextField
             label="Username"
             fullWidth

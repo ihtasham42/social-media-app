@@ -6,7 +6,7 @@ import { createComment } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ErrorAlert from "./ErrorAlert";
 
-const CommentEditor = ({ label }) => {
+const CommentEditor = ({ label, comment }) => {
   const [formData, setFormData] = useState({
     content: "",
   });
@@ -21,7 +21,11 @@ const CommentEditor = ({ label }) => {
   };
 
   const handleSubmit = async (e) => {
-    const data = createComment(formData, isLoggedIn(), params);
+    const body = {
+      ...formData,
+      parentId: comment && comment._id,
+    };
+    const data = createComment(body, params, isLoggedIn());
     if (data.error) {
       setError("Failed to post comment");
     } else {

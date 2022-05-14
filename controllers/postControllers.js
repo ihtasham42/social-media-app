@@ -124,14 +124,6 @@ const getPosts = async (req, res) => {
   try {
     const page = req.query.page;
 
-    /*/
-    const posts = await paginate(
-      Post.find().sort("-createdAt").populate("poster likes", "email"),
-      page,
-      pageSize
-    );
-    /*/
-
     const posts = await paginate(
       Post.find().populate("poster").sort("-createdAt"),
       page,

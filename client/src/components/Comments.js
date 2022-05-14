@@ -12,11 +12,12 @@ const Comments = () => {
   const params = useParams();
 
   const fetchComments = async () => {
-    const data = getComments(params);
+    const data = await getComments(params);
     if (data.error) {
       setError("Failed to fetch comments");
     } else {
-      setError(data);
+      console.log(data);
+      setComments(data);
     }
   };
 

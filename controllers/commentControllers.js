@@ -32,7 +32,9 @@ const getPostComments = async (req, res) => {
   try {
     const postId = req.params.id;
 
-    const comments = await Comment.find({ post: postId });
+    const comments = await Comment.find({ post: postId }).populate(
+      "commenter commenter.username"
+    );
 
     let commentParents = {};
     let rootComments = [];

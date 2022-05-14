@@ -47,7 +47,10 @@ const Comment = (props) => {
         <HorizontalStack justifyContent="space-between">
           <HorizontalStack>
             <Box mt={1}>
-              <ContentDetails />
+              <ContentDetails
+                username={comment.commenter.username}
+                createdAt={comment.createdAt}
+              />
             </Box>
 
             <IconButton
@@ -69,18 +72,13 @@ const Comment = (props) => {
         </HorizontalStack>
         {!minimised && (
           <Box>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-              volutpat elit ipsum, sit amet facilisis nulla auctor blandit. Cras
-              ipsum diam, ultrices eu nisl quis, scelerisque aliquet elit.
-              Aliquam ligula est, blandit a sem eget, tempor scelerisque urna.
-              Cras vitae ex pharetra, faucibus arcu sed, commodo odio. Vivamus
-              elementum iaculis bibendum. Orci varius natoque penatibus et
-              magnis dis parturient montes, nascetur ridiculus mus.
-            </Typography>
+            <Typography>{comment.content}</Typography>
             {replying && !minimised && (
               <Box sx={{ mt: 2 }}>
-                <CommentEditor label="What are your thoughts on this comment?" />
+                <CommentEditor
+                  comment={comment}
+                  label="What are your thoughts on this comment?"
+                />
               </Box>
             )}
             {comment.children && (

@@ -89,7 +89,7 @@ const createComment = async (comment, params, token) => {
         "Content-Type": "application/json",
         "x-access-token": token,
       },
-      body: comment,
+      body: JSON.stringify(comment),
     });
     return res.json();
   } catch (err) {
