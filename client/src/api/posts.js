@@ -79,6 +79,24 @@ const getComments = async (params) => {
   }
 };
 
+const createComment = async (comment, params, token) => {
+  try {
+    const { id } = params;
+    const res = await fetch("http://localhost:4000/api/comments/" + id, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-access-token": token,
+      },
+      body: comment,
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export {
   getPost,
   createPost,
@@ -88,4 +106,5 @@ export {
   likePost,
   unlikePost,
   getComments,
+  createComment,
 };

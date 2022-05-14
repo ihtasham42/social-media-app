@@ -5,7 +5,6 @@ import { AiFillMessage } from "react-icons/ai";
 import ContentDetails from "./ContentDetails";
 
 import LikeBox from "./LikeBox";
-import Editor from "./Editor";
 import PostContentBox from "./PostContentBox";
 import HorizontalStack from "./util/HorizontalStack";
 
@@ -32,7 +31,7 @@ const PostCard = (props) => {
 
           {preview !== "secondary" &&
             (editing ? (
-              <Editor />
+              <div>Editing</div>
             ) : (
               <Typography gutterBottom>{post.content}</Typography>
             ))}

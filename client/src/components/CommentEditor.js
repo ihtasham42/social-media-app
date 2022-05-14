@@ -1,12 +1,38 @@
 import { Button, Card, Stack, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createComment } from "../api/posts";
+import { isLoggedIn } from "../helpers/authHelper";
+import ErrorAlert from "./ErrorAlert";
 
 const CommentEditor = ({ label }) => {
+  const [formData, setFormData] = useState({
+    content: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    const data = createComment(formData, isLoggedIn(), params);
+    if (data.error) {
+      setError("Failed to post comment");
+    } else {
+      navigate("/posts/" + params.id);
+    }
+  };
+
   return (
     <Card>
       <Stack spacing={2}>
-        <Box component="form">
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
             multiline
             fullWidth
@@ -17,7 +43,9 @@ const CommentEditor = ({ label }) => {
             sx={{
               backgroundColor: "white",
             }}
+            onChange={handleChange}
           />
+          <ErrorAlert error={error} />
           <Button
             variant="outlined"
             type="submit"

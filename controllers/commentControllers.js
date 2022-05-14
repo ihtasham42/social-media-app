@@ -4,14 +4,15 @@ const Post = require("../models/Post");
 
 const createComment = async (req, res) => {
   try {
-    const { content, parentId, postId, userId } = req.body;
+    const postId = req.params.id;
+    const { content, parentId, userId } = req.body;
 
     const post = await Post.findByIdAndUpdate(postId, {
       $inc: { commentCount: 1 },
     });
 
     if (!post) {
-      return res.status(400).send("Post not found");
+      throw new Error("Post not found");
     }
 
     const comment = await Comment.create({
@@ -30,10 +31,6 @@ const createComment = async (req, res) => {
 const getPostComments = async (req, res) => {
   try {
     const postId = req.params.id;
-
-    if (!mongoose.Types.ObjectId.isValid(postId)) {
-      throw new Error("Post does not exist");
-    }
 
     const comments = await Comment.find({ post: postId });
 

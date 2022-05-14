@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { isLoggedIn } from "../helpers/authHelper";
 import CommentEditor from "./CommentEditor";
 import ContentDetails from "./ContentDetails";
-import Editor from "./Editor";
 import HorizontalStack from "./util/HorizontalStack";
 
 const Comment = (props) => {
