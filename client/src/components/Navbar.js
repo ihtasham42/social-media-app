@@ -16,6 +16,7 @@ import HorizontalStack from "./util/HorizontalStack";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const username = isLoggedIn().username;
 
   const handleLogout = async (e) => {
     logoutUser();
@@ -54,7 +55,7 @@ const Navbar = () => {
             <IconButton>
               <AiFillMessage />
             </IconButton>
-            <IconButton href="/users/1">
+            <IconButton href={"/users/" + username}>
               <Avatar sx={{ width: 25, height: 25 }} />
             </IconButton>
             <Button onClick={handleLogout}>Logout</Button>

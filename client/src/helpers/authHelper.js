@@ -1,13 +1,13 @@
 const isLoggedIn = () => {
-  return JSON.parse(localStorage.getItem("token"));
+  return JSON.parse(localStorage.getItem("user"));
 };
 
-const loginUser = (token) => {
-  localStorage.setItem("token", JSON.stringify(token));
+const loginUser = (user) => {
+  localStorage.setItem("user", JSON.stringify(user));
 };
 
 const logoutUser = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };
 
 export { loginUser, isLoggedIn, logoutUser };

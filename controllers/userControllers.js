@@ -30,7 +30,7 @@ const register = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
-    return res.json(token);
+    return res.json({ token, username });
   } catch (err) {
     console.log(err.code);
     return res.status(400).json({ error: err.message });
@@ -61,7 +61,7 @@ const login = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
-    return res.json(token);
+    return res.json({ token, username: user.username });
   } catch (err) {
     console.log(err);
     return res.status(400).json({ error: err.message });
@@ -134,7 +134,7 @@ const getUser = async (req, res) => {
   try {
     const username = req.params.username;
 
-    const user = await User.findOne(username).select("-password");
+    const user = await User.findOne({ username }).select("-password");
 
     if (!user) {
       throw new Error("User does not exist");

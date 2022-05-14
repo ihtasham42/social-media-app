@@ -18,14 +18,14 @@ const getPost = async (params) => {
   }
 };
 
-const createPost = async (post, token) => {
+const createPost = async (post, user) => {
   try {
     const res = await fetch("http://localhost:4000/api/posts", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "x-access-token": token,
+        "x-access-token": user.token,
       },
       body: JSON.stringify(post),
     });
@@ -79,15 +79,15 @@ const getComments = async (params) => {
   }
 };
 
-const createComment = async (comment, params, token) => {
+const createComment = async (comment, params, user) => {
   try {
-    const { username } = params;
-    const res = await fetch("http://localhost:4000/api/comments/" + username, {
+    const { id } = params;
+    const res = await fetch("http://localhost:4000/api/comments/" + id, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "x-access-token": token,
+        "x-access-token": user.token,
       },
       body: JSON.stringify(comment),
     });
