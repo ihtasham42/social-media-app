@@ -13,7 +13,7 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/users";
-import ErrorAlert from "../../ErrorAlert";
+import ErrorAlert from "../ErrorAlert";
 import { loginUser } from "../../helpers/authHelper";
 import Copyright from "../Copyright";
 

@@ -14,13 +14,14 @@ import { useParams } from "react-router-dom";
 import { getPost } from "../../api/posts";
 import FetchFail from "../FetchFail";
 import Comments from "../Comments";
+import ErrorAlert from "../ErrorAlert";
 
 const PostView = () => {
   const theme = useTheme();
   const params = useParams();
 
   const [post, setPost] = useState(null);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   const comments = [
     {
@@ -77,7 +78,7 @@ const PostView = () => {
   const fetchPost = async () => {
     const data = await getPost(params);
     if (data.error) {
-      setError(true);
+      setError(data.error);
     } else {
       setPost(data);
     }
@@ -93,19 +94,17 @@ const PostView = () => {
       <GoBack />
       <GridLayout
         left={
-          <Stack spacing={2}>
-            {post ? (
-              <Box>
-                <PostCard post={post} />
-                <CommentEditor label="What are your thoughts on this post?" />
-                <Comments />
-              </Box>
-            ) : error ? (
-              <FetchFail />
-            ) : (
-              <Loading />
-            )}
-          </Stack>
+          post ? (
+            <Stack spacing={2}>
+              <PostCard post={post} />
+              <CommentEditor label="What are your thoughts on this post?" />
+              <Comments />
+            </Stack>
+          ) : error ? (
+            <ErrorAlert error={error} />
+          ) : (
+            <Loading />
+          )
         }
         right={<Sidebar />}
       />

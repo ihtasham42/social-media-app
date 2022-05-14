@@ -5,7 +5,7 @@ import "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const PostContentBox = (props) => {
-  const { clickable } = props;
+  const { clickable, post } = props;
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const PostContentBox = (props) => {
             width: "100%",
             "&:hover": { backgroundColor: "grey.50", cursor: "pointer" },
           }}
-          onClick={() => navigate("/posts/1")}
+          onClick={() => navigate("/posts/" + post._id)}
         >
           {props.children}
         </Box>

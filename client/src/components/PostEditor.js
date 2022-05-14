@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../api/posts";
-import ErrorAlert from "../ErrorAlert";
+import ErrorAlert from "./ErrorAlert";
 import { isLoggedIn } from "../helpers/authHelper";
 
 const PostEditor = () => {

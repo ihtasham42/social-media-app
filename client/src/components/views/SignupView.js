@@ -13,7 +13,7 @@ import { signup } from "../../api/users";
 import { loginUser } from "../../helpers/authHelper";
 import { useNavigate } from "react-router-dom";
 import Copyright from "../Copyright";
-import ErrorAlert from "../../ErrorAlert";
+import ErrorAlert from "../ErrorAlert";
 
 const SignupView = () => {
   const navigate = useNavigate();

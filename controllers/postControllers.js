@@ -52,6 +52,10 @@ const getPost = async (req, res) => {
   try {
     const postId = req.params.id;
 
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      throw new Error("Post does not exist");
+    }
+
     const post = await Post.findById(postId);
 
     if (!post) {

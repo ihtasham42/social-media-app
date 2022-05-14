@@ -24,7 +24,7 @@ const PostCard = (props) => {
         >
           <LikeBox likeCount={post.likeCount} />
         </Box>
-        <PostContentBox clickable={preview}>
+        <PostContentBox clickable={preview} post={post}>
           <ContentDetails post={post} />
           <Typography variant="h5" gutterBottom sx={{ overflow: "hidden" }}>
             {post.title}
