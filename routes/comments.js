@@ -5,16 +5,8 @@ const { verifyToken } = require("../middleware/auth");
 
 router.post("/", verifyToken, commentControllers.createComment);
 
-router.get(
-  "/user_comments/:id",
-  verifyToken,
-  commentControllers.getUserComments
-);
+router.get("/user_comments/:id", commentControllers.getUserComments);
 
-router.get(
-  "/post_comments/:id",
-  verifyToken,
-  commentControllers.getPostComments
-);
+router.get("/post_comments/:id", commentControllers.getPostComments);
 
 module.exports = router;

@@ -31,6 +31,10 @@ const getPostComments = async (req, res) => {
   try {
     const postId = req.params.id;
 
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      throw new Error("Post does not exist");
+    }
+
     const comments = await Comment.find({ post: postId });
 
     let commentParents = {};

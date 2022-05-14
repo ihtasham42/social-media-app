@@ -1,13 +1,30 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import Loading from "./Loading";
+import { getComments } from "../api/posts";
+import { useParams } from "react-router-dom";
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
+  const [error, setError] = useState("");
+  const params = useParams();
 
-  return comments.length > 0 ? (
+  const fetchComments = async () => {
+    const data = getComments(params);
+    if (data.error) {
+      setError("Failed to fetch comments");
+    } else {
+      setError(data);
+    }
+  };
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+  return comments && comments.length > 0 ? (
     <>
       {comments.map((comment, i) => (
         <Comment comment={comment} key={i} depth={0} />

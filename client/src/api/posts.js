@@ -67,6 +67,18 @@ const unlikePost = async () => {
   }
 };
 
+const getComments = async (params) => {
+  try {
+    const { id } = params;
+    const res = await fetch(
+      "http://localhost:4000/api/comments/post_comments/" + id
+    );
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export {
   getPost,
   createPost,
@@ -75,4 +87,5 @@ export {
   getPosts,
   likePost,
   unlikePost,
+  getComments,
 };
