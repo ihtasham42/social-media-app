@@ -6,9 +6,6 @@ import PostCard from "./PostCard";
 const Sidebar = () => {
   return (
     <Stack spacing={2}>
-      <PostCard preview="secondary" />
-      <PostCard preview="secondary" />
-      <PostCard preview="secondary" />
       <Footer />
     </Stack>
   );

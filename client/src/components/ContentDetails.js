@@ -2,7 +2,7 @@ import { Avatar, Typography, Link } from "@mui/material";
 import React from "react";
 import HorizontalStack from "./util/HorizontalStack";
 
-const ContentDetails = (props) => {
+const ContentDetails = ({ post }) => {
   return (
     <HorizontalStack sx={{ mb: 1 }}>
       <Avatar sx={{ width: 20, height: 20 }} />
@@ -15,9 +15,9 @@ const ContentDetails = (props) => {
           }}
           href="/users/1"
         >
-          By Username
+          By {post.poster.username}
         </Link>{" "}
-        - 11/02/2022
+        - {post.createdAt}
       </Typography>
     </HorizontalStack>
   );
