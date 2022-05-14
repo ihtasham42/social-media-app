@@ -24,10 +24,10 @@ const Comments = () => {
 
   useEffect(() => {
     fetchComments();
-  }, [rerender]);
+  }, []);
 
   const addComment = (comment) => {
-    setRerender(!rerender);
+    setComments([comment, ...comments]);
   };
 
   return comments ? (
@@ -43,7 +43,7 @@ const Comments = () => {
             <Comment
               addComment={addComment}
               comment={comment}
-              key={i}
+              key={comment._id}
               depth={0}
             />
           ))}

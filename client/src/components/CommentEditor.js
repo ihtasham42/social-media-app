@@ -1,4 +1,10 @@
-import { Button, Card, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  Card,
+  CircularProgress,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { AiFillWindows } from "react-icons/ai";
@@ -13,6 +19,7 @@ const CommentEditor = ({ label, comment, addComment }) => {
   });
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -29,11 +36,14 @@ const CommentEditor = ({ label, comment, addComment }) => {
       ...formData,
       parentId: comment && comment._id,
     };
+
+    setLoading(true);
     const data = await createComment(body, params, isLoggedIn());
+    setLoading(false);
     if (data.error) {
       setError("Failed to post comment");
     } else {
-      addComment();
+      addComment(data);
     }
   };
 
@@ -59,12 +69,13 @@ const CommentEditor = ({ label, comment, addComment }) => {
             variant="outlined"
             type="submit"
             fullWidth
+            disabled={loading}
             sx={{
               backgroundColor: "white",
               mt: 2,
             }}
           >
-            Submit
+            {loading ? <div>Submitting</div> : <div>Submit</div>}
           </Button>
         </Box>
       </Stack>
