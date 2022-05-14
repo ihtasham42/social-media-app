@@ -107,7 +107,7 @@ const deletePost = async (req, res) => {
     }
 
     if (post.poster != userId) {
-      throw new Error("Not authorized to update post");
+      throw new Error("Not authorized to delete post");
     }
 
     await post.remove();

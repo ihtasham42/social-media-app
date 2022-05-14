@@ -43,9 +43,15 @@ const updatePost = async () => {
   }
 };
 
-const deletePost = async () => {
+const deletePost = async (postId, user) => {
   try {
-    const res = await fetch("/api/posts");
+    const res = await fetch("http://localhost:4000/api/posts/" + postId, {
+      method: "DELETE",
+      headers: {
+        "x-access-token": user.token,
+      },
+    });
+    return res.json();
   } catch (err) {
     console.log(err);
   }
