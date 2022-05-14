@@ -1,6 +1,7 @@
 import { Avatar, Typography, Link } from "@mui/material";
 import React from "react";
 import HorizontalStack from "./util/HorizontalStack";
+import Moment from "react-moment";
 
 const ContentDetails = ({ username, createdAt }) => {
   return (
@@ -17,7 +18,7 @@ const ContentDetails = ({ username, createdAt }) => {
         >
           By {username}
         </Link>{" "}
-        - {createdAt}
+        - <Moment format="DD/MM/YYYY">{createdAt}</Moment>
       </Typography>
     </HorizontalStack>
   );

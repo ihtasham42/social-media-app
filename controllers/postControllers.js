@@ -56,7 +56,7 @@ const getPost = async (req, res) => {
       throw new Error("Post does not exist");
     }
 
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId).populate("poster");
 
     if (!post) {
       throw new Error("Post does not exist");

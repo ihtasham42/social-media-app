@@ -7,7 +7,7 @@ import { getComments } from "../api/posts";
 import { useParams } from "react-router-dom";
 
 const Comments = () => {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(null);
   const [error, setError] = useState("");
   const params = useParams();
 
@@ -25,24 +25,33 @@ const Comments = () => {
     fetchComments();
   }, []);
 
-  return comments && comments.length > 0 ? (
-    <>
-      {comments.map((comment, i) => (
-        <Comment comment={comment} key={i} depth={0} />
-      ))}
-      <Loading />
-    </>
-  ) : (
-    <Box display="flex" justifyContent="center" textAlign="center" paddingY={3}>
-      <Box>
-        <Typography variant="h5" color="text.secondary" gutterBottom>
-          No comments yet...
-        </Typography>
-        <Typography variant="body" color="text.secondary">
-          Be the first one to comment!
-        </Typography>
+  return comments ? (
+    comments.length > 0 ? (
+      <>
+        {comments.map((comment, i) => (
+          <Comment comment={comment} key={i} depth={0} />
+        ))}
+        <Loading />
+      </>
+    ) : (
+      <Box
+        display="flex"
+        justifyContent="center"
+        textAlign="center"
+        paddingY={3}
+      >
+        <Box>
+          <Typography variant="h5" color="text.secondary" gutterBottom>
+            No comments yet...
+          </Typography>
+          <Typography variant="body" color="text.secondary">
+            Be the first one to comment!
+          </Typography>
+        </Box>
       </Box>
-    </Box>
+    )
+  ) : (
+    <Loading />
   );
 };
 
