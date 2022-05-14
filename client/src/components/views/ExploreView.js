@@ -11,18 +11,12 @@ import Sidebar from "../Sidebar";
 const ExploreView = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [serverError, setServerError] = useState(false);
 
   const fetchPosts = async () => {
     setLoading(true);
     const data = await getPosts();
     setLoading(false);
-    if (data) {
-      setPosts(data);
-      console.log(data);
-    } else {
-      setServerError(true);
-    }
+    setPosts(data);
   };
 
   useEffect(() => {
@@ -39,7 +33,6 @@ const ExploreView = () => {
             {posts.map((post, i) => (
               <PostCard preview="primary" key={i} post={post} />
             ))}
-            {serverError && <Typography>Failed to load!</Typography>}
             {loading && <Loading />}
           </Stack>
         }
