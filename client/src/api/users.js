@@ -30,4 +30,13 @@ const login = async (user) => {
   }
 };
 
-export { signup, login };
+const getUser = async (params) => {
+  try {
+    const res = await fetch("http://localhost:4000/api/users/" + params.id);
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { signup, login, getUser };

@@ -1,7 +1,10 @@
 const User = require("../models/User");
+const Post = require("../models/Post");
+const PostLike = require("../models/PostLike");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Follow = require("../models/Follow");
+const { default: mongoose } = require("mongoose");
 
 const register = async (req, res) => {
   try {
@@ -127,6 +130,43 @@ const getFollowing = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if (mongoose.Types.ObjectId.isValid(userId)) {
+      throw new Error("User does not exist");
+    }
+
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+
+    const posts = await Post.find({ poster: userId }).sort("-createdAt");
+
+    const likeCount = 0;
+
+    posts.forEach((post) => {
+      likeCount += post.likeCount;
+    });
+
+    const data = {
+      user,
+      posts: {
+        count: postCount.length,
+        likeCount,
+        data: posts,
+      },
+    };
+
+    return res.status(200).json(data);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -134,4 +174,5 @@ module.exports = {
   unfollow,
   getFollowers,
   getFollowing,
+  getUser,
 };

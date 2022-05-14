@@ -40,6 +40,7 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
     setLoading(true);
     const data = await createComment(body, params, isLoggedIn());
     setLoading(false);
+    formData.content = "";
     setReplying && setReplying(false);
 
     if (data.error) {
@@ -64,6 +65,7 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
               backgroundColor: "white",
             }}
             onChange={handleChange}
+            value={formData.content}
           />
 
           <ErrorAlert error={error} sx={{ my: 4 }} />
