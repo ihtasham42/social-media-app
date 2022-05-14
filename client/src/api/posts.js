@@ -81,8 +81,8 @@ const getComments = async (params) => {
 
 const createComment = async (comment, params, token) => {
   try {
-    const { id } = params;
-    const res = await fetch("http://localhost:4000/api/comments/" + id, {
+    const { username } = params;
+    const res = await fetch("http://localhost:4000/api/comments/" + username, {
       method: "POST",
       headers: {
         Accept: "application/json",

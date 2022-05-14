@@ -14,7 +14,7 @@ const ContentDetails = ({ username, createdAt }) => {
           onClick={(e) => {
             e.stopPropagation();
           }}
-          href="/users/1"
+          href={"/users/" + username}
         >
           By {username}
         </Link>{" "}

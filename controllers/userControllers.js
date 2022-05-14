@@ -132,21 +132,19 @@ const getFollowing = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const username = req.params.username;
 
-    if (mongoose.Types.ObjectId.isValid(userId)) {
-      throw new Error("User does not exist");
-    }
-
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findOne(username).select("-password");
 
     if (!user) {
       throw new Error("User does not exist");
     }
 
-    const posts = await Post.find({ poster: userId }).sort("-createdAt");
+    const posts = await Post.find({ poster: user._id })
+      .populate("poster")
+      .sort("-createdAt");
 
-    const likeCount = 0;
+    let likeCount = 0;
 
     posts.forEach((post) => {
       likeCount += post.likeCount;
@@ -155,7 +153,7 @@ const getUser = async (req, res) => {
     const data = {
       user,
       posts: {
-        count: postCount.length,
+        count: posts.length,
         likeCount,
         data: posts,
       },
