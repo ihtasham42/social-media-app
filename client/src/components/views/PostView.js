@@ -97,7 +97,7 @@ const PostView = () => {
           post ? (
             <Stack spacing={2}>
               <PostCard post={post} />
-              <CommentEditor label="What are your thoughts on this post?" />
+
               <Comments />
             </Stack>
           ) : error ? (

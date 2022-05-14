@@ -1,10 +1,11 @@
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import Loading from "./Loading";
 import { getComments } from "../api/posts";
 import { useParams } from "react-router-dom";
+import CommentEditor from "./CommentEditor";
 
 const Comments = () => {
   const [comments, setComments] = useState(null);
@@ -26,32 +27,36 @@ const Comments = () => {
   }, []);
 
   return comments ? (
-    comments.length > 0 ? (
-      <>
-        {comments.map((comment, i) => (
-          <Comment comment={comment} key={i} depth={0} />
-        ))}
-        <Loading />
-      </>
-    ) : (
-      <Box
-        display="flex"
-        justifyContent="center"
-        textAlign="center"
-        paddingY={3}
-      >
-        <Box>
-          <Typography variant="h5" color="text.secondary" gutterBottom>
-            No comments yet...
-          </Typography>
-          <Typography variant="body" color="text.secondary">
-            Be the first one to comment!
-          </Typography>
+    <Stack spacing={2}>
+      <CommentEditor label="What are your thoughts on this post?" />
+
+      {comments.length > 0 ? (
+        <>
+          {comments.map((comment, i) => (
+            <Comment comment={comment} key={i} depth={0} />
+          ))}
+          <Loading />
+        </>
+      ) : (
+        <Box
+          display="flex"
+          justifyContent="center"
+          textAlign="center"
+          paddingY={3}
+        >
+          <Box>
+            <Typography variant="h5" color="text.secondary" gutterBottom>
+              No comments yet...
+            </Typography>
+            <Typography variant="body" color="text.secondary">
+              Be the first one to comment!
+            </Typography>
+          </Box>
         </Box>
-      </Box>
-    )
+      )}
+    </Stack>
   ) : (
-    <Loading />
+    <Loading label="Loading comments" />
   );
 };
 
