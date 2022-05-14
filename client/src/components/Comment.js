@@ -10,8 +10,8 @@ import HorizontalStack from "./util/HorizontalStack";
 
 const Comment = (props) => {
   const theme = useTheme();
-  const { comment, depth } = props;
-  const [minimised, setMinimised] = useState(false);
+  const { comment, depth, addComment } = props;
+  const [minimised, setMinimised] = useState(depth % 4 === 3);
   const [replying, setReplying] = useState(false);
   const navigate = useNavigate();
 
@@ -77,6 +77,7 @@ const Comment = (props) => {
               <Box sx={{ mt: 2 }}>
                 <CommentEditor
                   comment={comment}
+                  addComment={addComment}
                   label="What are your thoughts on this comment?"
                 />
               </Box>

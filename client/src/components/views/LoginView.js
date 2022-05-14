@@ -57,7 +57,7 @@ const LoginView = () => {
         <Typography color="text.secondary">
           Don't have an account yet? <Link href="/signup">Sign Up</Link>
         </Typography>
-        <Box component="form" method="post" onSubmit={handleSubmit}>
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
             label="Email Address"
             fullWidth
@@ -74,7 +74,7 @@ const LoginView = () => {
             fullWidth
             required
             margin="normal"
-            id="email"
+            id="password"
             name="password"
             onChange={handleChange}
             type="password"

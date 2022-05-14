@@ -9,6 +9,7 @@ import CommentEditor from "./CommentEditor";
 
 const Comments = () => {
   const [comments, setComments] = useState(null);
+  const [rerender, setRerender] = useState(false);
   const [error, setError] = useState("");
   const params = useParams();
 
@@ -17,23 +18,34 @@ const Comments = () => {
     if (data.error) {
       setError("Failed to fetch comments");
     } else {
-      console.log(data);
       setComments(data);
     }
   };
 
   useEffect(() => {
     fetchComments();
-  }, []);
+  }, [rerender]);
+
+  const addComment = (comment) => {
+    setRerender(!rerender);
+  };
 
   return comments ? (
     <Stack spacing={2}>
-      <CommentEditor label="What are your thoughts on this post?" />
+      <CommentEditor
+        addComment={addComment}
+        label="What are your thoughts on this post?"
+      />
 
       {comments.length > 0 ? (
         <>
           {comments.map((comment, i) => (
-            <Comment comment={comment} key={i} depth={0} />
+            <Comment
+              addComment={addComment}
+              comment={comment}
+              key={i}
+              depth={0}
+            />
           ))}
           <Loading />
         </>

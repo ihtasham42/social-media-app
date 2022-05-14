@@ -5,10 +5,12 @@ const FollowSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Types.ObjectId,
       ref: "user",
+      required: true,
     },
     followingId: {
       type: mongoose.Types.ObjectId,
       ref: "user",
+      required: true,
     },
   },
   { timestamps: true }

@@ -1,12 +1,13 @@
 import { Button, Card, Stack, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { AiFillWindows } from "react-icons/ai";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createComment } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ErrorAlert from "./ErrorAlert";
 
-const CommentEditor = ({ label, comment }) => {
+const CommentEditor = ({ label, comment, addComment }) => {
   const [formData, setFormData] = useState({
     content: "",
   });
@@ -15,21 +16,24 @@ const CommentEditor = ({ label, comment }) => {
 
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const body = {
       ...formData,
       parentId: comment && comment._id,
     };
-    const data = createComment(body, params, isLoggedIn());
+    const data = await createComment(body, params, isLoggedIn());
     if (data.error) {
       setError("Failed to post comment");
     } else {
-      navigate("/posts/" + params.id);
+      addComment();
     }
   };
 
@@ -49,7 +53,8 @@ const CommentEditor = ({ label, comment }) => {
             }}
             onChange={handleChange}
           />
-          <ErrorAlert error={error} />
+
+          <ErrorAlert error={error} sx={{ my: 4 }} />
           <Button
             variant="outlined"
             type="submit"

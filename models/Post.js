@@ -5,6 +5,7 @@ const PostSchema = new mongoose.Schema(
     poster: {
       type: mongoose.Types.ObjectId,
       ref: "user",
+      required: true,
     },
     title: {
       type: String,

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import HorizontalStack from "./util/HorizontalStack";
 
 const SortBySelect = () => {
-  const [sortBy, setSortBy] = useState("latest");
+  const [sortBy, setSortBy] = useState("-createdAt");
 
   return (
     <HorizontalStack spacing={1}>
@@ -14,9 +14,10 @@ const SortBySelect = () => {
         sx={{ minWidth: 150 }}
         onChange={(e) => setSortBy(e.target.value)}
       >
-        <MenuItem value={"latest"}>Latest</MenuItem>
-        <MenuItem value={"likes"}>Likes</MenuItem>
-        <MenuItem value={"oldest"}>Oldest</MenuItem>
+        <MenuItem value={"-createdAt"}>Latest</MenuItem>
+        <MenuItem value={"likeCount"}>Likes</MenuItem>
+        <MenuItem value={"commentCount"}>Comments</MenuItem>
+        <MenuItem value={"createdAt"}>Oldest</MenuItem>
       </Select>
     </HorizontalStack>
   );

@@ -7,9 +7,7 @@ const createComment = async (req, res) => {
     const postId = req.params.id;
     const { content, parentId, userId } = req.body;
 
-    const post = await Post.findByIdAndUpdate(postId, {
-      $inc: { commentCount: 1 },
-    });
+    const post = await Post.findById(postId);
 
     if (!post) {
       throw new Error("Post not found");
@@ -22,9 +20,14 @@ const createComment = async (req, res) => {
       commenter: userId,
     });
 
+    post.commentCount += 1;
+
+    await post.save();
+
     return res.json(comment);
   } catch (err) {
-    return res.status(400).json(err.message);
+    console.log(err);
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -32,7 +35,9 @@ const getPostComments = async (req, res) => {
   try {
     const postId = req.params.id;
 
-    const comments = await Comment.find({ post: postId }).populate("commenter");
+    const comments = await Comment.find({ post: postId })
+      .populate("commenter")
+      .sort("-createdAt");
 
     let commentParents = {};
     let rootComments = [];
