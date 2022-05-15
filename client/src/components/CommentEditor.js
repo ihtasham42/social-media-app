@@ -50,6 +50,10 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
     }
   };
 
+  const handleFocus = (e) => {
+    !isLoggedIn() && navigate("/login");
+  };
+
   return (
     <Card>
       <Stack spacing={2}>
@@ -65,6 +69,7 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
               backgroundColor: "white",
             }}
             onChange={handleChange}
+            onFocus={handleFocus}
             value={formData.content}
           />
 

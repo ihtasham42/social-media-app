@@ -5,13 +5,13 @@ import "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const PostContentBox = (props) => {
-  const { clickable, post } = props;
+  const { clickable, post, editing } = props;
   const theme = useTheme();
   const navigate = useNavigate();
 
   return (
     <>
-      {clickable ? (
+      {clickable && !editing ? (
         <Box
           sx={{
             padding: theme.spacing(2),

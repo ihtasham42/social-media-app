@@ -16,7 +16,8 @@ import HorizontalStack from "./util/HorizontalStack";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const username = isLoggedIn().username;
+  const user = isLoggedIn();
+  const username = user && isLoggedIn().username;
 
   const handleLogout = async (e) => {
     logoutUser();

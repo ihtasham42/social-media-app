@@ -13,6 +13,8 @@ const Comment = (props) => {
   const { comment, depth, addComment } = props;
   const [minimised, setMinimised] = useState(depth % 4 === 3);
   const [replying, setReplying] = useState(false);
+  const user = isLoggedIn();
+  const isAuthor = user && user._id === comment.commenter;
   const navigate = useNavigate();
 
   const handleSetReplying = () => {
@@ -64,9 +66,21 @@ const Comment = (props) => {
             </IconButton>
           </HorizontalStack>
           {!minimised && (
-            <Button variant="text" size="small" onClick={handleSetReplying}>
-              {!replying ? <div>Reply</div> : <div>Cancel</div>}
-            </Button>
+            <HorizontalStack spacing={0}>
+              <Button variant="text" size="small" onClick={handleSetReplying}>
+                {!replying ? <div>Reply</div> : <div>Cancel</div>}
+              </Button>
+              {!isAuthor && (
+                <HorizontalStack spacing={0}>
+                  <Button variant="text" size="small">
+                    Edit
+                  </Button>
+                  <Button variant="text" size="small">
+                    Delete
+                  </Button>
+                </HorizontalStack>
+              )}
+            </HorizontalStack>
           )}
         </HorizontalStack>
         {!minimised && (

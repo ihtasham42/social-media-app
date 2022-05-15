@@ -28,7 +28,8 @@ const PostCard = (props) => {
   let postData = props.post;
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const isAuthor = isLoggedIn().username === postData.poster.username;
+  const user = isLoggedIn();
+  const isAuthor = user && user.username === postData.poster.username;
 
   const theme = useTheme();
   const [editing, setEditing] = useState(false);
@@ -62,8 +63,8 @@ const PostCard = (props) => {
     e.preventDefault();
 
     const content = e.target.content.value;
-    const updatedPost = await updatePost(post._id, isLoggedIn(), { content });
-    setPost({ ...post, content });
+    await updatePost(post._id, isLoggedIn(), { content });
+    setPost({ ...post, content, edited: true });
     setEditing(false);
   };
 
@@ -76,7 +77,7 @@ const PostCard = (props) => {
         >
           <LikeBox likeCount={post.likeCount} />
         </Box>
-        <PostContentBox clickable={preview} post={post}>
+        <PostContentBox clickable={preview} post={post} editing={editing}>
           <HorizontalStack justifyContent="space-between">
             <ContentDetails
               username={post.poster.username}
