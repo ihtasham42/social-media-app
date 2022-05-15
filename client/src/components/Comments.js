@@ -57,6 +57,20 @@ const Comments = () => {
     }
   };
 
+  const removeComment = (removedComment) => {
+    if (removedComment.parent) {
+      const parentComment = findComment(removedComment.parent);
+      parentComment.children.filter(
+        (comment) => comment._id !== removedComment._id
+      );
+      setRerender(!rerender);
+    } else {
+      setComments(
+        comments.filter((comment) => comment._id !== removedComment._id)
+      );
+    }
+  };
+
   return comments ? (
     <Stack spacing={2}>
       <CommentEditor
