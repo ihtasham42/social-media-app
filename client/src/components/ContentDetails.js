@@ -5,7 +5,7 @@ import Moment from "react-moment";
 
 const ContentDetails = ({ username, createdAt }) => {
   return (
-    <HorizontalStack sx={{ mb: 1 }}>
+    <HorizontalStack sx={{}}>
       <Avatar sx={{ width: 20, height: 20 }} />
       <Typography variant="subtitle2" color="text.secondary" gutterBottom>
         <Link

@@ -29,15 +29,22 @@ const PostCard = (props) => {
 
   const theme = useTheme();
   const [editing, setEditing] = useState(false);
+  const [confirm, setConfirm] = useState(false);
 
   const handleDeletePost = async (e) => {
     e.stopPropagation();
 
-    setLoading(true);
-    const data = await deletePost(post._id, isLoggedIn());
-    setLoading(false);
-    navigate("/");
+    if (!confirm) {
+      setConfirm(true);
+    } else {
+      setLoading(true);
+      await deletePost(post._id, isLoggedIn());
+      setLoading(false);
+      navigate("/");
+    }
   };
+
+  const handleEditPost = async (e) => {};
 
   return (
     <Card sx={{ padding: 0 }}>
@@ -49,7 +56,7 @@ const PostCard = (props) => {
           <LikeBox likeCount={post.likeCount} />
         </Box>
         <PostContentBox clickable={preview} post={post}>
-          <HorizontalStack>
+          <HorizontalStack justifyContent="space-between">
             <ContentDetails
               username={post.poster.username}
               createdAt={post.createdAt}
@@ -57,15 +64,30 @@ const PostCard = (props) => {
             <Box>
               {isAuthor && (
                 <HorizontalStack>
-                  <IconButton disabled={loading} onClick={handleDeletePost}>
-                    <AiFillDelete />
-                  </IconButton>
+                  <Button
+                    disabled={loading}
+                    size="small"
+                    onClick={handleEditPost}
+                  >
+                    {editing ? <>Cancel</> : <>Edit</>}
+                  </Button>
+                  <Button
+                    disabled={loading}
+                    size="small"
+                    onClick={handleDeletePost}
+                  >
+                    {confirm ? <>Confirm</> : <>Delete</>}
+                  </Button>
                 </HorizontalStack>
               )}
             </Box>
           </HorizontalStack>
 
-          <Typography variant="h5" gutterBottom sx={{ overflow: "hidden" }}>
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{ overflow: "hidden", mt: 1 }}
+          >
             {post.title}
           </Typography>
 

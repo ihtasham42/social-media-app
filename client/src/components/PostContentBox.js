@@ -23,7 +23,9 @@ const PostContentBox = (props) => {
           {props.children}
         </Box>
       ) : (
-        <Box sx={{ padding: theme.spacing(2) }}>{props.children}</Box>
+        <Box sx={{ padding: theme.spacing(2), width: "100%" }}>
+          {props.children}
+        </Box>
       )}
     </>
   );
