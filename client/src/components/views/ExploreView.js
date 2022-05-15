@@ -27,6 +27,10 @@ const ExploreView = () => {
     setPosts(posts.filter((post) => post._id !== removedPost._id));
   };
 
+  const editPost = (editedPost) => {
+    setPosts([...posts]);
+  };
+
   return (
     <Container>
       <Navbar />

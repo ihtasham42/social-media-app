@@ -25,14 +25,15 @@ import ContentUpdateEditor from "./ContentUpdateEditor";
 
 const PostCard = (props) => {
   const { preview, removePost } = props;
-  let { post } = props;
+  let postData = props.post;
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const isAuthor = isLoggedIn().username === post.poster.username;
+  const isAuthor = isLoggedIn().username === postData.poster.username;
 
   const theme = useTheme();
   const [editing, setEditing] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const [post, setPost] = useState(postData);
 
   const handleDeletePost = async (e) => {
     e.stopPropagation();
@@ -55,16 +56,15 @@ const PostCard = (props) => {
     e.stopPropagation();
 
     setEditing(!editing);
-    if (editing) {
-    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const content = e.target.content;
+    const content = e.target.content.value;
     const updatedPost = await updatePost(post._id, isLoggedIn(), { content });
-    post = updatedPost;
+    setPost({ ...post, content });
+    setEditing(false);
   };
 
   return (
@@ -115,7 +115,10 @@ const PostCard = (props) => {
 
           {preview !== "secondary" &&
             (editing ? (
-              <ContentUpdateEditor />
+              <ContentUpdateEditor
+                handleSubmit={handleSubmit}
+                originalContent={post.content}
+              />
             ) : (
               <Typography>{post.content}</Typography>
             ))}
