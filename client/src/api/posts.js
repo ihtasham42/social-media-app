@@ -35,9 +35,16 @@ const createPost = async (post, user) => {
   }
 };
 
-const updatePost = async () => {
+const updatePost = async (postId, user, data) => {
   try {
-    const res = await fetch("/api/posts");
+    const res = await fetch("http://localhost:4000/api/posts/" + postId, {
+      method: "PATCH",
+      headers: {
+        "x-access-token": user.token,
+      },
+      body: data,
+    });
+    return res.json();
   } catch (err) {
     console.log(err);
   }

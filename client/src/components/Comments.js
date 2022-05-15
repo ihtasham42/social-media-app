@@ -71,6 +71,10 @@ const Comments = () => {
     }
   };
 
+  const editComment = () => {
+    setRerender(!rerender);
+  };
+
   return comments ? (
     <Stack spacing={2}>
       <CommentEditor
@@ -83,6 +87,8 @@ const Comments = () => {
           {comments.map((comment, i) => (
             <Comment
               addComment={addComment}
+              removeComment={removeComment}
+              editComment={editComment}
               comment={comment}
               key={comment._id}
               depth={0}

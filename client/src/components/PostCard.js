@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { AiFillDelete, AiFillMessage } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { deletePost } from "../api/posts";
+import { deletePost, updatePost } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ContentDetails from "./ContentDetails";
 
@@ -24,7 +24,8 @@ import PostEditor from "./PostEditor";
 import ContentUpdateEditor from "./ContentUpdateEditor";
 
 const PostCard = (props) => {
-  const { post, preview, removePost } = props;
+  const { preview, removePost } = props;
+  let { post } = props;
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const isAuthor = isLoggedIn().username === post.poster.username;
@@ -62,6 +63,8 @@ const PostCard = (props) => {
     e.preventDefault();
 
     const content = e.target.content;
+    const updatedPost = await updatePost(post._id, isLoggedIn(), { content });
+    post = updatedPost;
   };
 
   return (
