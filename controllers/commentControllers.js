@@ -77,4 +77,14 @@ const getUserComments = async (req, res) => {
   }
 };
 
-module.exports = { createComment, getPostComments, getUserComments };
+const updateComment = async (req, res) => {};
+
+const deleteComment = async (req, res) => {};
+
+module.exports = {
+  createComment,
+  getPostComments,
+  getUserComments,
+  updateComment,
+  deleteComment,
+};

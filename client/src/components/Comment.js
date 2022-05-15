@@ -7,10 +7,11 @@ import { isLoggedIn } from "../helpers/authHelper";
 import CommentEditor from "./CommentEditor";
 import ContentDetails from "./ContentDetails";
 import HorizontalStack from "./util/HorizontalStack";
+import { deleteComment } from "../api/posts";
 
 const Comment = (props) => {
   const theme = useTheme();
-  const { comment, depth, addComment } = props;
+  const { comment, depth, addComment, removeComment, editComment } = props;
   const [minimised, setMinimised] = useState(depth % 4 === 3);
   const [replying, setReplying] = useState(false);
   const user = isLoggedIn();
@@ -23,6 +24,11 @@ const Comment = (props) => {
     } else {
       navigate("/login");
     }
+  };
+
+  const handleDelete = async () => {
+    await deleteComment(comment._id, user);
+    removeComment(comment);
   };
 
   let style = {
@@ -75,7 +81,7 @@ const Comment = (props) => {
                   <Button variant="text" size="small">
                     Edit
                   </Button>
-                  <Button variant="text" size="small">
+                  <Button variant="text" size="small" onClick={handleDelete}>
                     Delete
                   </Button>
                 </HorizontalStack>

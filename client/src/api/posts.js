@@ -114,6 +114,37 @@ const createComment = async (comment, params, user) => {
   }
 };
 
+const deleteComment = async (commentId, user) => {
+  try {
+    const res = await fetch("http://localhost:4000/api/comments/" + commentId, {
+      method: "DELETE",
+      headers: {
+        "x-access-token": user.token,
+      },
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updateComment = async (commentId, user, data) => {
+  try {
+    const res = await fetch("http://localhost:4000/api/comments/" + commentId, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-access-token": user.token,
+      },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export {
   getPost,
   createPost,
@@ -124,4 +155,6 @@ export {
   unlikePost,
   getComments,
   createComment,
+  deleteComment,
+  updateComment,
 };
