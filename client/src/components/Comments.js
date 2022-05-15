@@ -24,10 +24,37 @@ const Comments = () => {
 
   useEffect(() => {
     fetchComments();
-  }, [rerender]);
+  }, []);
+
+  const findComment = (id) => {
+    const recurse = (comment, id) => {
+      if (comment._id === id) {
+        return comment;
+      } else {
+        for (let i = 0; i < comment.children.length; i++) {
+          const commentToSearch = comment.children[i];
+          return recurse(commentToSearch, id);
+        }
+      }
+    };
+
+    for (let i = 0; i < comments.length; i++) {
+      const comment = comments[i];
+      const returnedComment = recurse(comment, id);
+      if (returnedComment) {
+        return returnedComment;
+      }
+    }
+  };
 
   const addComment = (comment) => {
-    setRerender(!rerender);
+    if (comment.parent) {
+      const parentComment = findComment(comment.parent);
+      parentComment.children = [comment, ...parentComment.children];
+      setRerender(!rerender);
+    } else {
+      setComments([comment, ...comments]);
+    }
   };
 
   return comments ? (

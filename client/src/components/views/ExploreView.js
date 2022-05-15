@@ -23,6 +23,10 @@ const ExploreView = () => {
     fetchPosts();
   }, []);
 
+  const removePost = (removedPost) => {
+    setPosts(posts.filter((post) => post._id !== removedPost._id));
+  };
+
   return (
     <Container>
       <Navbar />
@@ -31,7 +35,12 @@ const ExploreView = () => {
           <Stack spacing={2}>
             <PostBar />
             {posts.map((post, i) => (
-              <PostCard preview="primary" key={i} post={post} />
+              <PostCard
+                preview="primary"
+                key={post._id}
+                post={post}
+                removePost={removePost}
+              />
             ))}
             {loading && <Loading />}
           </Stack>

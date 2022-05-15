@@ -9,7 +9,7 @@ const Profile = ({ user }) => {
       {user ? (
         <Stack alignItems="center" spacing={1}>
           <Avatar sx={{ height: 150, width: 150, mb: 1 }} />
-          <Typography variant="h5">Ihtasham</Typography>
+          <Typography variant="h5">{user.user.username}</Typography>
           <Typography color="text.secondary">
             Likes <b>{user.posts.likeCount}</b>
           </Typography>

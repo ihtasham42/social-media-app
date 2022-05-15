@@ -24,6 +24,8 @@ const createComment = async (req, res) => {
 
     await post.save();
 
+    await Comment.populate(comment, { path: "commenter" });
+
     return res.json(comment);
   } catch (err) {
     console.log(err);

@@ -20,9 +20,11 @@ import PostContentBox from "./PostContentBox";
 import HorizontalStack from "./util/HorizontalStack";
 
 import {} from "react-icons/ai";
+import PostEditor from "./PostEditor";
+import ContentUpdateEditor from "./ContentUpdateEditor";
 
 const PostCard = (props) => {
-  const { preview, post } = props;
+  const { post, preview, removePost } = props;
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const isAuthor = isLoggedIn().username === post.poster.username;
@@ -40,11 +42,27 @@ const PostCard = (props) => {
       setLoading(true);
       await deletePost(post._id, isLoggedIn());
       setLoading(false);
-      navigate("/");
+      if (preview) {
+        removePost(post);
+      } else {
+        navigate("/");
+      }
     }
   };
 
-  const handleEditPost = async (e) => {};
+  const handleEditPost = async (e) => {
+    e.stopPropagation();
+
+    setEditing(!editing);
+    if (editing) {
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const content = e.target.content;
+  };
 
   return (
     <Card sx={{ padding: 0 }}>
@@ -60,6 +78,7 @@ const PostCard = (props) => {
             <ContentDetails
               username={post.poster.username}
               createdAt={post.createdAt}
+              edited={post.edited}
             />
             <Box>
               {isAuthor && (
@@ -93,12 +112,12 @@ const PostCard = (props) => {
 
           {preview !== "secondary" &&
             (editing ? (
-              <div>Editing</div>
+              <ContentUpdateEditor />
             ) : (
-              <Typography gutterBottom>{post.content}</Typography>
+              <Typography>{post.content}</Typography>
             ))}
 
-          <HorizontalStack>
+          <HorizontalStack sx={{ mt: 1 }}>
             <AiFillMessage />
             <Typography
               variant="subtitle2"

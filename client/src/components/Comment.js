@@ -46,12 +46,11 @@ const Comment = (props) => {
       >
         <HorizontalStack justifyContent="space-between">
           <HorizontalStack>
-            <Box mt={1}>
-              <ContentDetails
-                username={comment.commenter.username}
-                createdAt={comment.createdAt}
-              />
-            </Box>
+            <ContentDetails
+              username={comment.commenter.username}
+              createdAt={comment.createdAt}
+              edited={comment.edited}
+            />
 
             <IconButton
               color="primary"
@@ -71,7 +70,7 @@ const Comment = (props) => {
           )}
         </HorizontalStack>
         {!minimised && (
-          <Box>
+          <Box sx={{ mt: 1 }}>
             <Typography>{comment.content}</Typography>
             {replying && !minimised && (
               <Box sx={{ mt: 2 }}>
