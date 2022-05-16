@@ -77,9 +77,63 @@ const getUserComments = async (req, res) => {
   }
 };
 
-const updateComment = async (req, res) => {};
+const updateComment = async (req, res) => {
+  try {
+    const commentId = req.params.id;
+    const { userId, content } = req.body;
 
-const deleteComment = async (req, res) => {};
+    if (!content) {
+      throw new Error("All input required");
+    }
+
+    const comment = await Comment.findById(commentId);
+
+    if (!comment) {
+      throw new Error("Comment not found");
+    }
+
+    if (comment.commenter !== userId) {
+      throw new Error("Not authorized to update comment");
+    }
+
+    comment.content = content;
+    comment.edited = true;
+    await comment.save();
+
+    return res.status(200).json(comment);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
+const deleteComment = async (req, res) => {
+  try {
+    const commentId = req.params.id;
+    const { userId } = req.body;
+
+    const comment = await Comment.findById(commentId);
+
+    if (!comment) {
+      throw new Error("Comment not found");
+    }
+
+    if (comment.commenter != userId) {
+      throw new Error("Not authorized to delete comment");
+    }
+
+    await comment.remove();
+
+    const post = await Post.findById(comment.post);
+
+    post.commentCount = (await Comment.find({ post: post._id })).length;
+
+    await post.save();
+
+    return res.status(200).json(comment);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
 
 module.exports = {
   createComment,

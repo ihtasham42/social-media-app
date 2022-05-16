@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Post = require("./Post");
 
 const CommentSchema = new mongoose.Schema(
   {
@@ -34,4 +35,17 @@ const CommentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("comment", CommentSchema);
+CommentSchema.post("remove", async function (res, next) {
+  const comments = await this.model("comment").find({ parent: this._id });
+
+  for (let i = 0; i < comments.length; i++) {
+    const comment = comments[i];
+    await comment.remove();
+  }
+
+  next();
+});
+
+const Comment = mongoose.model("comment", CommentSchema);
+
+module.exports = Comment;

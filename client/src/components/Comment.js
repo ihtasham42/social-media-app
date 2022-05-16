@@ -7,15 +7,19 @@ import { isLoggedIn } from "../helpers/authHelper";
 import CommentEditor from "./CommentEditor";
 import ContentDetails from "./ContentDetails";
 import HorizontalStack from "./util/HorizontalStack";
-import { deleteComment } from "../api/posts";
+import { deleteComment, updateComment } from "../api/posts";
+import ContentUpdateEditor from "./ContentUpdateEditor";
 
 const Comment = (props) => {
   const theme = useTheme();
-  const { comment, depth, addComment, removeComment, editComment } = props;
+  const { depth, addComment, removeComment, editComment } = props;
+  const commentData = props.comment;
   const [minimised, setMinimised] = useState(depth % 4 === 3);
   const [replying, setReplying] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [comment, setComment] = useState(commentData);
   const user = isLoggedIn();
-  const isAuthor = user && user._id === comment.commenter;
+  const isAuthor = user && user.userId === comment.commenter._id;
   const navigate = useNavigate();
 
   const handleSetReplying = () => {
@@ -24,6 +28,15 @@ const Comment = (props) => {
     } else {
       navigate("/login");
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const content = e.target.content.value;
+    await updateComment(comment._id, user, content);
+    setComment({ ...comment, content, edited: true });
+    setEditing(false);
   };
 
   const handleDelete = async () => {
@@ -76,7 +89,7 @@ const Comment = (props) => {
               <Button variant="text" size="small" onClick={handleSetReplying}>
                 {!replying ? <div>Reply</div> : <div>Cancel</div>}
               </Button>
-              {!isAuthor && (
+              {isAuthor && (
                 <HorizontalStack spacing={0}>
                   <Button variant="text" size="small">
                     Edit
@@ -91,7 +104,15 @@ const Comment = (props) => {
         </HorizontalStack>
         {!minimised && (
           <Box sx={{ mt: 1 }}>
-            <Typography>{comment.content}</Typography>
+            {!editing ? (
+              <Typography>{comment.content}</Typography>
+            ) : (
+              <ContentUpdateEditor
+                handleSubmit={handleSubmit}
+                originalContent={comment.content}
+              />
+            )}
+
             {replying && !minimised && (
               <Box sx={{ mt: 2 }}>
                 <CommentEditor
@@ -106,10 +127,12 @@ const Comment = (props) => {
               <Box sx={{ pt: theme.spacing(2) }}>
                 {comment.children.map((reply, i) => (
                   <Comment
-                    key={i}
+                    key={reply._id}
                     comment={reply}
                     depth={depth + 1}
                     addComment={addComment}
+                    removeComment={removeComment}
+                    editComment={editComment}
                   />
                 ))}
               </Box>

@@ -73,8 +73,6 @@ const updatePost = async (req, res) => {
     const postId = req.params.id;
     const { content, userId } = req.body;
 
-    console.log(req.body);
-
     const post = await Post.findById(postId);
 
     if (!post) {
@@ -92,7 +90,6 @@ const updatePost = async (req, res) => {
 
     return res.json(post);
   } catch (err) {
-    //console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };

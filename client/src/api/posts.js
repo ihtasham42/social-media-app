@@ -19,7 +19,6 @@ const getPost = async (params) => {
 };
 
 const createPost = async (post, user) => {
-  console.log(post);
   try {
     const res = await fetch("http://localhost:4000/api/posts", {
       method: "POST",
@@ -40,7 +39,7 @@ const updatePost = async (postId, user, data) => {
   console.log(data);
   try {
     const res = await fetch("http://localhost:4000/api/posts/" + postId, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -131,7 +130,7 @@ const deleteComment = async (commentId, user) => {
 const updateComment = async (commentId, user, data) => {
   try {
     const res = await fetch("http://localhost:4000/api/comments/" + commentId, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

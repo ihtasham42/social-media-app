@@ -11,6 +11,7 @@ const Comments = () => {
   const [comments, setComments] = useState(null);
   const [rerender, setRerender] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const params = useParams();
 
   const fetchComments = async () => {
@@ -47,22 +48,14 @@ const Comments = () => {
     }
   };
 
-  const addComment = (comment) => {
-    if (comment.parent) {
-      const parentComment = findComment(comment.parent);
-      parentComment.children = [comment, ...parentComment.children];
-      setRerender(!rerender);
-    } else {
-      setComments([comment, ...comments]);
-    }
-  };
-
   const removeComment = (removedComment) => {
     if (removedComment.parent) {
       const parentComment = findComment(removedComment.parent);
-      parentComment.children.filter(
+      parentComment.children = parentComment.children.filter(
         (comment) => comment._id !== removedComment._id
       );
+      console.log(removedComment._id);
+      console.log(parentComment);
       setRerender(!rerender);
     } else {
       setComments(
@@ -73,6 +66,16 @@ const Comments = () => {
 
   const editComment = () => {
     setRerender(!rerender);
+  };
+
+  const addComment = (comment) => {
+    if (comment.parent) {
+      const parentComment = findComment(comment.parent);
+      parentComment.children = [comment, ...parentComment.children];
+      setRerender(!rerender);
+    } else {
+      setComments([comment, ...comments]);
+    }
   };
 
   return comments ? (
@@ -94,7 +97,7 @@ const Comments = () => {
               depth={0}
             />
           ))}
-          <Loading />
+          {loading && <Loading />}
         </>
       ) : (
         <Box

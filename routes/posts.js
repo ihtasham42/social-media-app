@@ -7,7 +7,7 @@ router.get("/", postControllers.getPosts);
 router.post("/", verifyToken, postControllers.createPost);
 
 router.get("/:id", postControllers.getPost);
-router.put("/:id", verifyToken, postControllers.updatePost);
+router.patch("/:id", verifyToken, postControllers.updatePost);
 router.delete("/:id", verifyToken, postControllers.deletePost);
 
 router.post("/like/:id", verifyToken, postControllers.likePost);

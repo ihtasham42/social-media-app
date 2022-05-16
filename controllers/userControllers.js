@@ -30,7 +30,7 @@ const register = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
-    return res.json({ token, username });
+    return res.json({ token, username, userId: user._id });
   } catch (err) {
     console.log(err.code);
     return res.status(400).json({ error: err.message });
@@ -61,7 +61,7 @@ const login = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
-    return res.json({ token, username: user.username });
+    return res.json({ token, username: user.username, userId: user._id });
   } catch (err) {
     console.log(err);
     return res.status(400).json({ error: err.message });

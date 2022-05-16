@@ -23,7 +23,6 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
 
   const params = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
