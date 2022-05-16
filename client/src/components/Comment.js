@@ -36,7 +36,7 @@ const Comment = (props) => {
 
     const content = e.target.content.value;
 
-    await updateComment(comment._id, user, content);
+    await updateComment(comment._id, user, { content });
 
     setComment({ ...comment, content, edited: true });
     setEditing(false);

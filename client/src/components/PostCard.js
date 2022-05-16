@@ -35,6 +35,7 @@ const PostCard = (props) => {
   const [editing, setEditing] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [post, setPost] = useState(postData);
+  const [likeCount, setLikeCount] = useState(post.likeCount);
 
   const handleDeletePost = async (e) => {
     e.stopPropagation();
@@ -68,6 +69,14 @@ const PostCard = (props) => {
     setEditing(false);
   };
 
+  const handleLike = (liked) => {
+    if (liked) {
+      setLikeCount(post.likeCount + 1);
+    } else {
+      setLikeCount(post.likeCount);
+    }
+  };
+
   return (
     <Card sx={{ padding: 0 }}>
       <HorizontalStack spacing={0} alignItems="initial">
@@ -75,7 +84,11 @@ const PostCard = (props) => {
           padding={theme.spacing(1)}
           sx={{ backgroundColor: "grey.100", width: "50px" }}
         >
-          <LikeBox likeCount={post.likeCount} />
+          <LikeBox
+            likeCount={likeCount}
+            liked={post.liked}
+            onLike={handleLike}
+          />
         </Box>
         <PostContentBox clickable={preview} post={post} editing={editing}>
           <HorizontalStack justifyContent="space-between">

@@ -92,7 +92,7 @@ const updateComment = async (req, res) => {
       throw new Error("Comment not found");
     }
 
-    if (comment.commenter !== userId) {
+    if (comment.commenter != userId) {
       throw new Error("Not authorized to update comment");
     }
 
@@ -102,6 +102,7 @@ const updateComment = async (req, res) => {
 
     return res.status(200).json(comment);
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };

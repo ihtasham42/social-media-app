@@ -102,7 +102,6 @@ const updateComment = async (commentId, user, data) => {
       method: "PATCH",
       headers: {
         Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
         "x-access-token": user.token,
       },
