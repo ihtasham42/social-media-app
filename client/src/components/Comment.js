@@ -9,6 +9,7 @@ import ContentDetails from "./ContentDetails";
 import HorizontalStack from "./util/HorizontalStack";
 import { deleteComment, updateComment } from "../api/posts";
 import ContentUpdateEditor from "./ContentUpdateEditor";
+import axios from "axios";
 
 const Comment = (props) => {
   const theme = useTheme();
@@ -34,7 +35,9 @@ const Comment = (props) => {
     e.preventDefault();
 
     const content = e.target.content.value;
+
     await updateComment(comment._id, user, content);
+
     setComment({ ...comment, content, edited: true });
     setEditing(false);
   };
@@ -91,8 +94,12 @@ const Comment = (props) => {
               </Button>
               {isAuthor && (
                 <HorizontalStack spacing={0}>
-                  <Button variant="text" size="small">
-                    Edit
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => setEditing(!editing)}
+                  >
+                    {editing ? <>Cancel</> : <>Edit</>}
                   </Button>
                   <Button variant="text" size="small" onClick={handleDelete}>
                     Delete

@@ -16,9 +16,14 @@ const ContentUpdateEditor = ({ handleSubmit, originalContent }) => {
           fullWidth
           margin="normal"
           name="content"
+          sx={{ backgroundColor: "white" }}
           onChange={handleChange}
         />
-        <Button type="submit" variant="outlined">
+        <Button
+          type="submit"
+          variant="outlined"
+          sx={{ backgroundColor: "white" }}
+        >
           Update
         </Button>
       </Stack>

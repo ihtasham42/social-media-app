@@ -36,7 +36,6 @@ const createPost = async (post, user) => {
 };
 
 const updatePost = async (postId, user, data) => {
-  console.log(data);
   try {
     const res = await fetch("http://localhost:4000/api/posts/" + postId, {
       method: "PATCH",
@@ -62,22 +61,6 @@ const deletePost = async (postId, user) => {
       },
     });
     return res.json();
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const likePost = async () => {
-  try {
-    const res = await fetch("/api/posts");
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const unlikePost = async () => {
-  try {
-    const res = await fetch("/api/posts");
   } catch (err) {
     console.log(err);
   }
@@ -113,6 +96,24 @@ const createComment = async (comment, params, user) => {
   }
 };
 
+const updateComment = async (commentId, user, data) => {
+  try {
+    const res = await fetch("http://localhost:4000/api/comments/" + commentId, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        "x-access-token": user.token,
+      },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const deleteComment = async (commentId, user) => {
   try {
     const res = await fetch("http://localhost:4000/api/comments/" + commentId, {
@@ -127,31 +128,12 @@ const deleteComment = async (commentId, user) => {
   }
 };
 
-const updateComment = async (commentId, user, data) => {
-  try {
-    const res = await fetch("http://localhost:4000/api/comments/" + commentId, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "x-access-token": user.token,
-      },
-      body: JSON.stringify(data),
-    });
-    return res.json();
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 export {
   getPost,
   createPost,
   updatePost,
   deletePost,
   getPosts,
-  likePost,
-  unlikePost,
   getComments,
   createComment,
   deleteComment,
