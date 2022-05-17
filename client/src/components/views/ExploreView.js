@@ -1,6 +1,7 @@
 import { Container, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getPosts } from "../../api/posts";
+import { isLoggedIn } from "../../helpers/authHelper";
 import GridLayout from "../GridLayout";
 import Loading from "../Loading";
 import Navbar from "../Navbar";
@@ -14,7 +15,7 @@ const ExploreView = () => {
 
   const fetchPosts = async () => {
     setLoading(true);
-    const data = await getPosts();
+    const data = await getPosts(isLoggedIn());
     setLoading(false);
     setPosts(data);
   };

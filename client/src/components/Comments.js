@@ -54,8 +54,6 @@ const Comments = () => {
       parentComment.children = parentComment.children.filter(
         (comment) => comment._id !== removedComment._id
       );
-      console.log(removedComment._id);
-      console.log(parentComment);
       setRerender(!rerender);
     } else {
       setComments(
@@ -71,7 +69,9 @@ const Comments = () => {
   const addComment = (comment) => {
     if (comment.parent) {
       const parentComment = findComment(comment.parent);
+      console.log(parentComment);
       parentComment.children = [comment, ...parentComment.children];
+      console.log(parentComment);
       setRerender(!rerender);
     } else {
       setComments([comment, ...comments]);

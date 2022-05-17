@@ -122,12 +122,23 @@ const deletePost = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     const page = req.query.page;
+    const { userId } = req.body;
 
     const posts = await paginate(
       Post.find().populate("poster").sort("-createdAt"),
       page,
       6
     );
+
+    const userPostLikes = await PostLike.find({ poster: userId });
+
+    posts.forEach((post) => {
+      userPostLikes.forEach((userPostLike) => {
+        if (userPostLike.postId == post._id) {
+          post.liked = true;
+        }
+      });
+    });
 
     return res.json(posts);
   } catch (err) {
