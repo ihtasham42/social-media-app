@@ -131,6 +131,34 @@ const deleteComment = async (commentId, user) => {
   }
 };
 
+const likePost = async (postId, user) => {
+  try {
+    const res = await fetch("http://localhost:4000/api/posts/like/" + postId, {
+      method: "POST",
+      headers: {
+        "x-access-token": user.token,
+      },
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const unlikePost = async (postId, user) => {
+  try {
+    const res = await fetch("http://localhost:4000/api/posts/like/" + postId, {
+      method: "DELETE",
+      headers: {
+        "x-access-token": user.token,
+      },
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export {
   getPost,
   createPost,
@@ -141,4 +169,6 @@ export {
   createComment,
   deleteComment,
   updateComment,
+  likePost,
+  unlikePost,
 };

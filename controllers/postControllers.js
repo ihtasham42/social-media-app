@@ -164,20 +164,15 @@ const likePost = async (req, res) => {
       throw new Error("Post is already liked");
     }
 
-    const likedPost = await Post.findByIdAndUpdate(
-      postId,
-      {
-        $inc: { likeCount: 1 },
-      },
-      { new: true }
-    );
-
     const postLike = await PostLike.create({
       postId,
       userId,
     });
 
-    return res.json(likedPost);
+    post.likeCount += 1;
+    await post.save();
+
+    return res.json(postLike);
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
@@ -200,15 +195,10 @@ const unlikePost = async (req, res) => {
       throw new Error("Post is already not liked");
     }
 
-    const unlikedPost = await Post.findByIdAndUpdate(
-      postId,
-      {
-        $inc: { likeCount: -1 },
-      },
-      { new: true }
-    );
+    post.likeCount -= 1;
+    post.save();
 
-    return res.json(unlikedPost);
+    return res.json(existingPostLike);
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
