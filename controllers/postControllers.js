@@ -149,13 +149,16 @@ const getPosts = async (req, res) => {
     let sortProperty = "-createdAt";
     if (sortBy) sortProperty = sortBy;
 
-    let populateCondition = {};
-    if (author) {
+    let populateCondition = "poster";
+
+    if (author != "undefined") {
       populateCondition = {
         path: "poster",
         match: { username: author },
       };
     }
+
+    console.log(author + sortBy);
 
     let posts = await paginate(
       Post.find().populate(populateCondition).sort(sortProperty),

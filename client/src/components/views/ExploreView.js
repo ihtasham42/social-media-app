@@ -11,90 +11,13 @@ import SortBySelect from "../SortBySelect";
 import PostCard from "../PostCard";
 import Sidebar from "../Sidebar";
 import HorizontalStack from "../util/HorizontalStack";
+import PostBrowser from "../PostBrowser";
 
 const ExploreView = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0);
-  const [end, setEnd] = useState(false);
-  const [sortBy, setSortBy] = useState("-createdAt");
-  const [author, setAuthor] = useState("ihtasham_42");
-  const user = isLoggedIn();
-
-  const fetchPosts = async () => {
-    setLoading(true);
-    const newPage = page + 1;
-    setPage(newPage);
-    const query = { page: newPage, sortBy, author };
-    const data = await getPosts(user && user.token, query);
-    if (data.length === 0) {
-      setEnd(true);
-    }
-    setLoading(false);
-    if (!data.error) {
-      setPosts([...posts, ...data]);
-    }
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, [sortBy]);
-
-  const handleSortBy = (e) => {
-    const newSortBy = e.target.value;
-
-    setPosts([]);
-    setPage(0);
-    setEnd(false);
-    setSortBy(newSortBy);
-  };
-
-  const removePost = (removedPost) => {
-    setPosts(posts.filter((post) => post._id !== removedPost._id));
-  };
-
   return (
     <Container>
       <Navbar />
-      <GridLayout
-        left={
-          <Stack spacing={2}>
-            <Card>
-              <HorizontalStack justifyContent="space-between">
-                <CreatePost />
-                <SortBySelect onSortBy={handleSortBy} sortBy={sortBy} />
-              </HorizontalStack>
-            </Card>
-
-            {posts.map((post, i) => (
-              <PostCard
-                preview="primary"
-                key={post._id}
-                post={post}
-                removePost={removePost}
-              />
-            ))}
-
-            {loading && <Loading />}
-            {end ? (
-              <Box py={5} textAlign="center">
-                <Typography variant="h5" color="text.secondary">
-                  All posts have been viewed
-                </Typography>
-              </Box>
-            ) : (
-              !loading && (
-                <Box pt={4} pb={6} display="flex" justifyContent="center">
-                  <Button onClick={fetchPosts} variant="contained">
-                    Load more
-                  </Button>
-                </Box>
-              )
-            )}
-          </Stack>
-        }
-        right={<Sidebar />}
-      />
+      <GridLayout left={<PostBrowser createPost />} right={<Sidebar />} />
     </Container>
   );
 };
