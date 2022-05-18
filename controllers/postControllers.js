@@ -63,7 +63,9 @@ const getPost = async (req, res) => {
       throw new Error("Post does not exist");
     }
 
-    await setLiked([post], userId);
+    if (userId) {
+      await setLiked([post], userId);
+    }
 
     return res.json(post);
   } catch (err) {
@@ -142,15 +144,30 @@ const getPosts = async (req, res) => {
   try {
     const { userId } = req.body;
 
-    const { page } = req.query;
+    const { page, sortBy, author } = req.query;
 
-    const posts = await paginate(
-      Post.find().populate("poster").sort("-createdAt"),
+    let sortProperty = "-createdAt";
+    if (sortBy) sortProperty = sortBy;
+
+    let populateCondition = {};
+    if (author) {
+      populateCondition = {
+        path: "poster",
+        match: { username: author },
+      };
+    }
+
+    let posts = await paginate(
+      Post.find().populate(populateCondition).sort(sortProperty),
       page,
-      4
+      10
     ).lean();
 
-    await setLiked(posts, userId);
+    posts = posts.filter((post) => post.poster);
+
+    if (userId) {
+      await setLiked(posts, userId);
+    }
 
     return res.json(posts);
   } catch (err) {

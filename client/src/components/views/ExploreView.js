@@ -1,53 +1,53 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Card, Container, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { getPosts } from "../../api/posts";
 import { isLoggedIn } from "../../helpers/authHelper";
+import CreatePost from "../CreatePost";
 import GridLayout from "../GridLayout";
 import Loading from "../Loading";
 import Navbar from "../Navbar";
-import PostBar from "../PostBar";
+import SortBySelect from "../SortBySelect";
 import PostCard from "../PostCard";
 import Sidebar from "../Sidebar";
+import HorizontalStack from "../util/HorizontalStack";
 
 const ExploreView = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [end, setEnd] = useState(false);
+  const [sortBy, setSortBy] = useState("-createdAt");
+  const [author, setAuthor] = useState("ihtasham_42");
+  const user = isLoggedIn();
 
   const fetchPosts = async () => {
-    if (!loading || !end) {
-      console.log("a");
-      setLoading(true);
-      const newPage = page + 1;
-      setPage(newPage);
-      const query = { page: newPage };
-      const data = await getPosts(isLoggedIn(), query);
-      if (data.length < 3) {
-        setEnd(true);
-      }
-      setLoading(false);
-      if (!data.error) {
-        setPosts([...posts, ...data]);
-      }
+    setLoading(true);
+    const newPage = page + 1;
+    setPage(newPage);
+    const query = { page: newPage, sortBy, author };
+    const data = await getPosts(user && user.token, query);
+    if (data.length === 0) {
+      setEnd(true);
     }
-  };
-
-  const handleScroll = (e) => {
-    const scrollHeight = e.target.documentElement.scrollHeight;
-    const currentHeight =
-      e.target.documentElement.scrollTop + window.innerHeight;
-
-    if (currentHeight + 50 >= scrollHeight) {
-      fetchPosts();
+    setLoading(false);
+    if (!data.error) {
+      setPosts([...posts, ...data]);
     }
   };
 
   useEffect(() => {
     fetchPosts();
-    window.addEventListener("scroll", handleScroll);
-  }, []);
+  }, [sortBy]);
+
+  const handleSortBy = (e) => {
+    const newSortBy = e.target.value;
+
+    setPosts([]);
+    setPage(0);
+    setEnd(false);
+    setSortBy(newSortBy);
+  };
 
   const removePost = (removedPost) => {
     setPosts(posts.filter((post) => post._id !== removedPost._id));
@@ -59,7 +59,13 @@ const ExploreView = () => {
       <GridLayout
         left={
           <Stack spacing={2}>
-            <PostBar />
+            <Card>
+              <HorizontalStack justifyContent="space-between">
+                <CreatePost />
+                <SortBySelect onSortBy={handleSortBy} sortBy={sortBy} />
+              </HorizontalStack>
+            </Card>
+
             {posts.map((post, i) => (
               <PostCard
                 preview="primary"
@@ -70,12 +76,20 @@ const ExploreView = () => {
             ))}
 
             {loading && <Loading />}
-            {end && (
-              <Box py={3} textAlign="center">
+            {end ? (
+              <Box py={5} textAlign="center">
                 <Typography variant="h5" color="text.secondary">
                   All posts have been viewed
                 </Typography>
               </Box>
+            ) : (
+              !loading && (
+                <Box pt={4} pb={6} display="flex" justifyContent="center">
+                  <Button onClick={fetchPosts} variant="contained">
+                    Load more
+                  </Button>
+                </Box>
+              )
             )}
           </Stack>
         }

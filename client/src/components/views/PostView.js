@@ -17,9 +17,10 @@ const PostView = () => {
 
   const [post, setPost] = useState(null);
   const [error, setError] = useState("");
+  const user = isLoggedIn();
 
   const fetchPost = async () => {
-    const data = await getPost(params.id, isLoggedIn());
+    const data = await getPost(params.id, user && user.token);
     if (data.error) {
       setError(data.error);
     } else {

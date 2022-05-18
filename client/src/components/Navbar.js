@@ -42,20 +42,12 @@ const Navbar = () => {
           PostIt
         </Link>
       </Typography>
-      <TextField
-        size="small"
-        label="Search for posts..."
-        sx={{ flexGrow: 1, maxWidth: 300 }}
-      />
       <HorizontalStack>
         <IconButton href="/">
           <AiFillHome />
         </IconButton>
         {isLoggedIn() ? (
           <>
-            <IconButton>
-              <AiFillMessage />
-            </IconButton>
             <IconButton href={"/users/" + username}>
               <Avatar sx={{ width: 25, height: 25 }} />
             </IconButton>
