@@ -19,11 +19,11 @@ const verifyToken = (req, res, next) => {
 };
 
 const optionallyVerifyToken = (req, res, next) => {
-  const token = req.headers["x-access-token"];
-
-  if (!token) next();
-
   try {
+    const token = req.headers["x-access-token"];
+
+    if (!token) next();
+
     const decoded = jwt.decode(token, process.env.TOKEN_KEY);
     req.body.userId = decoded.userId;
 

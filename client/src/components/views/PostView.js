@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { getPost } from "../../api/posts";
 import Comments from "../Comments";
 import ErrorAlert from "../ErrorAlert";
+import { isLoggedIn } from "../../helpers/authHelper";
 
 const PostView = () => {
   const params = useParams();
@@ -18,7 +19,7 @@ const PostView = () => {
   const [error, setError] = useState("");
 
   const fetchPost = async () => {
-    const data = await getPost(params);
+    const data = await getPost(params.id, isLoggedIn());
     if (data.error) {
       setError(data.error);
     } else {
