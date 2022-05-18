@@ -1,10 +1,13 @@
-const getPosts = async (user) => {
+const getPosts = async (user, query) => {
   try {
-    const res = await fetch("http://localhost:4000/api/posts", {
-      headers: {
-        "x-access-token": user.token,
-      },
-    });
+    const res = await fetch(
+      "http://localhost:4000/api/posts?" + new URLSearchParams(query),
+      {
+        headers: {
+          "x-access-token": user.token,
+        },
+      }
+    );
     return await res.json();
   } catch (err) {
     console.log(err);

@@ -1,4 +1,5 @@
-import { Container, Stack, Typography } from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { getPosts } from "../../api/posts";
 import { isLoggedIn } from "../../helpers/authHelper";
@@ -12,16 +13,40 @@ import Sidebar from "../Sidebar";
 const ExploreView = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(0);
+  const [end, setEnd] = useState(false);
 
   const fetchPosts = async () => {
-    setLoading(true);
-    const data = await getPosts(isLoggedIn());
-    setLoading(false);
-    setPosts(data);
+    if (!loading || !end) {
+      console.log("a");
+      setLoading(true);
+      const newPage = page + 1;
+      setPage(newPage);
+      const query = { page: newPage };
+      const data = await getPosts(isLoggedIn(), query);
+      if (data.length < 3) {
+        setEnd(true);
+      }
+      setLoading(false);
+      if (!data.error) {
+        setPosts([...posts, ...data]);
+      }
+    }
+  };
+
+  const handleScroll = (e) => {
+    const scrollHeight = e.target.documentElement.scrollHeight;
+    const currentHeight =
+      e.target.documentElement.scrollTop + window.innerHeight;
+
+    if (currentHeight + 50 >= scrollHeight) {
+      fetchPosts();
+    }
   };
 
   useEffect(() => {
     fetchPosts();
+    window.addEventListener("scroll", handleScroll);
   }, []);
 
   const removePost = (removedPost) => {
@@ -43,7 +68,15 @@ const ExploreView = () => {
                 removePost={removePost}
               />
             ))}
+
             {loading && <Loading />}
+            {end && (
+              <Box py={3} textAlign="center">
+                <Typography variant="h5" color="text.secondary">
+                  All posts have been viewed
+                </Typography>
+              </Box>
+            )}
           </Stack>
         }
         right={<Sidebar />}

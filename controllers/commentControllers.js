@@ -28,7 +28,6 @@ const createComment = async (req, res) => {
 
     return res.json(comment);
   } catch (err) {
-    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };
@@ -102,7 +101,6 @@ const updateComment = async (req, res) => {
 
     return res.status(200).json(comment);
   } catch (err) {
-    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };

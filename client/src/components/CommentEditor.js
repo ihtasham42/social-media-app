@@ -1,14 +1,7 @@
-import {
-  Button,
-  Card,
-  CircularProgress,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Button, Card, Stack, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { AiFillWindows } from "react-icons/ai";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { createComment } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ErrorAlert from "./ErrorAlert";

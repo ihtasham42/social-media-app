@@ -62,21 +62,36 @@ const Comments = () => {
     }
   };
 
-  const editComment = () => {
-    setRerender(!rerender);
+  const editComment = (editedComment) => {
+    if (editedComment.parent) {
+      let parentComment = findComment(editedComment.parent);
+      for (let i = 0; i < parentComment.children.length; i++) {
+        if (parentComment.children[i]._id === editedComment._id) {
+          parentComment.children[i] = editedComment;
+        }
+      }
+    } else {
+      for (let i = 0; i < comments.length; i++) {
+        if (comments[i]._id === editedComment._id) {
+          comments[i] = editedComment;
+        }
+      }
+      setRerender(!rerender);
+    }
   };
 
   const addComment = (comment) => {
     if (comment.parent) {
       const parentComment = findComment(comment.parent);
-      console.log(parentComment);
       parentComment.children = [comment, ...parentComment.children];
-      console.log(parentComment);
+
       setRerender(!rerender);
     } else {
       setComments([comment, ...comments]);
     }
   };
+
+  console.log(comments);
 
   return comments ? (
     <Stack spacing={2}>

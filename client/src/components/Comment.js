@@ -9,7 +9,6 @@ import ContentDetails from "./ContentDetails";
 import HorizontalStack from "./util/HorizontalStack";
 import { deleteComment, updateComment } from "../api/posts";
 import ContentUpdateEditor from "./ContentUpdateEditor";
-import axios from "axios";
 
 const Comment = (props) => {
   const theme = useTheme();
@@ -38,7 +37,12 @@ const Comment = (props) => {
 
     await updateComment(comment._id, user, { content });
 
-    setComment({ ...comment, content, edited: true });
+    const newCommentData = { ...comment, content, edited: true };
+
+    setComment(newCommentData);
+
+    editComment(newCommentData);
+
     setEditing(false);
   };
 
@@ -57,6 +61,8 @@ const Comment = (props) => {
   if (depth % 2 === 1) {
     style.backgroundColor = "white";
   }
+
+  console.log(comment._id);
 
   return (
     <Box sx={style}>

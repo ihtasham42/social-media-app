@@ -132,7 +132,6 @@ const setLiked = async (posts, userId) => {
     userPostLikes.forEach((userPostLike) => {
       if (userPostLike.postId.equals(post._id)) {
         post.liked = true;
-        console.log("liked!");
         return;
       }
     });
@@ -141,13 +140,14 @@ const setLiked = async (posts, userId) => {
 
 const getPosts = async (req, res) => {
   try {
-    const page = req.query.page;
     const { userId } = req.body;
+
+    const { page } = req.query;
 
     const posts = await paginate(
       Post.find().populate("poster").sort("-createdAt"),
       page,
-      6
+      4
     ).lean();
 
     await setLiked(posts, userId);
@@ -187,7 +187,6 @@ const likePost = async (req, res) => {
 
     return res.json(postLike);
   } catch (err) {
-    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };
