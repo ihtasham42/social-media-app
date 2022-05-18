@@ -1,17 +1,9 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  IconButton,
-  Link,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Button, Card, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
-import { AiFillDelete, AiFillMessage } from "react-icons/ai";
+import React, { useState } from "react";
+import { AiFillMessage } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { deletePost, updatePost } from "../api/posts";
+import { deletePost, likePost, unlikePost, updatePost } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ContentDetails from "./ContentDetails";
 
@@ -20,7 +12,6 @@ import PostContentBox from "./PostContentBox";
 import HorizontalStack from "./util/HorizontalStack";
 
 import {} from "react-icons/ai";
-import PostEditor from "./PostEditor";
 import ContentUpdateEditor from "./ContentUpdateEditor";
 
 const PostCard = (props) => {
@@ -69,11 +60,13 @@ const PostCard = (props) => {
     setEditing(false);
   };
 
-  const handleLike = (liked) => {
+  const handleLike = async (liked) => {
     if (liked) {
-      setLikeCount(post.likeCount + 1);
+      setLikeCount(likeCount + 1);
+      await likePost(post._id, user);
     } else {
-      setLikeCount(post.likeCount);
+      setLikeCount(likeCount - 1);
+      await unlikePost(post._id, user);
     }
   };
 

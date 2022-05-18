@@ -56,11 +56,13 @@ const getPost = async (req, res) => {
       throw new Error("Post does not exist");
     }
 
-    const post = await Post.findById(postId).populate("poster");
+    const post = await Post.findById(postId).populate("poster").lean();
 
     if (!post) {
       throw new Error("Post does not exist");
     }
+
+    await setLiked([post]);
 
     return res.json(post);
   } catch (err) {
@@ -119,26 +121,31 @@ const deletePost = async (req, res) => {
   }
 };
 
+const setLiked = async (posts) => {
+  const userPostLikes = await PostLike.find(); //userId needed
+
+  posts.forEach((post) => {
+    userPostLikes.forEach((userPostLike) => {
+      if (userPostLike.postId.equals(post._id)) {
+        post.liked = true;
+        console.log("liked!");
+        return;
+      }
+    });
+  });
+};
+
 const getPosts = async (req, res) => {
   try {
     const page = req.query.page;
-    const { userId } = req.body;
 
     const posts = await paginate(
       Post.find().populate("poster").sort("-createdAt"),
       page,
       6
-    );
+    ).lean();
 
-    const userPostLikes = await PostLike.find({ poster: userId });
-
-    posts.forEach((post) => {
-      userPostLikes.forEach((userPostLike) => {
-        if (userPostLike.postId == post._id) {
-          post.liked = true;
-        }
-      });
-    });
+    await setLiked(posts);
 
     return res.json(posts);
   } catch (err) {
@@ -158,7 +165,7 @@ const likePost = async (req, res) => {
       throw new Error("Post does not exist");
     }
 
-    const existingPostLike = await PostLike.find({ postId, userId });
+    const existingPostLike = await PostLike.findOne({ postId, userId });
 
     if (existingPostLike) {
       throw new Error("Post is already liked");
@@ -170,10 +177,12 @@ const likePost = async (req, res) => {
     });
 
     post.likeCount += 1;
+
     await post.save();
 
     return res.json(postLike);
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };
@@ -196,6 +205,7 @@ const unlikePost = async (req, res) => {
     }
 
     post.likeCount -= 1;
+
     post.save();
 
     return res.json(existingPostLike);

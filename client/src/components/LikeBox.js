@@ -1,5 +1,5 @@
 import { IconButton, Stack, Typography, useTheme } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { IconContext } from "react-icons/lib";
 
@@ -9,12 +9,10 @@ const LikeBox = (props) => {
   const [liked, setLiked] = useState(props.liked);
 
   const handleLike = (e) => {
-    setLiked(!liked);
+    const newLikedValue = !liked;
+    setLiked(newLikedValue);
+    onLike(newLikedValue);
   };
-
-  useEffect(() => {
-    onLike(liked);
-  }, [liked]);
 
   return (
     <Stack alignItems="center">
