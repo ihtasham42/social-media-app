@@ -51,6 +51,7 @@ const getUserPosts = async (req, res) => {
 const getPost = async (req, res) => {
   try {
     const postId = req.params.id;
+    const { userId } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(postId)) {
       throw new Error("Post does not exist");
@@ -62,7 +63,7 @@ const getPost = async (req, res) => {
       throw new Error("Post does not exist");
     }
 
-    await setLiked([post]);
+    await setLiked([post], userId);
 
     return res.json(post);
   } catch (err) {
@@ -121,8 +122,11 @@ const deletePost = async (req, res) => {
   }
 };
 
-const setLiked = async (posts) => {
-  const userPostLikes = await PostLike.find(); //userId needed
+const setLiked = async (posts, userId) => {
+  let searchCondition = {};
+  if (userId) searchCondition = { userId };
+
+  const userPostLikes = await PostLike.find(searchCondition); //userId needed
 
   posts.forEach((post) => {
     userPostLikes.forEach((userPostLike) => {
@@ -138,6 +142,7 @@ const setLiked = async (posts) => {
 const getPosts = async (req, res) => {
   try {
     const page = req.query.page;
+    const { userId } = req.body;
 
     const posts = await paginate(
       Post.find().populate("poster").sort("-createdAt"),
@@ -145,7 +150,7 @@ const getPosts = async (req, res) => {
       6
     ).lean();
 
-    await setLiked(posts);
+    await setLiked(posts, userId);
 
     return res.json(posts);
   } catch (err) {

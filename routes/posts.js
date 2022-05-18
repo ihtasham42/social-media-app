@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const postControllers = require("../controllers/postControllers");
-const { verifyToken } = require("../middleware/auth");
+const { verifyToken, optionallyVerifyToken } = require("../middleware/auth");
 
-router.get("/", postControllers.getPosts);
+router.get("/", optionallyVerifyToken, postControllers.getPosts);
 router.post("/", verifyToken, postControllers.createPost);
 
-router.get("/:id", postControllers.getPost);
+router.get("/:id", optionallyVerifyToken, postControllers.getPost);
 router.patch("/:id", verifyToken, postControllers.updatePost);
 router.delete("/:id", verifyToken, postControllers.deletePost);
 
@@ -18,6 +18,6 @@ router.get(
   postControllers.getUserLikedPosts
 );
 
-router.get("/user_posts/:id", verifyToken, postControllers.getUserPosts);
+router.get("/user_posts/:id", postControllers.getUserPosts);
 
 module.exports = router;
