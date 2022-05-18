@@ -14,6 +14,7 @@ import LoginView from "./components/views/LoginView";
 import SignupView from "./components/views/SignupView";
 import ExploreView from "./components/views/ExploreView";
 import PrivateRoute from "./components/PrivateRoute";
+import SearchView from "./components/views/SearchView";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             }
           />
           <Route path="/users/:id" element={<ProfileView />} />
+          <Route path="/search" element={<SearchView />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/signup" element={<SignupView />} />
         </Routes>

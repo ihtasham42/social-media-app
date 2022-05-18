@@ -7,6 +7,7 @@ import {
   Link,
   Button,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import React, { useState } from "react";
 import "react-icons/ai";
 import { AiFillHome, AiFillMessage } from "react-icons/ai";
@@ -18,10 +19,21 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = isLoggedIn();
   const username = user && isLoggedIn().username;
+  const [search, setSearch] = useState("");
 
   const handleLogout = async (e) => {
     logoutUser();
     navigate("/login");
+  };
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    navigate("/search?search=" + search);
   };
 
   return (
@@ -42,6 +54,15 @@ const Navbar = () => {
           PostIt
         </Link>
       </Typography>
+      <Box component="form" onSubmit={handleSubmit}>
+        <TextField
+          size="small"
+          label="Search for posts..."
+          sx={{ flexGrow: 1, maxWidth: 300 }}
+          onChange={handleChange}
+        />
+      </Box>
+
       <HorizontalStack>
         <IconButton href="/">
           <AiFillHome />
