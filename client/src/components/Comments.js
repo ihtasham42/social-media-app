@@ -101,7 +101,7 @@ const Comments = () => {
       />
 
       {comments.length > 0 ? (
-        <>
+        <Box pb={4}>
           {comments.map((comment, i) => (
             <Comment
               addComment={addComment}
@@ -113,7 +113,7 @@ const Comments = () => {
             />
           ))}
           {loading && <Loading />}
-        </>
+        </Box>
       ) : (
         <Box
           display="flex"

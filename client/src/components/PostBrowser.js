@@ -21,9 +21,12 @@ const PostBrowser = ({ author, search, createPost }) => {
     setLoading(true);
     const newPage = page + 1;
     setPage(newPage);
-    const query = { page: newPage, sortBy, author };
+    const query = {
+      page: newPage,
+      sortBy,
+      author: author !== undefined ? author : null,
+    };
     const data = await getPosts(user && user.token, query);
-    console.log(data);
     if (data.length === 0) {
       setEnd(true);
     }

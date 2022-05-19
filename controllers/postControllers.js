@@ -151,7 +151,9 @@ const getPosts = async (req, res) => {
 
     let populateCondition = "poster";
 
-    if (author != "undefined") {
+    console.log(author);
+
+    if (author) {
       populateCondition = {
         path: "poster",
         match: { username: author },

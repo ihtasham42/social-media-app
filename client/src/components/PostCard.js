@@ -91,7 +91,7 @@ const PostCard = (props) => {
               edited={post.edited}
             />
             <Box>
-              {isAuthor && (
+              {isAuthor && preview !== "secondary" && (
                 <HorizontalStack>
                   <Button
                     disabled={loading}
