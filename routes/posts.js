@@ -18,6 +18,4 @@ router.get(
   postControllers.getUserLikedPosts
 );
 
-router.get("/user_posts/:id", postControllers.getUserPosts);
-
 module.exports = router;

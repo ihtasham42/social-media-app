@@ -14,10 +14,12 @@ import { loginUser } from "../../helpers/authHelper";
 import { useNavigate } from "react-router-dom";
 import Copyright from "../Copyright";
 import ErrorAlert from "../ErrorAlert";
+import { isLength, isEmail, isAlpha } from "validator";
 
 const SignupView = () => {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState("");
+  const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
     username: "",
@@ -32,6 +34,9 @@ const SignupView = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const errors = validate();
+    if (Object.keys(errors).length !== 0) return;
+
     const data = await signup(formData);
 
     if (data.error) {
@@ -41,6 +46,32 @@ const SignupView = () => {
       navigate("/");
     }
   };
+
+  const validate = () => {
+    const errors = {};
+
+    if (!isLength(formData.username, { min: 6, max: 30 })) {
+      errors.username = "Must be between 6 and 30 characters long";
+    }
+
+    if (!isAlpha(formData.username, "en-US")) {
+      errors.username = "Must contain only valid characters";
+    }
+
+    if (!isLength(formData.password, { min: 8 })) {
+      errors.password = "Must be at least 8 characters long";
+    }
+
+    if (!isEmail(formData.email)) {
+      errors.email = "Must be a valid email address";
+    }
+
+    setErrors(errors);
+
+    return errors;
+  };
+
+  console.log(errors);
 
   return (
     <Container maxWidth={"xs"} sx={{ mt: { xs: 2, md: 6 } }}>
@@ -66,6 +97,8 @@ const SignupView = () => {
             id="username"
             name="username"
             onChange={handleChange}
+            error={errors.username !== undefined}
+            helperText={errors.username}
           />
           <TextField
             label="Email Address"
@@ -76,6 +109,8 @@ const SignupView = () => {
             id="email"
             name="email"
             onChange={handleChange}
+            error={errors.email !== undefined}
+            helperText={errors.email}
           />
           <TextField
             label="Password"
@@ -87,6 +122,8 @@ const SignupView = () => {
             name="password"
             type="password"
             onChange={handleChange}
+            error={errors.password !== undefined}
+            helperText={errors.password}
           />
           <ErrorAlert error={serverError} />
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
