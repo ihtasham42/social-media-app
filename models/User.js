@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { isEmail } = require("validator");
+const { isEmail, isAlpha } = require("validator");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       minlength: [6, "Must be at least 6 characters long"],
       maxlength: [30, "Must be no more than 30 characters long"],
+      validate: {
+        validator: (val) => isAlpha(val, ["en-US"]),
+        message: "Must contain no spaces and only valid characters",
+      },
     },
     email: {
       type: String,
