@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { deletePost, likePost, unlikePost, updatePost } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ContentDetails from "./ContentDetails";
+import ReactMarkdown from "react-markdown";
 
 import LikeBox from "./LikeBox";
 import PostContentBox from "./PostContentBox";
@@ -13,6 +14,7 @@ import HorizontalStack from "./util/HorizontalStack";
 
 import {} from "react-icons/ai";
 import ContentUpdateEditor from "./ContentUpdateEditor";
+import Markdown from "./Markdown";
 
 const PostCard = (props) => {
   const { preview, removePost } = props;
@@ -127,7 +129,7 @@ const PostCard = (props) => {
                 originalContent={post.content}
               />
             ) : (
-              <Typography>{post.content}</Typography>
+              <Markdown content={post.content} />
             ))}
 
           <HorizontalStack sx={{ mt: 1 }}>

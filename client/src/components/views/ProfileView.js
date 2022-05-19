@@ -32,7 +32,6 @@ const ProfileView = () => {
     } else {
       setUser(data);
     }
-    console.log(data);
   };
 
   useEffect(() => {

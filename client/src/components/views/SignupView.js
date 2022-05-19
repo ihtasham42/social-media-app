@@ -71,8 +71,6 @@ const SignupView = () => {
     return errors;
   };
 
-  console.log(errors);
-
   return (
     <Container maxWidth={"xs"} sx={{ mt: { xs: 2, md: 6 } }}>
       <Stack alignItems="center">

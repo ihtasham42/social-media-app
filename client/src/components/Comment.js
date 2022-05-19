@@ -9,6 +9,8 @@ import ContentDetails from "./ContentDetails";
 import HorizontalStack from "./util/HorizontalStack";
 import { deleteComment, updateComment } from "../api/posts";
 import ContentUpdateEditor from "./ContentUpdateEditor";
+import ReactMarkdown from "react-markdown";
+import Markdown from "./Markdown";
 
 const Comment = (props) => {
   const theme = useTheme();
@@ -116,7 +118,7 @@ const Comment = (props) => {
         {!minimised && (
           <Box sx={{ mt: 1 }}>
             {!editing ? (
-              <Typography>{comment.content}</Typography>
+              <Markdown content={comment.content} />
             ) : (
               <ContentUpdateEditor
                 handleSubmit={handleSubmit}

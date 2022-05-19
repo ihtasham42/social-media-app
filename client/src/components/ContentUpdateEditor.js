@@ -18,6 +18,7 @@ const ContentUpdateEditor = ({ handleSubmit, originalContent }) => {
           name="content"
           sx={{ backgroundColor: "white" }}
           onChange={handleChange}
+          multiline
         />
         <Button
           type="submit"
