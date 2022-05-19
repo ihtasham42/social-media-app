@@ -62,8 +62,6 @@ const Comment = (props) => {
     style.backgroundColor = "white";
   }
 
-  console.log(comment._id);
-
   return (
     <Box sx={style}>
       <Box

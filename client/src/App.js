@@ -4,7 +4,13 @@ import "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import theme from "./theme";
 
 import PostView from "./components/views/PostView";
@@ -23,7 +29,7 @@ function App() {
         <CssBaseline />
         <Routes>
           <Route path="/" element={<ExploreView />} />
-          <Route path="/posts/:id" element={<PostView />} />
+          <Route path="/posts/:id" element={<PostView key={"a"} />} />
           <Route
             path="/posts/create"
             element={

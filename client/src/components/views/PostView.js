@@ -17,20 +17,23 @@ const PostView = () => {
 
   const [post, setPost] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   const user = isLoggedIn();
 
   const fetchPost = async () => {
+    setLoading(true);
     const data = await getPost(params.id, user && user.token);
     if (data.error) {
       setError(data.error);
     } else {
       setPost(data);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchPost();
-  }, []);
+  }, [params.id]);
 
   return (
     <Container>
@@ -38,16 +41,16 @@ const PostView = () => {
       <GoBack />
       <GridLayout
         left={
-          post ? (
+          loading ? (
+            <Loading />
+          ) : post ? (
             <Stack spacing={2}>
-              <PostCard post={post} />
+              <PostCard post={post} key={post._id} />
 
               <Comments />
             </Stack>
-          ) : error ? (
-            <ErrorAlert error={error} />
           ) : (
-            <Loading />
+            error && <ErrorAlert error={error} />
           )
         }
         right={<Sidebar />}

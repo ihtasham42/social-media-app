@@ -91,8 +91,6 @@ const Comments = () => {
     }
   };
 
-  console.log(comments);
-
   return comments ? (
     <Stack spacing={2}>
       <CommentEditor
