@@ -18,8 +18,7 @@ const ContentDetails = ({ username, createdAt, edited }) => {
         >
           By {username}
         </Link>{" "}
-        - <Moment format="DD/MM/YYYY">{createdAt}</Moment>{" "}
-        {edited && <>(Edited)</>}
+        - <Moment fromNow>{createdAt}</Moment> {edited && <>(Edited)</>}
       </Typography>
     </HorizontalStack>
   );
