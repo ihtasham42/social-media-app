@@ -149,24 +149,15 @@ const getPosts = async (req, res) => {
     let sortProperty = "-createdAt";
     if (sortBy) sortProperty = sortBy;
 
-    let populateCondition = "poster";
-
-    console.log(author);
-
-    if (author) {
-      populateCondition = {
-        path: "poster",
-        match: { username: author },
-      };
-    }
-
     let posts = await paginate(
-      Post.find().populate(populateCondition).sort(sortProperty),
+      Post.find().populate("poster").sort(sortProperty),
       page,
       10
     ).lean();
 
-    posts = posts.filter((post) => post.poster);
+    if (author) {
+      posts = posts.filter((post) => post.poster.username == author);
+    }
 
     if (userId) {
       await setLiked(posts, userId);

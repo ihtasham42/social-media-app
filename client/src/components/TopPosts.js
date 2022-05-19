@@ -23,8 +23,6 @@ const TopPosts = () => {
       topPosts.push(data[i]);
     }
 
-    console.log(topPosts);
-
     setPosts(topPosts);
 
     setLoading(false);
