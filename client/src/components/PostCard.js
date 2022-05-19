@@ -30,6 +30,11 @@ const PostCard = (props) => {
   const [post, setPost] = useState(postData);
   const [likeCount, setLikeCount] = useState(post.likeCount);
 
+  let maxHeight = null;
+  if (preview === "primary") {
+    maxHeight = 250;
+  }
+
   const handleDeletePost = async (e) => {
     e.stopPropagation();
 
@@ -117,7 +122,7 @@ const PostCard = (props) => {
           <Typography
             variant="h5"
             gutterBottom
-            sx={{ overflow: "hidden", mt: 1 }}
+            sx={{ overflow: "hidden", mt: 1, maxHeight: 100 }}
           >
             {post.title}
           </Typography>
@@ -129,7 +134,9 @@ const PostCard = (props) => {
                 originalContent={post.content}
               />
             ) : (
-              <Markdown content={post.content} />
+              <Box maxHeight={maxHeight} overflow="hidden">
+                <Markdown content={post.content} />
+              </Box>
             ))}
 
           <HorizontalStack sx={{ mt: 1 }}>

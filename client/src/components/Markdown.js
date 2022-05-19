@@ -12,9 +12,8 @@ const Markdown = ({ content }) => {
         style={{ "&p": { margin: 0 } }}
         disallowedElements={disallowed}
         skipHtml
-      >
-        {content}
-      </ReactMarkdown>
+        children={content}
+      />
     </Typography>
   );
 };
