@@ -158,8 +158,6 @@ const getPosts = async (req, res) => {
       };
     }
 
-    console.log(author + sortBy);
-
     let posts = await paginate(
       Post.find().populate(populateCondition).sort(sortProperty),
       page,

@@ -32,8 +32,8 @@ const Navbar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    navigate("/search?search=" + search);
+    console.log(search);
+    navigate("/search?" + new URLSearchParams({ search }));
   };
 
   return (
@@ -54,6 +54,8 @@ const Navbar = () => {
           PostIt
         </Link>
       </Typography>
+
+      {/*
       <Box component="form" onSubmit={handleSubmit}>
         <TextField
           size="small"
@@ -62,6 +64,7 @@ const Navbar = () => {
           onChange={handleChange}
         />
       </Box>
+    */}
 
       <HorizontalStack>
         <IconButton href="/">
