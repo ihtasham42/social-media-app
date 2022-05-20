@@ -1,5 +1,5 @@
-# social-media-app
-Social media application built with the MERN stack
+# PostIt
+PostIt is a social media web application, built with the MERN stack.
 
 ## Features
 - Create, read, update and delete posts
