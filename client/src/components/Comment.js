@@ -1,7 +1,7 @@
 import { Button, IconButton, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
+import { AiFillEdit, AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { isLoggedIn } from "../helpers/authHelper";
 import CommentEditor from "./CommentEditor";
@@ -9,11 +9,14 @@ import ContentDetails from "./ContentDetails";
 import HorizontalStack from "./util/HorizontalStack";
 import { deleteComment, updateComment } from "../api/posts";
 import ContentUpdateEditor from "./ContentUpdateEditor";
-import ReactMarkdown from "react-markdown";
 import Markdown from "./Markdown";
+import { MdCancel } from "react-icons/md";
+import { BiReply, BiTrash } from "react-icons/bi";
+import { BsReply, BsReplyFill } from "react-icons/bs";
 
 const Comment = (props) => {
   const theme = useTheme();
+  const iconColor = theme.palette.primary.main;
   const { depth, addComment, removeComment, editComment } = props;
   const commentData = props.comment;
   const [minimised, setMinimised] = useState(depth % 4 === 3);
@@ -94,22 +97,38 @@ const Comment = (props) => {
             </IconButton>
           </HorizontalStack>
           {!minimised && (
-            <HorizontalStack spacing={0}>
-              <Button variant="text" size="small" onClick={handleSetReplying}>
-                {!replying ? <div>Reply</div> : <div>Cancel</div>}
-              </Button>
+            <HorizontalStack spacing={1}>
+              <IconButton
+                variant="text"
+                size="small"
+                onClick={handleSetReplying}
+              >
+                {!replying ? (
+                  <BsReplyFill color={iconColor} />
+                ) : (
+                  <MdCancel color={iconColor} />
+                )}
+              </IconButton>
               {isAuthor && (
-                <HorizontalStack spacing={0}>
-                  <Button
+                <HorizontalStack spacing={1}>
+                  <IconButton
                     variant="text"
                     size="small"
                     onClick={() => setEditing(!editing)}
                   >
-                    {editing ? <>Cancel</> : <>Edit</>}
-                  </Button>
-                  <Button variant="text" size="small" onClick={handleDelete}>
-                    Delete
-                  </Button>
+                    {editing ? (
+                      <MdCancel color={iconColor} />
+                    ) : (
+                      <AiFillEdit color={iconColor} />
+                    )}
+                  </IconButton>
+                  <IconButton
+                    variant="text"
+                    size="small"
+                    onClick={handleDelete}
+                  >
+                    <BiTrash color={iconColor} />
+                  </IconButton>
                 </HorizontalStack>
               )}
             </HorizontalStack>
