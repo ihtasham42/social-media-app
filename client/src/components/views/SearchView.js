@@ -1,5 +1,5 @@
 import { Container, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GridLayout from "../GridLayout";
 import Navbar from "../Navbar";
 import PostBrowser from "../PostBrowser";
@@ -7,7 +7,13 @@ import Sidebar from "../Sidebar";
 
 const SearchView = () => {
   let params = new URLSearchParams(window.location.search);
-  const search = params.get("search");
+  const searchValue = params.get("search");
+
+  const [search, setSearch] = useState(searchValue);
+
+  useEffect(() => {
+    setSearch(searchValue);
+  }, []);
 
   return (
     <Container>
@@ -16,6 +22,7 @@ const SearchView = () => {
         left={
           <Stack spacing={2}>
             <Typography variant="h4">
+              {console.log(search)}
               Showing results for "{search}":
             </Typography>
             <PostBrowser createPost search={search} />

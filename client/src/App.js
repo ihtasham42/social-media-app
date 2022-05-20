@@ -39,7 +39,6 @@ function App() {
             }
           />
           <Route path="/users/:id" element={<ProfileView />} />
-          <Route path="/search" element={<SearchView />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/signup" element={<SignupView />} />
         </Routes>
