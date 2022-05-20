@@ -79,10 +79,7 @@ const LoginView = () => {
             onChange={handleChange}
             type="password"
           />
-          <FormControlLabel
-            control={<Checkbox name="remember" color="primary" />}
-            label="Remember me"
-          />
+
           <ErrorAlert error={serverError} />
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
             Login
