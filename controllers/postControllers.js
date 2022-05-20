@@ -4,6 +4,7 @@ const User = require("../models/User");
 const Comment = require("../models/Comment");
 const PostLike = require("../models/PostLike");
 const paginate = require("../util/paginate");
+const cooldown = new Set();
 
 const createPost = async (req, res) => {
   try {
@@ -12,6 +13,17 @@ const createPost = async (req, res) => {
     if (!(title && content)) {
       throw new Error("All input required");
     }
+
+    if (cooldown.has(userId)) {
+      throw new Error(
+        "You are posting too frequently. Please try again shortly."
+      );
+    }
+
+    cooldown.add(userId);
+    setTimeout(() => {
+      cooldown.delete(userId);
+    }, 60000);
 
     const post = await Post.create({
       title,

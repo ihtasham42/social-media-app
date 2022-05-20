@@ -1,6 +1,7 @@
 const Comment = require("../models/Comment");
 const mongoose = require("mongoose");
 const Post = require("../models/Post");
+const cooldown = new Set();
 
 const createComment = async (req, res) => {
   try {
@@ -12,6 +13,17 @@ const createComment = async (req, res) => {
     if (!post) {
       throw new Error("Post not found");
     }
+
+    if (cooldown.has(userId)) {
+      throw new Error(
+        "You are commenting too frequently. Please try again shortly."
+      );
+    }
+
+    cooldown.add(userId);
+    setTimeout(() => {
+      cooldown.delete(userId);
+    }, 30000);
 
     const comment = await Comment.create({
       content,

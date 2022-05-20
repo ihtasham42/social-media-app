@@ -40,12 +40,12 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
     setLoading(true);
     const data = await createComment(body, params, isLoggedIn());
     setLoading(false);
-    formData.content = "";
-    setReplying && setReplying(false);
 
     if (data.error) {
-      setError("Failed to post comment");
+      setError(data.error);
     } else {
+      formData.content = "";
+      setReplying && setReplying(false);
       addComment(data);
     }
   };
