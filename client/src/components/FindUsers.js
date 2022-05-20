@@ -1,6 +1,7 @@
 import {
   Avatar,
   Card,
+  Divider,
   IconButton,
   Link,
   Stack,
@@ -50,6 +51,8 @@ const FindUsers = () => {
             <MdRefresh />
           </IconButton>
         </HorizontalStack>
+
+        <Divider />
 
         {loading ? (
           <Loading />

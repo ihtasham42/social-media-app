@@ -1,4 +1,4 @@
-import { Card, Container, Stack, Typography } from "@mui/material";
+import { Card, Container, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUser } from "../../api/users";
@@ -15,6 +15,7 @@ import Navbar from "../Navbar";
 import PostBrowser from "../PostBrowser";
 import PostCard from "../PostCard";
 import Profile from "../Profile";
+import ProfileTabs from "../ProfileTabs";
 import SortBySelect from "../SortBySelect";
 import HorizontalStack from "../util/HorizontalStack";
 
@@ -48,14 +49,22 @@ const ProfileView = () => {
         left={
           <>
             <MobileProfile user={user} />
-
-            {user && <PostBrowser author={user.user.username} />}
-            {error && <ErrorAlert error={error} />}
+            <Stack spacing={2}>
+              {user ? (
+                <>
+                  <PostBrowser author={user.user.username} />
+                </>
+              ) : (
+                <Loading />
+              )}
+              {error && <ErrorAlert error={error} />}
+            </Stack>
           </>
         }
         right={
           <Stack spacing={2}>
             <Profile user={user} />
+
             <FindUsers />
             <Footer />
           </Stack>

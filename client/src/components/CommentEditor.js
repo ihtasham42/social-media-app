@@ -58,7 +58,9 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
     <Card>
       <Stack spacing={2}>
         <HorizontalStack justifyContent="space-between">
-          <Typography variant="h5">Reply</Typography>
+          <Typography variant="h5">
+            {comment ? <>Reply</> : <>Comment</>}
+          </Typography>
           <Link href="https://commonmark.org/help/" target="_blank">
             Markdown Help
           </Link>

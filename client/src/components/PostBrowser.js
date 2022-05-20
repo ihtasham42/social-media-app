@@ -1,4 +1,4 @@
-import { Button, Card, Stack, Typography } from "@mui/material";
+import { Button, Card, Link, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { getPosts } from "../api/posts";
@@ -56,6 +56,13 @@ const PostBrowser = ({ author, search, createPost }) => {
     setPosts(posts.filter((post) => post._id !== removedPost._id));
   };
 
+  const handleBackToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
       <Stack spacing={2}>
@@ -84,11 +91,14 @@ const PostBrowser = ({ author, search, createPost }) => {
           </Box>
         ) : (
           !loading && (
-            <Box pt={4} pb={6} display="flex" justifyContent="center">
+            <Stack pt={2} pb={6} alignItems="center" spacing={2}>
               <Button onClick={fetchPosts} variant="contained">
                 Load more
               </Button>
-            </Box>
+              <Button variant="text" size="small" onClick={handleBackToTop}>
+                Back to top
+              </Button>
+            </Stack>
           )
         )}
       </Stack>

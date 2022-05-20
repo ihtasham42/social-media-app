@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { isEmail, isAlpha } = require("validator");
+const filter = require("../util/filter");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -28,5 +29,13 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+UserSchema.pre("save", function (next) {
+  if (filter.isProfane(this.username)) {
+    throw new Error("Username cannot contain profanity");
+  }
+
+  next();
+});
 
 module.exports = mongoose.model("user", UserSchema);

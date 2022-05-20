@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const filter = require("../util/filter");
 
 const PostSchema = new mongoose.Schema(
   {
@@ -32,5 +33,11 @@ const PostSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+PostSchema.pre("save", function (next) {
+  this.title = filter.clean(this.title);
+  this.content = filter.clean(this.content);
+  next();
+});
 
 module.exports = mongoose.model("post", PostSchema);
