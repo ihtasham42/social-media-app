@@ -5,6 +5,7 @@ import { getUser } from "../../api/users";
 
 import ContentSelect from "../ContentSelect";
 import ErrorAlert from "../ErrorAlert";
+import FindUsers from "../FindUsers";
 import Footer from "../Footer";
 import GoBack from "../GoBack";
 import GridLayout from "../GridLayout";
@@ -55,6 +56,7 @@ const ProfileView = () => {
         right={
           <Stack spacing={2}>
             <Profile user={user} />
+            <FindUsers />
             <Footer />
           </Stack>
         }
