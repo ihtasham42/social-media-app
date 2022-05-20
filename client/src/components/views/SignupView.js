@@ -14,7 +14,7 @@ import { loginUser } from "../../helpers/authHelper";
 import { useNavigate } from "react-router-dom";
 import Copyright from "../Copyright";
 import ErrorAlert from "../ErrorAlert";
-import { isLength, isEmail, isAlpha } from "validator";
+import { isLength, isEmail, contains } from "validator";
 
 const SignupView = () => {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ const SignupView = () => {
       errors.username = "Must be between 6 and 30 characters long";
     }
 
-    if (!isAlpha(formData.username)) {
+    if (contains(formData.username, " ")) {
       errors.username = "Must contain only valid characters";
     }
 

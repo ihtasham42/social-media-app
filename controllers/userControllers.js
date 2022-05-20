@@ -40,8 +40,6 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    console.log(password);
-
     if (!(email && password)) {
       throw new Error("All input required");
     }

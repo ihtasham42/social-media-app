@@ -1,5 +1,6 @@
 import "@mui/material";
 import "react-icons";
+import "react-icons/bi";
 import "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";

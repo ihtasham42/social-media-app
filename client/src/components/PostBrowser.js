@@ -84,11 +84,14 @@ const PostBrowser = ({ author, search, createPost }) => {
 
         {loading && <Loading />}
         {end ? (
-          <Box py={5} textAlign="center">
-            <Typography variant="h5" color="text.secondary">
+          <Stack py={5} alignItems="center">
+            <Typography variant="h5" color="text.secondary" gutterBottom>
               All posts have been viewed
             </Typography>
-          </Box>
+            <Button variant="text" size="small" onClick={handleBackToTop}>
+              Back to top
+            </Button>
+          </Stack>
         ) : (
           !loading && (
             <Stack pt={2} pb={6} alignItems="center" spacing={2}>
