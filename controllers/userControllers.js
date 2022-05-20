@@ -165,6 +165,43 @@ const getUser = async (req, res) => {
   }
 };
 
+const getRandomUsers = async (req, res) => {
+  try {
+    let { size } = req.query;
+
+    const users = await User.find();
+
+    const randomUsers = [];
+
+    if (size > users.length) {
+      size = users.length;
+    }
+
+    const randomIndices = getRandomIndices(size, users.length);
+
+    for (let i = 0; i < randomIndices.length; i++) {
+      const randomUser = users[randomIndices[i]];
+      randomUsers.push(randomUser);
+    }
+
+    return res.status(200).json(randomUsers);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ error: err.message });
+  }
+};
+
+const getRandomIndices = (size, sourceSize) => {
+  const randomIndices = [];
+  while (randomIndices.length < size) {
+    const randomNumber = Math.floor(Math.random() * sourceSize);
+    if (!randomIndices.includes(randomNumber)) {
+      randomIndices.push(randomNumber);
+    }
+  }
+  return randomIndices;
+};
+
 module.exports = {
   register,
   login,
@@ -173,4 +210,5 @@ module.exports = {
   getFollowers,
   getFollowing,
   getUser,
+  getRandomUsers,
 };

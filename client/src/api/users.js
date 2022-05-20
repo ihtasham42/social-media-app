@@ -39,4 +39,15 @@ const getUser = async (params) => {
   }
 };
 
-export { signup, login, getUser };
+const getRandomUsers = async (query) => {
+  try {
+    const res = await fetch(
+      "http://localhost:4000/api/users/random?" + new URLSearchParams(query)
+    );
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { signup, login, getUser, getRandomUsers };
