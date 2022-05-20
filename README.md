@@ -2,10 +2,11 @@
 Social media application built with the MERN stack
 
 ## Features
-- Create, read, update, delete posts
+- Create, read, update and delete posts
 - Like and unlike posts
-- Create, read, update, delete nested comments
+- Create, reply to, read, update and delete nested comments
+- Markdown for posts and comments
 - Sign up and login using JWT for authentication
 - View profiles of users and browse through posts they have made
 - Infinite scrolling 
-- Filter posts 
+- Sort posts by attributes such as like count, comment count and date created
