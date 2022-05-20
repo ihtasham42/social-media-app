@@ -10,9 +10,10 @@ import {
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import "react-icons/ai";
-import { AiFillHome, AiFillMessage } from "react-icons/ai";
+import { AiFillFileText, AiFillHome, AiFillMessage } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { isLoggedIn, logoutUser } from "../helpers/authHelper";
+import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
 
 const Navbar = () => {
@@ -49,11 +50,14 @@ const Navbar = () => {
       }}
       spacing={2}
     >
-      <Typography variant="h4" mr={1}>
-        <Link href="/" color="inherit" underline="none">
-          PostIt
-        </Link>
-      </Typography>
+      <HorizontalStack>
+        <AiFillFileText size={40} />
+        <Typography variant="h4" mr={1}>
+          <Link href="/" color="inherit" underline="none">
+            PostIt
+          </Link>
+        </Typography>
+      </HorizontalStack>
 
       {/*
       <Box component="form" onSubmit={handleSubmit}>
@@ -70,10 +74,10 @@ const Navbar = () => {
         <IconButton href="/">
           <AiFillHome />
         </IconButton>
-        {isLoggedIn() ? (
+        {user ? (
           <>
             <IconButton href={"/users/" + username}>
-              <Avatar sx={{ width: 25, height: 25 }} />
+              <UserAvatar width={30} height={30} username={user.username} />
             </IconButton>
             <Button onClick={handleLogout}>Logout</Button>
           </>

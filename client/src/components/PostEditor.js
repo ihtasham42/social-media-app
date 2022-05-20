@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { createPost } from "../api/posts";
 import ErrorAlert from "./ErrorAlert";
 import { isLoggedIn } from "../helpers/authHelper";
-import { isAlpha } from "validator";
+import HorizontalStack from "./util/HorizontalStack";
+import UserAvatar from "./UserAvatar";
 
 const PostEditor = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const PostEditor = () => {
 
   const [serverError, setServerError] = useState("");
   const [errors, setErrors] = useState({});
+  const user = isLoggedIn();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,7 +49,15 @@ const PostEditor = () => {
   return (
     <Card>
       <Stack spacing={2}>
-        <Typography variant="h5">What would you like to post today?</Typography>
+        {user && (
+          <HorizontalStack spacing={2}>
+            <UserAvatar width={50} height={50} username={user.username} />
+            <Typography variant="h5">
+              What would you like to post today {user.username}?
+            </Typography>
+          </HorizontalStack>
+        )}
+
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
             fullWidth

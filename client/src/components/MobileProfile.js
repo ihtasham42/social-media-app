@@ -1,5 +1,6 @@
 import { Avatar, Card, Stack, Typography } from "@mui/material";
 import React from "react";
+import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
 
 const MobileProfile = ({ user }) => {
@@ -7,8 +8,8 @@ const MobileProfile = ({ user }) => {
     <Card sx={{ display: { sm: "block", md: "none" }, mb: 2 }}>
       {user ? (
         <HorizontalStack justifyContent="space-between">
-          <HorizontalStack>
-            <Avatar />
+          <HorizontalStack spacing={2}>
+            <UserAvatar width={50} height={50} username={user.user.username} />
             <Typography variant="h6">{user.user.username}'s Profile</Typography>
           </HorizontalStack>
 

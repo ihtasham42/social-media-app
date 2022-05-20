@@ -2,11 +2,12 @@ import { Avatar, Typography, Link } from "@mui/material";
 import React from "react";
 import HorizontalStack from "./util/HorizontalStack";
 import Moment from "react-moment";
+import UserAvatar from "./UserAvatar";
 
 const ContentDetails = ({ username, createdAt, edited, preview }) => {
   return (
     <HorizontalStack sx={{}}>
-      <Avatar sx={{ width: 20, height: 20 }} />
+      <UserAvatar width={30} height={30} username={username} />
       <Typography variant="subtitle2" color="text.secondary" gutterBottom>
         <Link
           color="inherit"
