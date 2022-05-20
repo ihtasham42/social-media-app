@@ -1,6 +1,8 @@
+import { BASE_URL } from "../config";
+
 const signup = async (user) => {
   try {
-    const res = await fetch("http://localhost:4000/api/users/register", {
+    const res = await fetch(BASE_URL + "api/users/register", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -16,7 +18,7 @@ const signup = async (user) => {
 
 const login = async (user) => {
   try {
-    const res = await fetch("http://localhost:4000/api/users/login", {
+    const res = await fetch(BASE_URL + "api/users/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -32,7 +34,7 @@ const login = async (user) => {
 
 const getUser = async (params) => {
   try {
-    const res = await fetch("http://localhost:4000/api/users/" + params.id);
+    const res = await fetch(BASE_URL + "api/users/" + params.id);
     return res.json();
   } catch (err) {
     console.log(err);
@@ -42,7 +44,7 @@ const getUser = async (params) => {
 const getRandomUsers = async (query) => {
   try {
     const res = await fetch(
-      "http://localhost:4000/api/users/random?" + new URLSearchParams(query)
+      BASE_URL + "api/users/random?" + new URLSearchParams(query)
     );
     return res.json();
   } catch (err) {
