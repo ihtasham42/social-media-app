@@ -23,7 +23,7 @@ const ContentUpdateEditor = ({ handleSubmit, originalContent }) => {
         <Button
           type="submit"
           variant="outlined"
-          sx={{ backgroundColor: "white" }}
+          sx={{ backgroundColor: "white", mt: 1 }}
         >
           Update
         </Button>

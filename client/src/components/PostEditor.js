@@ -1,4 +1,11 @@
-import { Button, Card, Stack, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +55,7 @@ const PostEditor = () => {
 
   return (
     <Card>
-      <Stack spacing={2}>
+      <Stack spacing={1}>
         {user && (
           <HorizontalStack spacing={2}>
             <UserAvatar width={50} height={50} username={user.username} />
@@ -57,6 +64,12 @@ const PostEditor = () => {
             </Typography>
           </HorizontalStack>
         )}
+
+        <Typography>
+          <Link href="https://commonmark.org/help/" target="_blank">
+            Markdown Help
+          </Link>
+        </Typography>
 
         <Box component="form" onSubmit={handleSubmit}>
           <TextField

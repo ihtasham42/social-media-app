@@ -1,10 +1,18 @@
-import { Button, Card, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  Card,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createComment } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ErrorAlert from "./ErrorAlert";
+import HorizontalStack from "./util/HorizontalStack";
 
 const CommentEditor = ({ label, comment, addComment, setReplying }) => {
   const [formData, setFormData] = useState({
@@ -49,6 +57,13 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
   return (
     <Card>
       <Stack spacing={2}>
+        <HorizontalStack justifyContent="space-between">
+          <Typography variant="h5">Reply</Typography>
+          <Link href="https://commonmark.org/help/" target="_blank">
+            Markdown Help
+          </Link>
+        </HorizontalStack>
+
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
             multiline
