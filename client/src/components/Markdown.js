@@ -9,6 +9,7 @@ const Markdown = ({ content }) => {
   return (
     <Typography component="span">
       <ReactMarkdown
+        className="markdown"
         style={{ "&p": { margin: 0 } }}
         disallowedElements={disallowed}
         skipHtml

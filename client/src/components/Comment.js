@@ -116,7 +116,7 @@ const Comment = (props) => {
           )}
         </HorizontalStack>
         {!minimised && (
-          <Box sx={{ mt: 1 }}>
+          <Box sx={{ mt: 1 }} overflow="hidden">
             {!editing ? (
               <Markdown content={comment.content} />
             ) : (

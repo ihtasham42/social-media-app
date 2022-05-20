@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { createPost } from "../api/posts";
 import ErrorAlert from "./ErrorAlert";
 import { isLoggedIn } from "../helpers/authHelper";
+import { isAlpha } from "validator";
 
 const PostEditor = () => {
   const navigate = useNavigate();
@@ -16,9 +17,12 @@ const PostEditor = () => {
   });
 
   const [serverError, setServerError] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    const errors = validate();
+    setErrors(errors);
   };
 
   const handleSubmit = async (e) => {
@@ -34,6 +38,12 @@ const PostEditor = () => {
     }
   };
 
+  const validate = () => {
+    const errors = {};
+
+    return errors;
+  };
+
   return (
     <Card>
       <Stack spacing={2}>
@@ -46,6 +56,8 @@ const PostEditor = () => {
             name="title"
             margin="normal"
             onChange={handleChange}
+            error={errors.title !== undefined}
+            helperText={errors.title}
           />
           <TextField
             fullWidth
@@ -55,6 +67,9 @@ const PostEditor = () => {
             name="content"
             margin="normal"
             onChange={handleChange}
+            error={errors.content !== undefined}
+            helperText={errors.content}
+            required
           />
           <ErrorAlert error={serverError} />
           <Button

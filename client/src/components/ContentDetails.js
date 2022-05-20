@@ -3,7 +3,7 @@ import React from "react";
 import HorizontalStack from "./util/HorizontalStack";
 import Moment from "react-moment";
 
-const ContentDetails = ({ username, createdAt, edited }) => {
+const ContentDetails = ({ username, createdAt, edited, preview }) => {
   return (
     <HorizontalStack sx={{}}>
       <Avatar sx={{ width: 20, height: 20 }} />
@@ -17,8 +17,13 @@ const ContentDetails = ({ username, createdAt, edited }) => {
           href={"/users/" + username}
         >
           By {username}
-        </Link>{" "}
-        - <Moment fromNow>{createdAt}</Moment> {edited && <>(Edited)</>}
+        </Link>
+        {!preview && (
+          <>
+            {" "}
+            - <Moment fromNow>{createdAt}</Moment> {edited && <>(Edited)</>}
+          </>
+        )}
       </Typography>
     </HorizontalStack>
   );

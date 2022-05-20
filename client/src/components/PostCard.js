@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { deletePost, likePost, unlikePost, updatePost } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import ContentDetails from "./ContentDetails";
-import ReactMarkdown from "react-markdown";
 
 import LikeBox from "./LikeBox";
 import PostContentBox from "./PostContentBox";
@@ -15,6 +14,8 @@ import HorizontalStack from "./util/HorizontalStack";
 import {} from "react-icons/ai";
 import ContentUpdateEditor from "./ContentUpdateEditor";
 import Markdown from "./Markdown";
+
+import "./postCard.css";
 
 const PostCard = (props) => {
   const { preview, removePost } = props;
@@ -78,79 +79,87 @@ const PostCard = (props) => {
   };
 
   return (
-    <Card sx={{ padding: 0 }}>
-      <HorizontalStack spacing={0} alignItems="initial">
-        <Box
-          padding={theme.spacing(1)}
-          sx={{ backgroundColor: "grey.100", width: "50px" }}
-        >
-          <LikeBox
-            likeCount={likeCount}
-            liked={post.liked}
-            onLike={handleLike}
-          />
-        </Box>
-        <PostContentBox clickable={preview} post={post} editing={editing}>
-          <HorizontalStack justifyContent="space-between">
-            <ContentDetails
-              username={post.poster.username}
-              createdAt={post.createdAt}
-              edited={post.edited}
-            />
-            <Box>
-              {isAuthor && preview !== "secondary" && (
-                <HorizontalStack>
-                  <Button
-                    disabled={loading}
-                    size="small"
-                    onClick={handleEditPost}
-                  >
-                    {editing ? <>Cancel</> : <>Edit</>}
-                  </Button>
-                  <Button
-                    disabled={loading}
-                    size="small"
-                    onClick={handleDeletePost}
-                  >
-                    {confirm ? <>Confirm</> : <>Delete</>}
-                  </Button>
-                </HorizontalStack>
-              )}
-            </Box>
-          </HorizontalStack>
-
-          <Typography
-            variant="h5"
-            gutterBottom
-            sx={{ overflow: "hidden", mt: 1, maxHeight: 100 }}
+    <Card sx={{ padding: 0 }} className="post-card">
+      <Box className={preview}>
+        <HorizontalStack spacing={0} alignItems="initial">
+          <Box
+            padding={theme.spacing(1)}
+            sx={{ backgroundColor: "grey.100", width: "50px" }}
           >
-            {post.title}
-          </Typography>
-
-          {preview !== "secondary" &&
-            (editing ? (
-              <ContentUpdateEditor
-                handleSubmit={handleSubmit}
-                originalContent={post.content}
+            <LikeBox
+              likeCount={likeCount}
+              liked={post.liked}
+              onLike={handleLike}
+            />
+          </Box>
+          <PostContentBox clickable={preview} post={post} editing={editing}>
+            <HorizontalStack justifyContent="space-between">
+              <ContentDetails
+                username={post.poster.username}
+                createdAt={post.createdAt}
+                edited={post.edited}
+                preview={preview === "secondary"}
               />
-            ) : (
-              <Box maxHeight={maxHeight} overflow="hidden">
-                <Markdown content={post.content} />
+              <Box>
+                {isAuthor && preview !== "secondary" && (
+                  <HorizontalStack>
+                    <Button
+                      disabled={loading}
+                      size="small"
+                      onClick={handleEditPost}
+                    >
+                      {editing ? <>Cancel</> : <>Edit</>}
+                    </Button>
+                    <Button
+                      disabled={loading}
+                      size="small"
+                      onClick={handleDeletePost}
+                    >
+                      {confirm ? <>Confirm</> : <>Delete</>}
+                    </Button>
+                  </HorizontalStack>
+                )}
               </Box>
-            ))}
+            </HorizontalStack>
 
-          <HorizontalStack sx={{ mt: 1 }}>
-            <AiFillMessage />
             <Typography
-              variant="subtitle2"
-              color="text.secondary"
-              sx={{ fontWeight: "bold" }}
+              variant="h5"
+              gutterBottom
+              sx={{ overflow: "hidden", mt: 1, maxHeight: 125 }}
+              className="title"
             >
-              {post.commentCount}
+              {post.title}
             </Typography>
-          </HorizontalStack>
-        </PostContentBox>
-      </HorizontalStack>
+
+            {preview !== "secondary" &&
+              (editing ? (
+                <ContentUpdateEditor
+                  handleSubmit={handleSubmit}
+                  originalContent={post.content}
+                />
+              ) : (
+                <Box
+                  maxHeight={maxHeight}
+                  overflow="hidden"
+                  className="content"
+                >
+                  <Markdown content={post.content} />
+                </Box>
+              ))}
+
+            <HorizontalStack sx={{ mt: 1 }}>
+              <AiFillMessage />
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                sx={{ fontWeight: "bold" }}
+              >
+                {post.commentCount}
+              </Typography>
+            </HorizontalStack>
+          </PostContentBox>
+        </HorizontalStack>
+      </Box>
     </Card>
   );
 };
