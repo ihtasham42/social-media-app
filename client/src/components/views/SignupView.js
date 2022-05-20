@@ -54,7 +54,7 @@ const SignupView = () => {
       errors.username = "Must be between 6 and 30 characters long";
     }
 
-    if (!isAlpha(formData.username, "en-US")) {
+    if (!isAlpha(formData.username)) {
       errors.username = "Must contain only valid characters";
     }
 
