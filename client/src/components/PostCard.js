@@ -1,7 +1,7 @@
-import { Button, Card, Typography, useTheme } from "@mui/material";
+import { Button, Card, IconButton, Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { AiFillMessage } from "react-icons/ai";
+import { AiFillCheckCircle, AiFillEdit, AiFillMessage } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { deletePost, likePost, unlikePost, updatePost } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
@@ -16,6 +16,8 @@ import ContentUpdateEditor from "./ContentUpdateEditor";
 import Markdown from "./Markdown";
 
 import "./postCard.css";
+import { MdCancel } from "react-icons/md";
+import { BiTrash } from "react-icons/bi";
 
 const PostCard = (props) => {
   const { preview, removePost } = props;
@@ -26,6 +28,8 @@ const PostCard = (props) => {
   const isAuthor = user && user.username === postData.poster.username;
 
   const theme = useTheme();
+  const iconColor = theme.palette.primary.main;
+
   const [editing, setEditing] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [post, setPost] = useState(postData);
@@ -103,20 +107,28 @@ const PostCard = (props) => {
               <Box>
                 {isAuthor && preview !== "secondary" && (
                   <HorizontalStack>
-                    <Button
+                    <IconButton
                       disabled={loading}
                       size="small"
                       onClick={handleEditPost}
                     >
-                      {editing ? <>Cancel</> : <>Edit</>}
-                    </Button>
-                    <Button
+                      {editing ? (
+                        <MdCancel color={iconColor} />
+                      ) : (
+                        <AiFillEdit color={iconColor} />
+                      )}
+                    </IconButton>
+                    <IconButton
                       disabled={loading}
                       size="small"
                       onClick={handleDeletePost}
                     >
-                      {confirm ? <>Confirm</> : <>Delete</>}
-                    </Button>
+                      {confirm ? (
+                        <AiFillCheckCircle color={theme.palette.error.main} />
+                      ) : (
+                        <BiTrash color={theme.palette.error.main} />
+                      )}
+                    </IconButton>
                   </HorizontalStack>
                 )}
               </Box>

@@ -35,8 +35,14 @@ const PostSchema = new mongoose.Schema(
 );
 
 PostSchema.pre("save", function (next) {
-  this.title = filter.clean(this.title);
-  this.content = filter.clean(this.content);
+  if (this.title.length > 0) {
+    this.title = filter.clean(this.title);
+  }
+
+  if (this.content.length > 0) {
+    this.content = filter.clean(this.content);
+  }
+
   next();
 });
 

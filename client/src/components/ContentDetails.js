@@ -17,12 +17,12 @@ const ContentDetails = ({ username, createdAt, edited, preview }) => {
           }}
           href={"/users/" + username}
         >
-          By {username}
+          {username}
         </Link>
         {!preview && (
           <>
             {" "}
-            - <Moment fromNow>{createdAt}</Moment> {edited && <>(Edited)</>}
+            · <Moment fromNow>{createdAt}</Moment> {edited && <>(Edited)</>}
           </>
         )}
       </Typography>

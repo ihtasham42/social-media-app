@@ -127,7 +127,7 @@ const Comment = (props) => {
                     size="small"
                     onClick={handleDelete}
                   >
-                    <BiTrash color={iconColor} />
+                    <BiTrash color={theme.palette.error.main} />
                   </IconButton>
                 </HorizontalStack>
               )}

@@ -48,7 +48,10 @@ CommentSchema.post("remove", async function (res, next) {
 });
 
 CommentSchema.pre("save", function (next) {
-  this.content = filter.clean(this.content);
+  if (this.content.length > 0) {
+    this.content = filter.clean(this.content);
+  }
+
   next();
 });
 
