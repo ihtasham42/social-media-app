@@ -1,7 +1,7 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
 
-const ContentUpdateEditor = ({ handleSubmit, originalContent }) => {
+const ContentUpdateEditor = ({ handleSubmit, originalContent, error }) => {
   const [content, setContent] = useState(originalContent);
 
   const handleChange = (e) => {
@@ -19,6 +19,8 @@ const ContentUpdateEditor = ({ handleSubmit, originalContent }) => {
           sx={{ backgroundColor: "white" }}
           onChange={handleChange}
           multiline
+          error={error}
+          helperText={error}
         />
         <Button
           type="submit"

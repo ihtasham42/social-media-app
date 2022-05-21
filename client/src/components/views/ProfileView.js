@@ -1,7 +1,8 @@
 import { Card, Container, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getUser } from "../../api/users";
+import { getUser, updateUser } from "../../api/users";
+import { isLoggedIn } from "../../helpers/authHelper";
 
 import ContentSelect from "../ContentSelect";
 import ErrorAlert from "../ErrorAlert";
@@ -21,8 +22,10 @@ import HorizontalStack from "../util/HorizontalStack";
 
 const ProfileView = () => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const currentUser = isLoggedIn();
+  const [profile, setProfile] = useState(null);
   const [error, setError] = useState("");
+  const [editing, setEditing] = useState(false);
   const params = useParams();
 
   const fetchUser = async () => {
@@ -32,8 +35,33 @@ const ProfileView = () => {
     if (data.error) {
       setError(data.error);
     } else {
-      setUser(data);
+      setProfile(data);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const biography = e.target.content.value;
+
+    await updateUser(currentUser, { biography });
+
+    setEditing(false);
+    setProfile({ ...profile, user: { ...profile.user, biography } });
+  };
+
+  const handleEdit = async () => {
+    setEditing(!editing);
+  };
+
+  const validate = async (content) => {
+    let error = "";
+
+    if (content.length > 250) {
+      error = "Bio cannot be longer than 250 characters";
+    }
+
+    return error;
   };
 
   useEffect(() => {
@@ -48,11 +76,11 @@ const ProfileView = () => {
       <GridLayout
         left={
           <>
-            <MobileProfile user={user} />
+            <MobileProfile user={profile} />
             <Stack spacing={2}>
-              {user ? (
+              {profile ? (
                 <>
-                  <PostBrowser author={user.user.username} />
+                  <PostBrowser author={profile.user.username} />
                 </>
               ) : (
                 <Loading />
@@ -63,8 +91,13 @@ const ProfileView = () => {
         }
         right={
           <Stack spacing={2}>
-            <Profile user={user} />
-
+            <Profile
+              profile={profile}
+              handleEdit={handleEdit}
+              handleSubmit={handleSubmit}
+              validate={validate}
+              editing={editing}
+            />
             <FindUsers />
             <Footer />
           </Stack>

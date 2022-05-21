@@ -52,4 +52,21 @@ const getRandomUsers = async (query) => {
   }
 };
 
-export { signup, login, getUser, getRandomUsers };
+const updateUser = async (user, data) => {
+  try {
+    const res = await fetch(BASE_URL + "api/users/" + user._id, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-access-token": user.token,
+      },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { signup, login, getUser, getRandomUsers, updateUser };
