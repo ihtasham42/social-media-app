@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import {
   Avatar,
   IconButton,
@@ -19,6 +20,7 @@ import HorizontalStack from "./util/HorizontalStack";
 const Navbar = () => {
   const navigate = useNavigate();
   const user = isLoggedIn();
+  const theme = useTheme();
   const username = user && isLoggedIn().username;
   const [search, setSearch] = useState("");
 
@@ -51,8 +53,8 @@ const Navbar = () => {
       spacing={2}
     >
       <HorizontalStack>
-        <AiFillFileText size={40} />
-        <Typography variant="h4" mr={1}>
+        <AiFillFileText size={33} color={theme.palette.primary.main} />
+        <Typography variant="h4" mr={1} color={theme.palette.primary.main}>
           <Link href="/" color="inherit" underline="none">
             PostIt
           </Link>

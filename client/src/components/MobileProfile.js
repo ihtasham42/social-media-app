@@ -56,7 +56,7 @@ const MobileProfile = (props) => {
           </HorizontalStack>
           <Divider />
           <Box>
-            {user._id === currentUser.userId && (
+            {currentUser && user._id === currentUser.userId && (
               <IconButton onClick={props.handleEditing} sx={{ mr: 1 }}>
                 {props.editing ? (
                   <MdCancel color={iconColor} />
@@ -76,7 +76,7 @@ const MobileProfile = (props) => {
               <Typography variant="p">
                 <i>
                   No bio yet{" "}
-                  {user._id === currentUser.userId && (
+                  {currentUser && user._id === currentUser.userId && (
                     <span>- Tap on the edit icon to add your bio</span>
                   )}
                 </i>

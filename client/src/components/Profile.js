@@ -58,7 +58,7 @@ const Profile = (props) => {
             </Typography>
           )}
 
-          {user._id === currentUser.userId && (
+          {currentUser && user._id === currentUser.userId && (
             <Box>
               <Button
                 startIcon={<AiFillEdit color={iconColor} />}
