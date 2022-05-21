@@ -58,6 +58,16 @@ const ProfileView = () => {
     fetchUser();
   }, []);
 
+  const validate = (content) => {
+    let error = "";
+
+    if (content.length > 250) {
+      error = "Bio cannot be longer than 250 characters";
+    }
+
+    return error;
+  };
+
   return (
     <Container>
       <Navbar />
@@ -66,7 +76,13 @@ const ProfileView = () => {
       <GridLayout
         left={
           <>
-            <MobileProfile user={profile} />
+            <MobileProfile
+              profile={profile}
+              editing={editing}
+              handleSubmit={handleSubmit}
+              handleEditing={handleEditing}
+              validate={validate}
+            />
             <Stack spacing={2}>
               {profile ? (
                 <>
@@ -86,6 +102,7 @@ const ProfileView = () => {
               editing={editing}
               handleSubmit={handleSubmit}
               handleEditing={handleEditing}
+              validate={validate}
             />
 
             <FindUsers />

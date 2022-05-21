@@ -94,7 +94,7 @@ const updateUser = async (req, res) => {
       throw new Error("User does not exist");
     }
 
-    if (biography) {
+    if (typeof biography == "string") {
       user.biography = biography;
     }
 

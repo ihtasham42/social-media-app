@@ -44,6 +44,7 @@ const Profile = (props) => {
               <ContentUpdateEditor
                 handleSubmit={props.handleSubmit}
                 originalContent={user.biography}
+                validate={props.validate}
               />
             </Box>
           ) : user.biography ? (
