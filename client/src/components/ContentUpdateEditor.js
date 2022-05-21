@@ -19,7 +19,7 @@ const ContentUpdateEditor = (props) => {
       error = props.validate(content);
     }
 
-    if (error.length !== 0) {
+    if (error && error.length !== 0) {
       setError(error);
     } else {
       props.handleSubmit(e);
