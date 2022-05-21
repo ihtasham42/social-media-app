@@ -7,11 +7,17 @@ import {
   Typography,
   Link,
   Button,
+  InputAdornment,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import "react-icons/ai";
-import { AiFillFileText, AiFillHome, AiFillMessage } from "react-icons/ai";
+import {
+  AiFillFileText,
+  AiFillHome,
+  AiFillMessage,
+  AiOutlineSearch,
+} from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { isLoggedIn, logoutUser } from "../helpers/authHelper";
 import UserAvatar from "./UserAvatar";
@@ -61,7 +67,6 @@ const Navbar = () => {
         </Typography>
       </HorizontalStack>
 
-      {/*
       <Box component="form" onSubmit={handleSubmit}>
         <TextField
           size="small"
@@ -70,7 +75,6 @@ const Navbar = () => {
           onChange={handleChange}
         />
       </Box>
-    */}
 
       <HorizontalStack>
         <IconButton href="/">

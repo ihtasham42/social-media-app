@@ -1,4 +1,11 @@
-import { Button, Card, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Button,
+  Card,
+  IconButton,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { AiFillCheckCircle, AiFillEdit, AiFillMessage } from "react-icons/ai";
@@ -86,16 +93,22 @@ const PostCard = (props) => {
     <Card sx={{ padding: 0 }} className="post-card">
       <Box className={preview}>
         <HorizontalStack spacing={0} alignItems="initial">
-          <Box
-            padding={theme.spacing(1)}
-            sx={{ backgroundColor: "grey.100", width: "50px" }}
+          <Stack
+            justifyContent="space-between "
+            alignItems="center"
+            spacing={1}
+            sx={{
+              backgroundColor: "grey.100",
+              width: "50px",
+              padding: theme.spacing(1),
+            }}
           >
             <LikeBox
               likeCount={likeCount}
               liked={post.liked}
               onLike={handleLike}
             />
-          </Box>
+          </Stack>
           <PostContentBox clickable={preview} post={post} editing={editing}>
             <HorizontalStack justifyContent="space-between">
               <ContentDetails

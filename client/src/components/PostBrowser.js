@@ -93,7 +93,9 @@ const PostBrowser = ({ author, search, createPost }) => {
             </Button>
           </Stack>
         ) : (
-          !loading && (
+          !loading &&
+          posts &&
+          posts.length > 0 && (
             <Stack pt={2} pb={6} alignItems="center" spacing={2}>
               <Button onClick={fetchPosts} variant="contained">
                 Load more
