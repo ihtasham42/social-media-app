@@ -21,7 +21,7 @@ import HorizontalStack from "../util/HorizontalStack";
 
 const ProfileView = () => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [error, setError] = useState("");
   const params = useParams();
 
@@ -32,7 +32,7 @@ const ProfileView = () => {
     if (data.error) {
       setError(data.error);
     } else {
-      setUser(data);
+      setProfile(data);
     }
   };
 
@@ -48,11 +48,11 @@ const ProfileView = () => {
       <GridLayout
         left={
           <>
-            <MobileProfile user={user} />
+            <MobileProfile user={profile} />
             <Stack spacing={2}>
-              {user ? (
+              {profile ? (
                 <>
-                  <PostBrowser author={user.user.username} />
+                  <PostBrowser author={profile.user.username} />
                 </>
               ) : (
                 <Loading />
@@ -63,7 +63,7 @@ const ProfileView = () => {
         }
         right={
           <Stack spacing={2}>
-            <Profile user={user} />
+            <Profile profile={profile} />
 
             <FindUsers />
             <Footer />

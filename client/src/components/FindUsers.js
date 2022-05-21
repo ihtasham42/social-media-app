@@ -24,7 +24,6 @@ const FindUsers = () => {
     const data = await getRandomUsers({ size: 5 });
     setLoading(false);
     setUsers(data);
-    console.log(data);
   };
 
   useEffect(() => {

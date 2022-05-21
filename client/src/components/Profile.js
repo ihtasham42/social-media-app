@@ -1,25 +1,29 @@
 import { Avatar, Card, Divider, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Loading from "./Loading";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
 
-const Profile = ({ user }) => {
+const Profile = (props) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (props.profile) {
+      setUser(props.profile.user);
+    }
+  }, [props.profile]);
+
   return (
     <Card>
       {user ? (
         <Stack alignItems="center" spacing={2}>
           <Box my={1}>
-            <UserAvatar
-              width={150}
-              height={150}
-              username={user.user.username}
-            />
+            <UserAvatar width={150} height={150} username={user.username} />
           </Box>
 
-          <Typography variant="h5">{user.user.username}</Typography>
+          <Typography variant="h5">{user.username}</Typography>
 
           <Typography textAlign="center">
             <b>Bio: </b>No bio yet
@@ -27,10 +31,10 @@ const Profile = ({ user }) => {
 
           <HorizontalStack>
             <Typography color="text.secondary">
-              Likes <b>{user.posts.likeCount}</b>
+              Likes <b>{props.profile.posts.likeCount}</b>
             </Typography>
             <Typography color="text.secondary">
-              Posts <b>{user.posts.count}</b>
+              Posts <b>{props.profile.posts.count}</b>
             </Typography>
           </HorizontalStack>
         </Stack>
