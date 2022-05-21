@@ -10,6 +10,7 @@ const theme = createTheme({
         root: ({ ownerState, theme }) => ({
           ...{
             padding: theme.spacing(2),
+            borderWidth: "1.5px",
           },
         }),
       },

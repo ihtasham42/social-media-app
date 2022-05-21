@@ -84,6 +84,26 @@ const follow = async (req, res) => {
   }
 };
 
+const updateBio = async (req, res) => {
+  try {
+    const { userId, biography } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+
+    user.biography = biography;
+
+    await user.save();
+
+    return res.json(200).json({ success: true });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
 const unfollow = async (req, res) => {
   try {
     const { userId } = req.body;
@@ -208,4 +228,5 @@ module.exports = {
   getFollowing,
   getUser,
   getRandomUsers,
+  updateBio,
 };

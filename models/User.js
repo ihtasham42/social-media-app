@@ -26,6 +26,11 @@ const UserSchema = new mongoose.Schema(
       required: true,
       minLength: [8, "Must be at least 8 characters long"],
     },
+    biography: {
+      type: String,
+      default: "",
+      maxLength: [250, "Must be at most 250 characters long"],
+    },
   },
   { timestamps: true }
 );
@@ -33,6 +38,10 @@ const UserSchema = new mongoose.Schema(
 UserSchema.pre("save", function (next) {
   if (filter.isProfane(this.username)) {
     throw new Error("Username cannot contain profanity");
+  }
+
+  if (filter.isProfane(this.biography)) {
+    throw new Error("Biography cannot contain profanity");
   }
 
   next();
