@@ -1,15 +1,33 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
 
-const ContentUpdateEditor = ({ handleSubmit, originalContent, error }) => {
-  const [content, setContent] = useState(originalContent);
+const ContentUpdateEditor = (props) => {
+  const [content, setContent] = useState(props.originalContent);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setContent(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const content = e.target.content.value;
+
+    let error = null;
+    if (props.validate) {
+      error = props.validate(content);
+    }
+
+    if (error) {
+      setError(error);
+    } else {
+      props.handleSubmit(e);
+    }
+  };
+
   return (
-    <Box component="form" onSubmit={handleSubmit}>
+    <Box component="form" onSubmit={props.handleSubmit}>
       <Stack>
         <TextField
           value={content}

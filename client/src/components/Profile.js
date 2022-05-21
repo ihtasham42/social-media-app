@@ -18,19 +18,20 @@ import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
 
 const Profile = (props) => {
-  const [profile, setProfile] = useState(null);
-  const user = profile && profile.user;
+  const [user, setUser] = useState(null);
   const currentUser = isLoggedIn();
   const theme = useTheme();
   const iconColor = theme.palette.primary.main;
 
   useEffect(() => {
-    setProfile(props.profile);
+    if (props.profile && props.profile.user) {
+      setUser(props.profile.user);
+    }
   }, [props.profile]);
 
   return (
     <Card>
-      {profile ? (
+      {user ? (
         <Stack alignItems="center" spacing={2}>
           <Box my={1}>
             <UserAvatar width={150} height={150} username={user.username} />
@@ -69,10 +70,10 @@ const Profile = (props) => {
 
           <HorizontalStack>
             <Typography color="text.secondary">
-              Likes <b>{profile.posts.likeCount}</b>
+              Likes <b>{props.profile.posts.likeCount}</b>
             </Typography>
             <Typography color="text.secondary">
-              Posts <b>{profile.posts.count}</b>
+              Posts <b>{props.profile.posts.count}</b>
             </Typography>
           </HorizontalStack>
         </Stack>
