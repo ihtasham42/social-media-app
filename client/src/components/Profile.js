@@ -1,79 +1,36 @@
-import { useTheme } from "@emotion/react";
-import {
-  Avatar,
-  Button,
-  Card,
-  Divider,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Card, Divider, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
-import { AiFillEdit } from "react-icons/ai";
-import { isLoggedIn } from "../helpers/authHelper";
-import ContentUpdateEditor from "./ContentUpdateEditor";
+import React from "react";
 import Footer from "./Footer";
 import Loading from "./Loading";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
 
-const Profile = (props) => {
-  const [user, setUser] = useState(null);
-  const currentUser = isLoggedIn();
-  const theme = useTheme();
-  const iconColor = theme.palette.primary.main;
-
-  useEffect(() => {
-    if (props.profile && props.profile.user) {
-      setUser(props.profile.user);
-    }
-  }, [props.profile]);
-
+const Profile = ({ user }) => {
   return (
     <Card>
       {user ? (
         <Stack alignItems="center" spacing={2}>
           <Box my={1}>
-            <UserAvatar width={150} height={150} username={user.username} />
+            <UserAvatar
+              width={150}
+              height={150}
+              username={user.user.username}
+            />
           </Box>
 
-          <Typography variant="h5">{user.username}</Typography>
+          <Typography variant="h5">{user.user.username}</Typography>
 
-          {props.editing ? (
-            <Box>
-              <ContentUpdateEditor
-                handleSubmit={props.handleSubmit}
-                originalContent={user.biography}
-              />
-            </Box>
-          ) : user.biography ? (
-            <Typography textAlign="center" variant="p">
-              <b>Bio: </b>
-              {user.biography}
-            </Typography>
-          ) : (
-            <Typography variant="p">
-              <i>No bio yet</i>
-            </Typography>
-          )}
-
-          {user._id === currentUser.userId && (
-            <Box>
-              <Button
-                startIcon={<AiFillEdit color={iconColor} />}
-                onClick={props.handleEdit}
-              >
-                {props.editing ? <>Cancel</> : <>Edit bio</>}
-              </Button>
-            </Box>
-          )}
+          <Typography textAlign="center">
+            <b>Bio: </b>No bio yet
+          </Typography>
 
           <HorizontalStack>
             <Typography color="text.secondary">
-              Likes <b>{props.profile.posts.likeCount}</b>
+              Likes <b>{user.posts.likeCount}</b>
             </Typography>
             <Typography color="text.secondary">
-              Posts <b>{props.profile.posts.count}</b>
+              Posts <b>{user.posts.count}</b>
             </Typography>
           </HorizontalStack>
         </Stack>

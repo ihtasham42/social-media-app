@@ -3,27 +3,9 @@ import React, { useState } from "react";
 
 const ContentUpdateEditor = (props) => {
   const [content, setContent] = useState(props.originalContent);
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setContent(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const content = e.target.content.value;
-
-    let error = null;
-    if (props.validate) {
-      error = props.validate(content);
-    }
-
-    if (error) {
-      setError(error);
-    } else {
-      props.handleSubmit(e);
-    }
   };
 
   return (
@@ -37,8 +19,6 @@ const ContentUpdateEditor = (props) => {
           sx={{ backgroundColor: "white" }}
           onChange={handleChange}
           multiline
-          error={error}
-          helperText={error}
         />
         <Button
           type="submit"
