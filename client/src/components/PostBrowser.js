@@ -11,7 +11,7 @@ import HorizontalStack from "./util/HorizontalStack";
 
 const PostBrowser = ({ author, search, createPost }) => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [end, setEnd] = useState(false);
   const [sortBy, setSortBy] = useState("-createdAt");
