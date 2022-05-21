@@ -100,7 +100,7 @@ const updateUser = async (req, res) => {
 
     await user.save();
 
-    return res.json(200).json({ success: true });
+    return res.status(200).json({ success: true });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }

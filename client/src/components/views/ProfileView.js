@@ -1,7 +1,8 @@
 import { Card, Container, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getUser } from "../../api/users";
+import { getUser, updateUser } from "../../api/users";
+import { isLoggedIn } from "../../helpers/authHelper";
 
 import ContentSelect from "../ContentSelect";
 import ErrorAlert from "../ErrorAlert";
@@ -22,6 +23,8 @@ import HorizontalStack from "../util/HorizontalStack";
 const ProfileView = () => {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
+  const [editing, setEditing] = useState(false);
+  const user = isLoggedIn();
   const [error, setError] = useState("");
   const params = useParams();
 
@@ -34,6 +37,21 @@ const ProfileView = () => {
     } else {
       setProfile(data);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const content = e.target.content.value;
+
+    await updateUser(user, { biography: content });
+
+    setProfile({ ...profile, user: { ...profile.user, biography: content } });
+    setEditing(false);
+  };
+
+  const handleEditing = () => {
+    setEditing(!editing);
   };
 
   useEffect(() => {
@@ -63,7 +81,12 @@ const ProfileView = () => {
         }
         right={
           <Stack spacing={2}>
-            <Profile profile={profile} />
+            <Profile
+              profile={profile}
+              editing={editing}
+              handleSubmit={handleSubmit}
+              handleEditing={handleEditing}
+            />
 
             <FindUsers />
             <Footer />

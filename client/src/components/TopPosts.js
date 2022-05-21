@@ -24,7 +24,6 @@ const TopPosts = () => {
     }
 
     setPosts(topPosts);
-    console.log(topPosts);
 
     setLoading(false);
   };
