@@ -84,7 +84,7 @@ const follow = async (req, res) => {
   }
 };
 
-const updateBio = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     const { userId, biography } = req.body;
 
@@ -94,7 +94,9 @@ const updateBio = async (req, res) => {
       throw new Error("User does not exist");
     }
 
-    user.biography = biography;
+    if (biography) {
+      user.biography = biography;
+    }
 
     await user.save();
 
@@ -228,5 +230,5 @@ module.exports = {
   getFollowing,
   getUser,
   getRandomUsers,
-  updateBio,
+  updateUser,
 };
