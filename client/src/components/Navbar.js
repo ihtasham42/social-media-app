@@ -60,6 +60,10 @@ const Navbar = () => {
     navigate("/search?" + new URLSearchParams({ search }));
   };
 
+  const handleSearchIcon = (e) => {
+    setSearchIcon(!searchIcon);
+  };
+
   return (
     <Stack mb={2}>
       <Stack
@@ -67,7 +71,7 @@ const Navbar = () => {
         alignItems="center"
         justifyContent="space-between"
         sx={{
-          mb: 2,
+          mb: 0,
           py: 2,
           borderBottom: 1,
           borderColor: "divider",
@@ -96,6 +100,12 @@ const Navbar = () => {
         )}
 
         <HorizontalStack>
+          {mobile && (
+            <IconButton onClick={handleSearchIcon}>
+              <AiOutlineSearch />
+            </IconButton>
+          )}
+
           <IconButton href="/">
             <AiFillHome />
           </IconButton>
@@ -119,15 +129,17 @@ const Navbar = () => {
           )}
         </HorizontalStack>
       </Stack>
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField
-          size="small"
-          label="Search for posts..."
-          fullWidth
-          onChange={handleChange}
-          value={search}
-        />
-      </Box>
+      {mobile && searchIcon && (
+        <Box component="form" onSubmit={handleSubmit} mt={2}>
+          <TextField
+            size="small"
+            label="Search for posts..."
+            fullWidth
+            onChange={handleChange}
+            value={search}
+          />
+        </Box>
+      )}
     </Stack>
   );
 };
