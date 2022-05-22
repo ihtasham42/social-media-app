@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import "./markdown.css";
 
 const Markdown = ({ content }) => {
-  const disallowed = ["image"];
+  const disallowed = ["Image"];
 
   return (
     <Typography component="span">

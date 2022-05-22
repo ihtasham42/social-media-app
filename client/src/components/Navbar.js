@@ -80,11 +80,13 @@ const Navbar = () => {
       >
         <HorizontalStack>
           <AiFillFileText size={33} color={theme.palette.primary.main} />
-          <Typography variant="h4" mr={1} color={theme.palette.primary.main}>
-            <Link href="/" color="inherit" underline="none">
-              PostIt
-            </Link>
-          </Typography>
+          {!mobile && (
+            <Typography variant="h4" mr={1} color={theme.palette.primary.main}>
+              <Link href="/" color="inherit" underline="none">
+                PostIt
+              </Link>
+            </Typography>
+          )}
         </HorizontalStack>
 
         {!mobile && (
