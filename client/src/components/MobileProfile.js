@@ -33,26 +33,30 @@ const MobileProfile = (props) => {
     <Card sx={{ display: { sm: "block", md: "none" }, mb: 2 }}>
       {user ? (
         <Stack spacing={2}>
-          <HorizontalStack justifyContent="space-between">
-            <HorizontalStack spacing={2}>
+          <HorizontalStack spacing={2} justifyContent="space-between">
+            <HorizontalStack>
               <UserAvatar width={50} height={50} username={user.username} />
-              <Typography variant="h6">{user.username}</Typography>
+              <Typography variant="h6" textOverflow="ellipses">
+                {user.username}
+              </Typography>
             </HorizontalStack>
 
-            <HorizontalStack spacing={3}>
-              <Stack alignItems="center">
-                <Typography>Likes</Typography>
-                <Typography color="text.secondary">
-                  <b>{props.profile.posts.likeCount}</b>
-                </Typography>
-              </Stack>
-              <Stack alignItems="center">
-                <Typography>Posts</Typography>
-                <Typography color="text.secondary">
-                  <b>{props.profile.posts.count}</b>
-                </Typography>
-              </Stack>
-            </HorizontalStack>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <HorizontalStack spacing={3}>
+                <Stack alignItems="center">
+                  <Typography>Likes</Typography>
+                  <Typography color="text.secondary">
+                    <b>{props.profile.posts.likeCount}</b>
+                  </Typography>
+                </Stack>
+                <Stack alignItems="center">
+                  <Typography color="text.secondary">Posts</Typography>
+                  <Typography color="text.secondary">
+                    <b>{props.profile.posts.count}</b>
+                  </Typography>
+                </Stack>
+              </HorizontalStack>
+            </Box>
           </HorizontalStack>
           <Divider />
           <Box>

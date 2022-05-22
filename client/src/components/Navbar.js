@@ -10,7 +10,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-icons/ai";
 import {
   AiFillFileText,
@@ -29,6 +29,21 @@ const Navbar = () => {
   const theme = useTheme();
   const username = user && isLoggedIn().username;
   const [search, setSearch] = useState("");
+  const [width, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    updateDimensions();
+
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  const mobile = width < 600;
+
+  const updateDimensions = () => {
+    const width = window.innerWidth;
+    setWindowWidth(width);
+  };
 
   const handleLogout = async (e) => {
     logoutUser();
@@ -67,14 +82,16 @@ const Navbar = () => {
         </Typography>
       </HorizontalStack>
 
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField
-          size="small"
-          label="Search for posts..."
-          sx={{ flexGrow: 1, maxWidth: 300 }}
-          onChange={handleChange}
-        />
-      </Box>
+      {!mobile && (
+        <Box component="form" onSubmit={handleSubmit}>
+          <TextField
+            size="small"
+            label="Search for posts..."
+            sx={{ flexGrow: 1, maxWidth: 300 }}
+            onChange={handleChange}
+          />
+        </Box>
+      )}
 
       <HorizontalStack>
         <IconButton href="/">

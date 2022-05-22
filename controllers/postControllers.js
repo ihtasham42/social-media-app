@@ -37,29 +37,6 @@ const createPost = async (req, res) => {
   }
 };
 
-const getUserPosts = async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const page = req.query.page;
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      throw new Error("User does not exist");
-    }
-
-    const posts = await paginate(
-      Post.find({ poster: userId }).sort("-createdAt"),
-      page,
-      pageSize
-    );
-
-    return res.json(posts);
-  } catch (err) {
-    return res.status(400).json({ error: err.message });
-  }
-};
-
 const getPost = async (req, res) => {
   try {
     const postId = req.params.id;
@@ -156,20 +133,18 @@ const getPosts = async (req, res) => {
   try {
     const { userId } = req.body;
 
-    const { page, sortBy, author } = req.query;
+    let { page, sortBy, author } = req.query;
 
-    let sortProperty = "-createdAt";
-    if (sortBy) sortProperty = sortBy;
+    if (!sortBy) sortBy = "-createdAt";
+    if (!page) page = 1;
 
-    let posts = await paginate(
-      Post.find().populate("poster").sort(sortProperty),
-      page,
-      10
-    ).lean();
+    let posts = await Post.find().populate("poster").sort(sortBy).lean();
 
     if (author) {
       posts = posts.filter((post) => post.poster.username == author);
     }
+
+    posts = paginate(posts, 10, page);
 
     if (userId) {
       await setLiked(posts, userId);
@@ -262,7 +237,6 @@ const getUserLikedPosts = async (req, res) => {
 module.exports = {
   getPost,
   getPosts,
-  getUserPosts,
   createPost,
   updatePost,
   deletePost,

@@ -14,9 +14,13 @@ const register = async (req, res) => {
       throw new Error("All input required");
     }
 
+    const normalizedEmail = email.toLowerCase();
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    const existingUser = await User.findOne({
+      $or: [{ email: normalizedEmail }, { username }],
+    });
 
     if (existingUser) {
       throw new Error("Email and username must be unique");
@@ -24,7 +28,7 @@ const register = async (req, res) => {
 
     const user = await User.create({
       username,
-      email,
+      email: normalizedEmail,
       password: hashedPassword,
     });
 
@@ -44,7 +48,9 @@ const login = async (req, res) => {
       throw new Error("All input required");
     }
 
-    const user = await User.findOne({ email });
+    const normalizedEmail = email.toLowerCase();
+
+    const user = await User.findOne({ email: normalizedEmail });
 
     if (!user) {
       throw new Error("Email or password incorrect");

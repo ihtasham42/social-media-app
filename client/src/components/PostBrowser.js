@@ -1,6 +1,8 @@
 import { Button, Card, Link, Stack, Typography } from "@mui/material";
+import { alignProperty } from "@mui/material/styles/cssUtils";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
+import { MdSettingsInputAntenna } from "react-icons/md";
 import { getPosts } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import CreatePost from "./CreatePost";
@@ -9,13 +11,15 @@ import PostCard from "./PostCard";
 import SortBySelect from "./SortBySelect";
 import HorizontalStack from "./util/HorizontalStack";
 
-const PostBrowser = ({ author, search, createPost }) => {
+const PostBrowser = (props) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [end, setEnd] = useState(false);
   const [sortBy, setSortBy] = useState("-createdAt");
   const user = isLoggedIn();
+
+  const [search, setSearch] = useState(props.search);
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -27,7 +31,7 @@ const PostBrowser = ({ author, search, createPost }) => {
       sortBy,
     };
 
-    if (author) query.author = author;
+    if (props.author) query.author = props.author;
 
     const data = await getPosts(user && user.token, query);
     if (data.length === 0) {
@@ -40,8 +44,12 @@ const PostBrowser = ({ author, search, createPost }) => {
   };
 
   useEffect(() => {
+    setSearch(props.search);
+  }, [props.search]);
+
+  useEffect(() => {
     fetchPosts();
-  }, [sortBy]);
+  }, [props.sortBy]);
 
   const handleSortBy = (e) => {
     const newSortBy = e.target.value;
@@ -68,10 +76,18 @@ const PostBrowser = ({ author, search, createPost }) => {
       <Stack spacing={2}>
         <Card>
           <HorizontalStack justifyContent="space-between">
-            {createPost && <CreatePost />}
+            {props.createPost && <CreatePost />}
             <SortBySelect onSortBy={handleSortBy} sortBy={sortBy} />
           </HorizontalStack>
         </Card>
+
+        {search && (
+          <HorizontalStack padding={0} justifyContent="space-between">
+            {console.log(search)}
+            <Typography variant="h5">Showing results for "{search}"</Typography>
+            <Typography color="text.secondary">14 results found</Typography>
+          </HorizontalStack>
+        )}
 
         {posts.map((post, i) => (
           <PostCard
@@ -86,7 +102,11 @@ const PostBrowser = ({ author, search, createPost }) => {
         {end ? (
           <Stack py={5} alignItems="center">
             <Typography variant="h5" color="text.secondary" gutterBottom>
-              All posts have been viewed
+              {posts.length > 0 ? (
+                <>All posts have been viewed</>
+              ) : (
+                <>No posts available</>
+              )}
             </Typography>
             <Button variant="text" size="small" onClick={handleBackToTop}>
               Back to top

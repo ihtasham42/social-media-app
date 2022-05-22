@@ -1,8 +1,6 @@
-const paginate = (query, page, pageSize) => {
-  if (!page) page = 1;
-  let skipCount = (page - 1) * pageSize;
-  if (skipCount < 0) skipCount = 0;
-  return query.skip(skipCount).limit(pageSize);
-};
+function paginate(array, page_size, page_number) {
+  // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+  return array.slice((page_number - 1) * page_size, page_number * page_size);
+}
 
 module.exports = paginate;
