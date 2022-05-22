@@ -199,16 +199,16 @@ const likePost = async (req, res) => {
       throw new Error("Post is already liked");
     }
 
-    const postLike = await PostLike.create({
+    await PostLike.create({
       postId,
       userId,
     });
 
-    post.likeCount += 1;
+    post.likeCount = (await PostLike.find({ postId })).length;
 
     await post.save();
 
-    return res.json(postLike);
+    return res.json({ success: true });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
@@ -225,17 +225,19 @@ const unlikePost = async (req, res) => {
       throw new Error("Post does not exist");
     }
 
-    const existingPostLike = await PostLike.deleteOne({ postId, userId });
+    const existingPostLike = await PostLike.findOne({ postId, userId });
 
     if (!existingPostLike) {
       throw new Error("Post is already not liked");
     }
 
-    post.likeCount -= 1;
+    await existingPostLike.remove();
+
+    post.likeCount = (await PostLike.find({ postId })).length;
 
     post.save();
 
-    return res.json(existingPostLike);
+    return res.json({ success: true });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
