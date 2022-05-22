@@ -13,6 +13,7 @@ PostIt is a social media web application, built with the MERN stack. You can vis
 - Profanity filtering and posting/commenting cooldowns
 - Update bio which can be viewed by other users
 - Search for posts by their title
+- Fully responsive layout
 
 ## Screenshots
 <img width="720" alt="image" src="https://user-images.githubusercontent.com/76620777/169582952-33a59dcd-041f-4ee4-be6f-bdff5ed52f04.png">
