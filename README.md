@@ -11,6 +11,8 @@ PostIt is a social media web application, built with the MERN stack. You can vis
 - Infinite scrolling 
 - Sort posts by attributes such as like count, comment count and date created
 - Profanity filtering and posting/commenting cooldowns
+- Update bio which can be viewed by other users
+- Search for posts by their title
 
 ## Screenshots
 <img width="720" alt="image" src="https://user-images.githubusercontent.com/76620777/169582952-33a59dcd-041f-4ee4-be6f-bdff5ed52f04.png">
