@@ -3,7 +3,7 @@ import { alignProperty } from "@mui/material/styles/cssUtils";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { MdSettingsInputAntenna } from "react-icons/md";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { getPosts } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import CreatePost from "./CreatePost";
@@ -20,8 +20,11 @@ const PostBrowser = (props) => {
   const [sortBy, setSortBy] = useState("-createdAt");
   const user = isLoggedIn();
 
-  const [search] = useSearchParams();
-  console.log(search);
+  const [search, setSearchParams] = useSearchParams();
+  const [effect, setEffect] = useState(false);
+
+  const searchExists =
+    search && search.get("search") && search.get("search").length > 0;
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -34,11 +37,12 @@ const PostBrowser = (props) => {
     };
 
     if (props.author) query.author = props.author;
-    if (search && search.entries().length > 0)
-      query.search = search.get("search");
+    if (searchExists) query.search = search.get("search");
+
+    console.log(query);
 
     const data = await getPosts(user && user.token, query);
-    if (data.length === 0) {
+    if (data.length < 10) {
       setEnd(true);
     }
     setLoading(false);
@@ -49,11 +53,17 @@ const PostBrowser = (props) => {
 
   useEffect(() => {
     fetchPosts();
-  }, [props.sortBy]);
+  }, [sortBy, effect]);
+
+  useEffect(() => {
+    setPosts([]);
+    setPage(0);
+    setEnd(false);
+    setEffect(!effect);
+  }, [search]);
 
   const handleSortBy = (e) => {
     const newSortBy = e.target.value;
-
     setPosts([]);
     setPage(0);
     setEnd(false);
@@ -81,7 +91,7 @@ const PostBrowser = (props) => {
           </HorizontalStack>
         </Card>
 
-        {search && search.entries().length > 0 && (
+        {searchExists && (
           <Box>
             <Typography variant="h5" gutterBottom>
               Showing results for "{search.get("search")}"

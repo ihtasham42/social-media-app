@@ -145,10 +145,9 @@ const getPosts = async (req, res) => {
     }
 
     if (search) {
-      posts = posts.filter((post) => {
-        console.log(post.title + " " + search);
-        return post.title.includes(search);
-      });
+      posts = posts.filter((post) =>
+        post.title.toLowerCase().includes(search.toLowerCase())
+      );
     }
 
     posts = paginate(posts, 10, page);
