@@ -3,6 +3,7 @@ import { alignProperty } from "@mui/material/styles/cssUtils";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { MdSettingsInputAntenna } from "react-icons/md";
+import { useSearchParams } from "react-router-dom";
 import { getPosts } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import CreatePost from "./CreatePost";
@@ -19,7 +20,8 @@ const PostBrowser = (props) => {
   const [sortBy, setSortBy] = useState("-createdAt");
   const user = isLoggedIn();
 
-  const [search, setSearch] = useState(props.search);
+  const [search] = useSearchParams();
+  console.log(search);
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -32,6 +34,8 @@ const PostBrowser = (props) => {
     };
 
     if (props.author) query.author = props.author;
+    if (search && search.entries().length > 0)
+      query.search = search.get("search");
 
     const data = await getPosts(user && user.token, query);
     if (data.length === 0) {
@@ -42,10 +46,6 @@ const PostBrowser = (props) => {
       setPosts([...posts, ...data]);
     }
   };
-
-  useEffect(() => {
-    setSearch(props.search);
-  }, [props.search]);
 
   useEffect(() => {
     fetchPosts();
@@ -81,12 +81,15 @@ const PostBrowser = (props) => {
           </HorizontalStack>
         </Card>
 
-        {search && (
-          <HorizontalStack padding={0} justifyContent="space-between">
-            {console.log(search)}
-            <Typography variant="h5">Showing results for "{search}"</Typography>
-            <Typography color="text.secondary">14 results found</Typography>
-          </HorizontalStack>
+        {search && search.entries().length > 0 && (
+          <Box>
+            <Typography variant="h5" gutterBottom>
+              Showing results for "{search.get("search")}"
+            </Typography>
+            <Typography color="text.secondary" variant="span">
+              14 results found
+            </Typography>
+          </Box>
         )}
 
         {posts.map((post, i) => (

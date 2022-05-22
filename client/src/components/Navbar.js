@@ -56,7 +56,6 @@ const Navbar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(search);
     navigate("/search?" + new URLSearchParams({ search }));
   };
 

@@ -133,7 +133,7 @@ const getPosts = async (req, res) => {
   try {
     const { userId } = req.body;
 
-    let { page, sortBy, author } = req.query;
+    let { page, sortBy, author, search } = req.query;
 
     if (!sortBy) sortBy = "-createdAt";
     if (!page) page = 1;
@@ -142,6 +142,13 @@ const getPosts = async (req, res) => {
 
     if (author) {
       posts = posts.filter((post) => post.poster.username == author);
+    }
+
+    if (search) {
+      posts = posts.filter((post) => {
+        console.log(post.title + " " + search);
+        return post.title.includes(search);
+      });
     }
 
     posts = paginate(posts, 10, page);
