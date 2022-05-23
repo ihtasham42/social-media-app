@@ -112,6 +112,10 @@ const Navbar = () => {
             </IconButton>
           )}
 
+          <IconButton href="messenger">
+            <AiFillMessage />
+          </IconButton>
+
           <IconButton href="/">
             <AiFillHome />
           </IconButton>
