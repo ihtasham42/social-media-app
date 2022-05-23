@@ -1,17 +1,25 @@
-import { TextField } from "@mui/material";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Button } from '@mui/material'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AiOutlinePlus } from 'react-icons/ai'
 
 const CreatePost = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
-    <TextField
-      sx={{ flexGrow: 1, maxWidth: 300 }}
-      size="small"
-      label="Create a post..."
-      onClick={() => navigate("/posts/create")}
-    />
-  );
-};
+    <Button
+      variant='outlined'
+      size='medium'
+      onClick={() => navigate('/posts/create')}
+      sx={{
+        gap: '0.5rem',
+        minWidth: '150px',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      <AiOutlinePlus style={{ flexShrink: 0 }} />
+      <span>Create Post</span>
+    </Button>
+  )
+}
 
-export default CreatePost;
+export default CreatePost
