@@ -65,7 +65,7 @@ const getPost = async (req, res) => {
 const updatePost = async (req, res) => {
   try {
     const postId = req.params.id;
-    const { content, userId } = req.body;
+    const { content, userId, isAdmin } = req.body;
 
     const post = await Post.findById(postId);
 
@@ -73,7 +73,7 @@ const updatePost = async (req, res) => {
       throw new Error("Post does not exist");
     }
 
-    if (post.poster != userId) {
+    if (post.poster != userId && !isAdmin) {
       throw new Error("Not authorized to update post");
     }
 
@@ -91,7 +91,7 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const postId = req.params.id;
-    const { userId } = req.body;
+    const { userId, isAdmin } = req.body;
 
     const post = await Post.findById(postId);
 
@@ -99,7 +99,7 @@ const deletePost = async (req, res) => {
       throw new Error("Post does not exist");
     }
 
-    if (post.poster != userId) {
+    if (post.poster != userId && !isAdmin) {
       throw new Error("Not authorized to delete post");
     }
 
@@ -109,6 +109,7 @@ const deletePost = async (req, res) => {
 
     return res.json(post);
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };

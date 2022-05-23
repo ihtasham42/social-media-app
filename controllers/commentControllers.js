@@ -91,7 +91,7 @@ const getUserComments = async (req, res) => {
 const updateComment = async (req, res) => {
   try {
     const commentId = req.params.id;
-    const { userId, content } = req.body;
+    const { userId, content, isAdmin } = req.body;
 
     if (!content) {
       throw new Error("All input required");
@@ -103,7 +103,7 @@ const updateComment = async (req, res) => {
       throw new Error("Comment not found");
     }
 
-    if (comment.commenter != userId) {
+    if (comment.commenter != userId && !isAdmin) {
       throw new Error("Not authorized to update comment");
     }
 
@@ -120,7 +120,7 @@ const updateComment = async (req, res) => {
 const deleteComment = async (req, res) => {
   try {
     const commentId = req.params.id;
-    const { userId } = req.body;
+    const { userId, isAdmin } = req.body;
 
     const comment = await Comment.findById(commentId);
 
@@ -128,7 +128,7 @@ const deleteComment = async (req, res) => {
       throw new Error("Comment not found");
     }
 
-    if (comment.commenter != userId) {
+    if (comment.commenter != userId && !isAdmin) {
       throw new Error("Not authorized to delete comment");
     }
 
