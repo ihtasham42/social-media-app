@@ -8,9 +8,13 @@ const verifyToken = (req, res, next) => {
       throw new Error("No token provided");
     }
 
-    const { userId } = jwt.decode(token, process.env.TOKEN_KEY);
+    const { userId, isAdmin } = jwt.decode(token, process.env.TOKEN_KEY);
 
-    req.body.userId = userId;
+    req.body = {
+      ...req.body,
+      userId,
+      isAdmin,
+    };
 
     return next();
   } catch (err) {

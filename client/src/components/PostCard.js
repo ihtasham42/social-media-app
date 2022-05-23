@@ -118,7 +118,7 @@ const PostCard = (props) => {
                 preview={preview === "secondary"}
               />
               <Box>
-                {isAuthor && preview !== "secondary" && (
+                {user && (isAuthor || user.isAdmin) && preview !== "secondary" && (
                   <HorizontalStack>
                     <IconButton
                       disabled={loading}

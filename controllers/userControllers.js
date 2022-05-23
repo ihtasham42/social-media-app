@@ -6,6 +6,15 @@ const jwt = require("jsonwebtoken");
 const Follow = require("../models/Follow");
 const { default: mongoose } = require("mongoose");
 
+const getUserDict = (token, user) => {
+  return {
+    token,
+    username: user.username,
+    userId: user._id,
+    isAdmin: user.isAdmin,
+  };
+};
+
 const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -34,7 +43,7 @@ const register = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
-    return res.json({ token, username, userId: user._id });
+    return res.json(getUserDict(token, user));
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
@@ -64,7 +73,7 @@ const login = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.TOKEN_KEY);
 
-    return res.json({ token, username: user.username, userId: user._id });
+    return res.json(getUserDict(token, user));
   } catch (err) {
     console.log(err);
     return res.status(400).json({ error: err.message });

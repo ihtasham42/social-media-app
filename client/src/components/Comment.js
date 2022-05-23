@@ -109,7 +109,7 @@ const Comment = (props) => {
                   <MdCancel color={iconColor} />
                 )}
               </IconButton>
-              {isAuthor && (
+              {user && (isAuthor || user.isAdmin) && (
                 <HorizontalStack spacing={1}>
                   <IconButton
                     variant="text"

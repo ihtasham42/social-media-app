@@ -158,7 +158,6 @@ const getPosts = async (req, res) => {
 
     return res.json(posts);
   } catch (err) {
-    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };
