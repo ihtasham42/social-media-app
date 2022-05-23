@@ -18,6 +18,7 @@ const PostBrowser = (props) => {
   const [page, setPage] = useState(0);
   const [end, setEnd] = useState(false);
   const [sortBy, setSortBy] = useState("-createdAt");
+  const [count, setCount] = useState(0);
   const user = isLoggedIn();
 
   const [search, setSearchParams] = useSearchParams();
@@ -39,15 +40,15 @@ const PostBrowser = (props) => {
     if (props.author) query.author = props.author;
     if (searchExists) query.search = search.get("search");
 
-    console.log(query);
-
     const data = await getPosts(user && user.token, query);
-    if (data.length < 10) {
+    if (data.data.length < 10) {
       setEnd(true);
     }
+
     setLoading(false);
     if (!data.error) {
-      setPosts([...posts, ...data]);
+      setPosts([...posts, ...data.data]);
+      setCount(data.count);
     }
   };
 
@@ -97,7 +98,7 @@ const PostBrowser = (props) => {
               Showing results for "{search.get("search")}"
             </Typography>
             <Typography color="text.secondary" variant="span">
-              14 results found
+              {count} results found
             </Typography>
           </Box>
         )}

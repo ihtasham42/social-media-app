@@ -19,8 +19,11 @@ const TopPosts = () => {
     const data = await getPosts(user && user.token, query);
 
     const topPosts = [];
-    for (let i = 0; i < 3 && i < data.length; i++) {
-      topPosts.push(data[i]);
+
+    if (data && data.data) {
+      for (let i = 0; i < 3 && i < data.data.length; i++) {
+        topPosts.push(data.data[i]);
+      }
     }
 
     setPosts(topPosts);

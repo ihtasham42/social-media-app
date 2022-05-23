@@ -156,13 +156,15 @@ const getPosts = async (req, res) => {
       );
     }
 
+    const count = posts.length;
+
     posts = paginate(posts, 10, page);
 
     if (userId) {
       await setLiked(posts, userId);
     }
 
-    return res.json(posts);
+    return res.json({ data: posts, count });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
