@@ -17,26 +17,32 @@ import {
   TextField,
 } from "@mui/material";
 import { Box, Container } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 import { BiUser } from "react-icons/bi";
 import GoBack from "../GoBack";
+import Message from "../Message";
 import Navbar from "../Navbar";
 import UserAvatar from "../UserAvatar";
 import UserMessengerEntry from "../UserMessengerEntry";
 import HorizontalStack from "../util/HorizontalStack";
 
-const usernames = [
-  "Harry_02",
-  "Ihtasham_42",
-  "simon995",
-  "CaptainSparklez",
-  "Pewdiepie",
-  "Markiplier",
-  "JamesCharles",
-  "Epicminecraftgamer",
-];
+const conversations = {
+  Pewdiepie: {
+    messages: [
+      { direction: "to", content: "Hi!" },
+      { direction: "from", content: "Hey!" },
+      { direction: "to", content: "How are you doing?" },
+      { direction: "from", content: "I'm doing fine, what about you?" },
+      { direction: "to", content: "Doing pretty good as well :)" },
+      { direction: "from", content: "Alright cya" },
+      { direction: "to", content: "Bye :)" },
+    ],
+  },
+};
 
 const MessengerView = () => {
+  const [conservant, setConservant] = useState("Pewdiepie");
+
   return (
     <Container>
       <Navbar />
@@ -50,7 +56,7 @@ const MessengerView = () => {
           >
             <Grid item xs={5} sx={{ height: "100%" }}>
               <Card sx={{ height: "100%", padding: 0 }}>
-                {usernames.map((username) => (
+                {Object.keys(conversations).map((username) => (
                   <UserMessengerEntry username={username} key={username} />
                 ))}
               </Card>
@@ -58,7 +64,13 @@ const MessengerView = () => {
             <Grid item xs={7}>
               <Card sx={{ height: "100%" }}>
                 <Stack>
-                  <HorizontalStack sx={{ padding: 2 }}>a</HorizontalStack>
+                  {conversations[conservant].messages.map((message) => (
+                    <Message
+                      message={message.content}
+                      direction={message.direction}
+                    />
+                  ))}
+
                   <FormControl>
                     <InputLabel>Send a message...</InputLabel>
                     <OutlinedInput
