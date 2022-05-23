@@ -36,7 +36,7 @@ const createComment = async (req, res) => {
 
     await post.save();
 
-    await Comment.populate(comment, { path: "commenter" });
+    await Comment.populate(comment, { path: "commenter", select: "-password" });
 
     return res.json(comment);
   } catch (err) {
@@ -49,7 +49,7 @@ const getPostComments = async (req, res) => {
     const postId = req.params.id;
 
     const comments = await Comment.find({ post: postId })
-      .populate("commenter")
+      .populate("commenter", "-password")
       .sort("-createdAt");
 
     let commentParents = {};

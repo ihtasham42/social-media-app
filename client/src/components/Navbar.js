@@ -79,7 +79,11 @@ const Navbar = () => {
         spacing={2}
       >
         <HorizontalStack>
-          <AiFillFileText size={33} color={theme.palette.primary.main} />
+          <AiFillFileText
+            size={33}
+            color={theme.palette.primary.main}
+            onClick={() => navigate("/")}
+          />
           {!mobile && (
             <Typography variant="h4" mr={1} color={theme.palette.primary.main}>
               <Link href="/" color="inherit" underline="none">

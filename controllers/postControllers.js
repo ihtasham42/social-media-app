@@ -46,7 +46,9 @@ const getPost = async (req, res) => {
       throw new Error("Post does not exist");
     }
 
-    const post = await Post.findById(postId).populate("poster").lean();
+    const post = await Post.findById(postId)
+      .populate("poster", "-password")
+      .lean();
 
     if (!post) {
       throw new Error("Post does not exist");
@@ -139,7 +141,10 @@ const getPosts = async (req, res) => {
     if (!sortBy) sortBy = "-createdAt";
     if (!page) page = 1;
 
-    let posts = await Post.find().populate("poster").sort(sortBy).lean();
+    let posts = await Post.find()
+      .populate("poster", "-password")
+      .sort(sortBy)
+      .lean();
 
     if (author) {
       posts = posts.filter((post) => post.poster.username == author);

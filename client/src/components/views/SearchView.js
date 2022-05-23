@@ -10,7 +10,6 @@ const SearchView = () => {
   return (
     <Container>
       <Navbar />
-      <GoBack />
       <GridLayout
         left={
           <Stack spacing={2}>

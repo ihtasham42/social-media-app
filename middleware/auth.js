@@ -26,14 +26,14 @@ const optionallyVerifyToken = (req, res, next) => {
   try {
     const token = req.headers["x-access-token"];
 
-    if (!token) next();
+    if (!token) return next();
 
     const decoded = jwt.decode(token, process.env.TOKEN_KEY);
     req.body.userId = decoded.userId;
 
     next();
   } catch (err) {
-    next();
+    return next();
   }
 };
 

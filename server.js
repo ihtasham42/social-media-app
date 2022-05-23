@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
+const bcrypt = require("bcrypt");
 const app = express();
 
 const posts = require("./routes/posts");

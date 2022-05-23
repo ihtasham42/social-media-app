@@ -66,7 +66,6 @@ const ProfileView = () => {
   return (
     <Container>
       <Navbar />
-      <GoBack />
 
       <GridLayout
         left={
