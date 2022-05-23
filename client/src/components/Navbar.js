@@ -12,6 +12,7 @@ import {
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import "react-icons/ai";
+import "react-icons/ri";
 import {
   AiFillFileText,
   AiFillHome,
@@ -22,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { isLoggedIn, logoutUser } from "../helpers/authHelper";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
+import { RiContrast2Line } from "react-icons/ri";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -71,10 +73,8 @@ const Navbar = () => {
         alignItems="center"
         justifyContent="space-between"
         sx={{
-          mb: 0,
-          py: 2,
-          borderBottom: 1,
-          borderColor: "divider",
+          pt: 2,
+          pb: 0,
         }}
         spacing={2}
       >
@@ -111,7 +111,6 @@ const Navbar = () => {
           <IconButton href="/">
             <AiFillHome />
           </IconButton>
-
           {user ? (
             <>
               <IconButton href={"/users/" + username}>

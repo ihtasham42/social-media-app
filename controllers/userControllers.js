@@ -210,7 +210,7 @@ const getRandomUsers = async (req, res) => {
   try {
     let { size } = req.query;
 
-    const users = await User.find();
+    const users = await User.find().select("-password");
 
     const randomUsers = [];
 
