@@ -81,7 +81,7 @@ const getConversations = async (req, res) => {
         $in: [userId],
       },
     })
-      .populate("recipients")
+      .populate("recipients", "-password")
       .lean();
 
     for (let i = 0; i < conversations.length; i++) {
