@@ -10,18 +10,23 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useRef } from "react";
-import Message from "./components/Message";
-import UserAvatar from "./components/UserAvatar";
-import HorizontalStack from "./components/util/HorizontalStack";
+import Message from "./Message";
+import SendMessage from "./SendMessage";
+import UserAvatar from "./UserAvatar";
+import HorizontalStack from "./util/HorizontalStack";
 
 const Messages = (props) => {
   const messagesEndRef = useRef(null);
   const conversation =
-    props.conservations && props.conservations[props.conservant];
+    props.conversations && props.conversations[props.conservant];
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
+    scrollToBottom();
   });
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
+  };
 
   return (
     <>
@@ -53,26 +58,12 @@ const Messages = (props) => {
         </Box>
       </Box>
 
-      <Stack
-        sx={{
-          p: 2,
-          height: "12%",
-        }}
-        justifyContent="center"
-      >
-        <FormControl sx={{ padding: 0 }}>
-          <InputLabel>Send a message...</InputLabel>
-          <OutlinedInput
-            label="Write a message..."
-            fullWidth
-            endAdornment={
-              <InputAdornment position="end">
-                <Button>Send</Button>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-      </Stack>
+      <SendMessage
+        conversations={props.conversations}
+        setConversations={props.setConversations}
+        conservant={props.conservant}
+        scrollToBottom={scrollToBottom}
+      />
     </>
   );
 };

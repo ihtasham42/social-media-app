@@ -5,13 +5,13 @@ const mongoose = require("mongoose");
 
 const sendMessage = async (req, res) => {
   try {
-    const email = req.params.id;
-    const { text, userId } = req.body;
+    const username = req.params.id;
+    const { content, userId } = req.body;
 
-    const recipient = await User.findOne({ email });
+    const recipient = await User.findOne({ username });
 
     if (!recipient) {
-      return res.status(400).send("Recipient not found");
+      throw new Error("Recipient not found");
     }
 
     const conversation = await Conversation.findOneAndUpdate(
@@ -29,24 +29,24 @@ const sendMessage = async (req, res) => {
     const message = await Message.create({
       conversation: conversation._id,
       sender: userId,
-      text,
+      content,
     });
 
-    return res.json({ conversation, message });
+    return res.json({ success: true });
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: err.message });
   }
 };
 
 const getMessages = async (req, res) => {
   try {
-    const email = req.params.id;
+    const username = req.params.id;
     const { userId } = req.body;
 
-    const recipient = await User.findOne({ email });
+    const recipient = await User.findOne({ username });
 
     if (!recipient) {
-      return res.status(400).send("Recipient not found");
+      throw new Error("Recipient not found");
     }
 
     const conversation = await Conversation.findOne({
@@ -56,20 +56,51 @@ const getMessages = async (req, res) => {
     });
 
     if (!conversation) {
-      return res.status(400).send("Conversation does not exist");
+      throw new Error("Conversation not found");
     }
 
     const messages = await Message.find({
       conversation: conversation._id,
-    }).sort("-createdAt");
+    })
+      .populate("sender", "-password")
+      .sort("-createdAt")
+      .limit(30);
 
     return res.json(messages);
   } catch (err) {
-    return res.status(400).json(err.message);
+    return res.status(400).json({ error: err.message });
+  }
+};
+
+const getConversations = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const conversations = await Conversation.find({
+      recipients: {
+        $in: [userId],
+      },
+    })
+      .populate("recipients")
+      .lean();
+
+    for (let i = 0; i < conversations.length; i++) {
+      const conversation = conversations[i];
+      for (let j = 0; j < 2; j++) {
+        if (conversation.recipients[j] != userId) {
+          conversation.recipient = recipient;
+        }
+      }
+    }
+
+    return res.json(conversations);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
   }
 };
 
 module.exports = {
   sendMessage,
   getMessages,
+  getConversations,
 };

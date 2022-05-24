@@ -14,7 +14,7 @@ import {
 import { Box, Container } from "@mui/system";
 import React, { useState } from "react";
 import { AiFillMessage } from "react-icons/ai";
-import Messages from "../../Messages";
+import Messages from "../Messages";
 import Message from "../Message";
 import Navbar from "../Navbar";
 import UserAvatar from "../UserAvatar";
@@ -39,46 +39,10 @@ const conversationsData = {
     ],
   },
   IhtashamAlt: {
-    messages: [],
-  },
-  simon_995: {
-    messages: [],
-  },
-  CaptainSparklez: {
-    messages: [],
-  },
-  Notch32: {
-    messages: [],
-  },
-  mr_white: {
-    messages: [],
-  },
-  xXSuperGamerXx: {
-    messages: [],
-  },
-  FastDolphin: {
-    messages: [],
-  },
-  testUser1: {
-    messages: [],
-  },
-  testUser2: {
-    messages: [],
-  },
-  testUser3: {
-    messages: [],
-  },
-  testUser4: {
-    messages: [],
-  },
-  testUser5: {
-    messages: [],
-  },
-  testUser6: {
-    messages: [],
-  },
-  testUser7: {
-    messages: [],
+    messages: [
+      { direction: "from", content: "xD" },
+      { direction: "to", content: "lol" },
+    ],
   },
 };
 
