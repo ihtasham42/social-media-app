@@ -14,13 +14,15 @@ import {
 import { Box, Container } from "@mui/system";
 import React, { useState } from "react";
 import { AiFillMessage } from "react-icons/ai";
+import Messages from "../../Messages";
 import Message from "../Message";
 import Navbar from "../Navbar";
 import UserAvatar from "../UserAvatar";
+import UserMessengerEntries from "../UserMessengerEntries";
 import UserMessengerEntry from "../UserMessengerEntry";
 import HorizontalStack from "../util/HorizontalStack";
 
-const conversations = {
+const conversationsData = {
   Pewdiepie: {
     messages: [
       { direction: "to", content: "Hi!" },
@@ -82,6 +84,7 @@ const conversations = {
 
 const MessengerView = () => {
   const [conservant, setConservant] = useState("Pewdiepie");
+  const [conversations, setConversations] = useState(conversationsData);
 
   return (
     <Container>
@@ -95,81 +98,17 @@ const MessengerView = () => {
                 xs={5}
                 sx={{ height: "100%", borderRight: 1, borderColor: "divider" }}
               >
-                <HorizontalStack
-                  alignItems="center"
-                  spacing={2}
-                  sx={{ px: 2, height: "10%" }}
-                >
-                  <AiFillMessage size={30} />
-                  <Typography>
-                    <b>Your Conversations</b>
-                  </Typography>
-                </HorizontalStack>
-                <Divider />
-                <Box sx={{ height: "90%" }}>
-                  <Box sx={{ height: "100%" }}>
-                    <List sx={{ overflow: "scroll", maxHeight: "100%", p: 0 }}>
-                      {Object.keys(conversations).map((username) => (
-                        <UserMessengerEntry
-                          username={username}
-                          key={username}
-                        />
-                      ))}
-                    </List>
-                  </Box>
-                </Box>
+                <UserMessengerEntries
+                  conversations={conversations}
+                  setConservant={setConservant}
+                />
               </Grid>
               <Grid item xs={7} sx={{ height: "100%" }}>
-                <HorizontalStack
-                  alignItems="center"
-                  spacing={2}
-                  sx={{ px: 2, height: "10%" }}
-                >
-                  <UserAvatar username={conservant} />
-                  <Typography>
-                    <b>{conservant}</b>
-                  </Typography>
-                </HorizontalStack>
-                <Divider />
-                <Box sx={{ height: "78%" }}>
-                  <Box sx={{ height: "100%" }}>
-                    <Stack
-                      sx={{ padding: 2, overflow: "scroll", maxHeight: "100%" }}
-                    >
-                      {conversations[conservant].messages.map((message, i) => (
-                        <Message
-                          conservant={conservant}
-                          message={message.content}
-                          direction={message.direction}
-                          key={i}
-                        />
-                      ))}
-                    </Stack>
-                  </Box>
-                </Box>
-
-                <Stack
-                  sx={{
-                    p: 2,
-                    height: "12%",
-                    borderTop: 1,
-                    borderColor: "divider",
-                  }}
-                  justifyContent="center"
-                >
-                  <FormControl sx={{ padding: 0 }}>
-                    <InputLabel>Send a message...</InputLabel>
-                    <OutlinedInput
-                      label="Write a message..."
-                      fullWidth
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <Button>Send</Button>
-                        </InputAdornment>
-                      }
-                    />
-                  </FormControl>
-                </Stack>
+                <Messages
+                  conservant={conservant}
+                  conversations={conversations}
+                  setConversations={setConversations}
+                />
               </Grid>
             </Grid>
           </Card>
