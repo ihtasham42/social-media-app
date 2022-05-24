@@ -4,22 +4,14 @@ import {
   Divider,
   FormControl,
   Grid,
-  Input,
   InputAdornment,
   InputLabel,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   OutlinedInput,
   Stack,
-  TextField,
+  Typography,
 } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React, { useState } from "react";
-import { BiUser } from "react-icons/bi";
-import GoBack from "../GoBack";
 import Message from "../Message";
 import Navbar from "../Navbar";
 import UserAvatar from "../UserAvatar";
@@ -34,9 +26,30 @@ const conversations = {
       { direction: "to", content: "How are you doing?" },
       { direction: "from", content: "I'm doing fine, what about you?" },
       { direction: "to", content: "Doing pretty good as well :)" },
-      { direction: "from", content: "Alright cya" },
+      { direction: "from", content: "Nice! Alright gtg, bye" },
       { direction: "to", content: "Bye :)" },
     ],
+  },
+  IhtashamAlt: {
+    messages: [],
+  },
+  simon_995: {
+    messages: [],
+  },
+  CaptainSparklez: {
+    messages: [],
+  },
+  Notch32: {
+    messages: [],
+  },
+  mr_white: {
+    messages: [],
+  },
+  xXSuperGamerXx: {
+    messages: [],
+  },
+  FastDolphin: {
+    messages: [],
   },
 };
 
@@ -62,16 +75,25 @@ const MessengerView = () => {
               </Card>
             </Grid>
             <Grid item xs={7}>
-              <Card sx={{ height: "100%" }}>
-                <Stack>
-                  {conversations[conservant].messages.map((message) => (
+              <Card sx={{ height: "100%", padding: 0 }}>
+                <HorizontalStack sx={{ padding: 2 }} spacing={2}>
+                  <UserAvatar username={conservant} />
+                  <Typography>
+                    <b>{conservant}</b>
+                  </Typography>
+                </HorizontalStack>
+                <Divider />
+                <Stack sx={{ padding: 2 }}>
+                  {conversations[conservant].messages.map((message, i) => (
                     <Message
+                      conservant={conservant}
                       message={message.content}
                       direction={message.direction}
+                      key={i}
                     />
                   ))}
 
-                  <FormControl>
+                  <FormControl sx={{ my: 2 }}>
                     <InputLabel>Send a message...</InputLabel>
                     <OutlinedInput
                       label="Write a message..."

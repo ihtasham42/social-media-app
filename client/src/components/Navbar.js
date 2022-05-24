@@ -112,7 +112,7 @@ const Navbar = () => {
             </IconButton>
           )}
 
-          <IconButton href="messenger">
+          <IconButton href="/messenger">
             <AiFillMessage />
           </IconButton>
 

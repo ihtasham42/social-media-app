@@ -15,7 +15,7 @@ const UserMessengerEntry = (props) => {
       <ListItem disablePadding alignItems="flex-start">
         <ListItemButton sx={{ paddingY: 2 }}>
           <ListItemAvatar>
-            <UserAvatar username={props.username} />
+            <UserAvatar height={45} width={45} username={props.username} />
           </ListItemAvatar>
           <ListItemText
             primary={props.username}
