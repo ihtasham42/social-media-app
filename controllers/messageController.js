@@ -88,13 +88,14 @@ const getConversations = async (req, res) => {
       const conversation = conversations[i];
       for (let j = 0; j < 2; j++) {
         if (conversation.recipients[j] != userId) {
-          conversation.recipient = recipient;
+          conversation.recipient = conversation.recipients[j];
         }
       }
     }
 
     return res.json(conversations);
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };

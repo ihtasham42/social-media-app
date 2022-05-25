@@ -69,6 +69,10 @@ const Profile = (props) => {
             </Box>
           )}
 
+          {currentUser && user._id !== currentUser.userId && (
+            <Button variant="outlined">Message</Button>
+          )}
+
           <HorizontalStack>
             <Typography color="text.secondary">
               Likes <b>{props.profile.posts.likeCount}</b>

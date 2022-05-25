@@ -9,7 +9,7 @@ const app = express();
 const posts = require("./routes/posts");
 const users = require("./routes/users");
 const comments = require("./routes/comments");
-const conversations = require("./routes/conversations");
+const messages = require("./routes/messages");
 const User = require("./models/User");
 
 dotenv.config();
@@ -31,7 +31,7 @@ app.use(cors());
 app.use("/api/posts", posts);
 app.use("/api/users", users);
 app.use("/api/comments", comments);
-app.use("/api/conversations", conversations);
+app.use("/api/messages", messages);
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

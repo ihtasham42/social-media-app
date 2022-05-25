@@ -42,7 +42,14 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/messenger" element={<MessengerView />} />
+          <Route
+            path="/messenger"
+            element={
+              <PrivateRoute>
+                <MessengerView />
+              </PrivateRoute>
+            }
+          />
           <Route path="/search" element={<SearchView />} />
           <Route path="/users/:id" element={<ProfileView />} />
           <Route path="/login" element={<LoginView />} />

@@ -1,26 +1,11 @@
-import {
-  Button,
-  Card,
-  Divider,
-  FormControl,
-  Grid,
-  InputAdornment,
-  InputLabel,
-  List,
-  OutlinedInput,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Card, Grid } from "@mui/material";
 import { Box, Container } from "@mui/system";
-import React, { useState } from "react";
-import { AiFillMessage } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
 import Messages from "../Messages";
-import Message from "../Message";
 import Navbar from "../Navbar";
-import UserAvatar from "../UserAvatar";
 import UserMessengerEntries from "../UserMessengerEntries";
-import UserMessengerEntry from "../UserMessengerEntry";
-import HorizontalStack from "../util/HorizontalStack";
+import { getConversations } from "../../api/messages";
+import { isLoggedIn } from "../../helpers/authHelper";
 
 const conversationsData = {
   Pewdiepie: {
@@ -47,8 +32,19 @@ const conversationsData = {
 };
 
 const MessengerView = () => {
-  const [conservant, setConservant] = useState("Pewdiepie");
-  const [conversations, setConversations] = useState(conversationsData);
+  const [conservant, setConservant] = useState(null);
+  const [conversations, setConversations] = useState(null);
+  const user = isLoggedIn();
+
+  const fetchConversations = async () => {
+    const data = await getConversations(user);
+    setConversations(data);
+    console.log(data);
+  };
+
+  useEffect(() => {
+    fetchConversations();
+  }, []);
 
   return (
     <Container>
@@ -56,7 +52,7 @@ const MessengerView = () => {
       <Box>
         <Box sx={{ padding: 1 }}>
           <Card sx={{ padding: 0 }}>
-            <Grid container sx={{ height: "85vh" }} alignItems="stretch">
+            <Grid container sx={{ height: "84vh" }} alignItems="stretch">
               <Grid
                 item
                 xs={5}

@@ -15,7 +15,7 @@ const UserMessengerEntry = (props) => {
   };
 
   return (
-    <Box>
+    <>
       <ListItem disablePadding alignItems="flex-start">
         <ListItemButton sx={{ paddingY: "11px" }} onClick={handleClick}>
           <ListItemAvatar>
@@ -28,7 +28,7 @@ const UserMessengerEntry = (props) => {
         </ListItemButton>
       </ListItem>
       <Divider />
-    </Box>
+    </>
   );
 };
 
