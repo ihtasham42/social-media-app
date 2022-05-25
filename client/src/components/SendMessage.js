@@ -18,20 +18,20 @@ const SendMessage = (props) => {
 
   const handleSendMessage = async () => {
     const newMessage = { direction: "from", content };
-    const newMessages = [...props.messages, newMessage];
+    const newMessages = [newMessage, ...props.messages];
 
     props.setMessages(newMessages);
+    props.scrollToBottom();
+    setContent("");
 
     await sendMessage(user, newMessage, props.recipient._id);
-
-    setContent("");
   };
 
   return (
     <Stack
       sx={{
         p: 2,
-        height: "70px",
+        height: "12%",
       }}
       justifyContent="center"
     >

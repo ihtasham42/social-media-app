@@ -42,7 +42,6 @@ const sendMessage = async (req, res) => {
 const getMessages = async (req, res) => {
   try {
     const conversationId = req.params.id;
-    const { userId } = req.body;
 
     const conversation = await Conversation.findById(conversationId);
 
@@ -55,10 +54,11 @@ const getMessages = async (req, res) => {
     })
       .populate("sender", "-password")
       .sort("-createdAt")
-      .limit(30);
+      .limit(12);
 
     return res.json(messages);
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };
@@ -78,7 +78,7 @@ const getConversations = async (req, res) => {
     for (let i = 0; i < conversations.length; i++) {
       const conversation = conversations[i];
       for (let j = 0; j < 2; j++) {
-        if (conversation.recipients[j] != userId) {
+        if (conversation.recipients[j]._id != userId) {
           conversation.recipient = conversation.recipients[j];
         }
       }

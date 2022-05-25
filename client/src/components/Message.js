@@ -5,14 +5,15 @@ import HorizontalStack from "./util/HorizontalStack";
 
 const Message = (props) => {
   const username = props.conservant;
+  const message = props.message;
   const theme = useTheme();
 
   let styles = {};
-  if (props.direction === "to") {
+  if (message.direction === "to") {
     styles = {
       justifyContent: "flex-start",
     };
-  } else if (props.direction === "from") {
+  } else if (message.direction === "from") {
     styles = {
       messageColor: theme.palette.grey["100"],
       justifyContent: "flex-end",
@@ -26,7 +27,7 @@ const Message = (props) => {
       justifyContent={styles.justifyContent}
       alignItems="flex-end"
     >
-      {props.direction === "to" && (
+      {message.direction === "to" && (
         <UserAvatar username={username} height={30} width={30} />
       )}
 
@@ -39,7 +40,7 @@ const Message = (props) => {
           paddingX: 2,
         }}
       >
-        {props.message}
+        {message.content}
       </Card>
     </HorizontalStack>
   );

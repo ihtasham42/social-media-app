@@ -21,9 +21,7 @@ import HorizontalStack from "./util/HorizontalStack";
 
 const Messages = (props) => {
   const messagesEndRef = useRef(null);
-
   const user = isLoggedIn();
-
   const [messages, setMessages] = useState(null);
 
   const getConversation = (conversations, conservant) => {
@@ -39,21 +37,38 @@ const Messages = (props) => {
     props.conversations &&
     getConversation(props.conversations, props.conservant);
 
+  const setDirection = (messages) => {
+    messages.forEach((message) => {
+      if (message.sender._id === user.userId) {
+        message.direction = "from";
+      } else {
+        message.direction = "to";
+      }
+    });
+  };
+
   const fetchMessages = async () => {
     if (conversation) {
       const data = await getMessages(user, conversation._id);
 
-      console.log(data);
+      setDirection(data);
+
       if (data && !data.error) {
+        console.log(data);
         setMessages(data);
       }
     }
   };
 
   useEffect(() => {
-    scrollToBottom();
     fetchMessages();
   }, [props.conservant]);
+
+  useEffect(() => {
+    if (messages) {
+      scrollToBottom();
+    }
+  }, [messages]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
@@ -66,7 +81,7 @@ const Messages = (props) => {
           <HorizontalStack
             alignItems="center"
             spacing={2}
-            sx={{ px: 2, height: "70px" }}
+            sx={{ px: 2, height: "10%" }}
           >
             <UserAvatar username={props.conservant} />
             <Typography>
@@ -76,20 +91,21 @@ const Messages = (props) => {
           <Divider />
           <Box sx={{ height: "78%" }}>
             <Box sx={{ height: "100%" }}>
-              <Stack sx={{ padding: 2, overflow: "auto", maxHeight: "100%" }}>
+              <Stack
+                sx={{ padding: 2, overflowY: "scroll", maxHeight: "100%" }}
+                direction="column-reverse"
+              >
+                <div ref={messagesEndRef} />
                 {messages.map((message, i) => (
                   <Message
                     conservant={props.conservant}
-                    message={message.content}
-                    direction={message.direction}
+                    message={message}
                     key={i}
                   />
                 ))}
-                <div ref={messagesEndRef} />
               </Stack>
             </Box>
           </Box>
-
           <SendMessage
             messages={messages}
             recipient={conversation.recipient}
