@@ -30,8 +30,8 @@ const SendMessage = (props) => {
   return (
     <Stack
       sx={{
-        p: 2,
-        height: "70px",
+        m: 2,
+        height: "40px",
       }}
       justifyContent="center"
     >
@@ -42,6 +42,7 @@ const SendMessage = (props) => {
           fullWidth
           value={content}
           autoComplete="off"
+          size="small"
         />
 
         <Button onClick={handleSendMessage} disabled={content.length === 0}>

@@ -49,6 +49,11 @@ const Messages = (props) => {
 
   const fetchMessages = async () => {
     if (conversation) {
+      if (conversation.new) {
+        setMessages([]);
+        return;
+      }
+
       const data = await getMessages(user, conversation._id);
 
       setDirection(data);
@@ -81,7 +86,7 @@ const Messages = (props) => {
           <HorizontalStack
             alignItems="center"
             spacing={2}
-            sx={{ px: 2, height: "70px" }}
+            sx={{ px: 2, height: "60px" }}
           >
             <UserAvatar username={props.conservant} />
             <Typography>
@@ -89,7 +94,7 @@ const Messages = (props) => {
             </Typography>
           </HorizontalStack>
           <Divider />
-          <Box sx={{ height: "calc(100vh - 250px)" }}>
+          <Box sx={{ height: "calc(100vh - 240px)" }}>
             <Box sx={{ height: "100%" }}>
               <Stack
                 sx={{ padding: 2, overflowY: "scroll", maxHeight: "100%" }}

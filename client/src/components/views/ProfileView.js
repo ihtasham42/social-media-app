@@ -1,6 +1,6 @@
 import { Container, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUser, updateUser } from "../../api/users";
 import { isLoggedIn } from "../../helpers/authHelper";
 
@@ -22,6 +22,7 @@ const ProfileView = () => {
   const user = isLoggedIn();
   const [error, setError] = useState("");
   const params = useParams();
+  const navigate = useNavigate();
 
   const fetchUser = async () => {
     setLoading(true);
@@ -47,6 +48,10 @@ const ProfileView = () => {
 
   const handleEditing = () => {
     setEditing(!editing);
+  };
+
+  const handleMessage = () => {
+    navigate("/messenger", { state: { user: profile.user } });
   };
 
   useEffect(() => {
@@ -96,6 +101,7 @@ const ProfileView = () => {
               editing={editing}
               handleSubmit={handleSubmit}
               handleEditing={handleEditing}
+              handleMessage={handleMessage}
               validate={validate}
             />
 

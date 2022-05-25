@@ -6,16 +6,27 @@ import Navbar from "../Navbar";
 import UserMessengerEntries from "../UserMessengerEntries";
 import { getConversations } from "../../api/messages";
 import { isLoggedIn } from "../../helpers/authHelper";
+import { useLocation } from "react-router-dom";
 
 const MessengerView = () => {
   const [conservant, setConservant] = useState(null);
   const [conversations, setConversations] = useState(null);
   const user = isLoggedIn();
+  const { state } = useLocation();
+  const newConservant = state && state.user;
 
   const fetchConversations = async () => {
-    const data = await getConversations(user);
+    let data = await getConversations(user);
+    if (newConservant) {
+      const newConversation = {
+        _id: newConservant._id,
+        recipient: newConservant,
+        new: true,
+      };
+      setConservant(newConservant.username);
+      data = [newConversation, ...data];
+    }
     setConversations(data);
-    console.log(data);
   };
 
   useEffect(() => {
