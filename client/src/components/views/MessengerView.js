@@ -27,7 +27,11 @@ const MessengerView = () => {
       <Navbar />
       <Box>
         <Card sx={{ padding: 0 }}>
-          <Grid container sx={{ height: "85vh" }} alignItems="stretch">
+          <Grid
+            container
+            sx={{ height: "calc(100vh - 110px)" }}
+            alignItems="stretch"
+          >
             <Grid
               item
               xs={5}

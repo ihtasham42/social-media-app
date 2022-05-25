@@ -31,7 +31,7 @@ const SendMessage = (props) => {
     <Stack
       sx={{
         p: 2,
-        height: "12%",
+        height: "70px",
       }}
       justifyContent="center"
     >

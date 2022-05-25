@@ -81,7 +81,7 @@ const Messages = (props) => {
           <HorizontalStack
             alignItems="center"
             spacing={2}
-            sx={{ px: 2, height: "10%" }}
+            sx={{ px: 2, height: "70px" }}
           >
             <UserAvatar username={props.conservant} />
             <Typography>
@@ -89,7 +89,7 @@ const Messages = (props) => {
             </Typography>
           </HorizontalStack>
           <Divider />
-          <Box sx={{ height: "78%" }}>
+          <Box sx={{ height: "calc(100vh - 250px)" }}>
             <Box sx={{ height: "100%" }}>
               <Stack
                 sx={{ padding: 2, overflowY: "scroll", maxHeight: "100%" }}

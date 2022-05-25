@@ -11,11 +11,11 @@ const UserMessengerEntries = (props) => {
   return props.conversations ? (
     <>
       {props.conversations.length > 0 ? (
-        <>
+        <Stack>
           <HorizontalStack
             alignItems="center"
             spacing={2}
-            sx={{ px: 2, height: "10%" }}
+            sx={{ px: 2, height: "70px" }}
           >
             <AiFillMessage size={30} />
             <Typography>
@@ -23,7 +23,7 @@ const UserMessengerEntries = (props) => {
             </Typography>
           </HorizontalStack>
           <Divider />
-          <Box sx={{ height: "90%" }}>
+          <Box sx={{ height: "calc(100vh - 180px)" }}>
             <Box sx={{ height: "100%" }}>
               <List sx={{ padding: 0, maxHeight: "100%", overflowY: "auto" }}>
                 {props.conversations.map((conversation) => (
@@ -58,6 +58,12 @@ const UserMessengerEntries = (props) => {
                       key={conversation.recipient.username}
                       setConservant={props.setConservant}
                     />
+
+                    <UserMessengerEntry
+                      conversation={conversation}
+                      key={conversation.recipient.username}
+                      setConservant={props.setConservant}
+                    />
                     <UserMessengerEntry
                       conversation={conversation}
                       key={conversation.recipient.username}
@@ -73,7 +79,7 @@ const UserMessengerEntries = (props) => {
               </List>
             </Box>
           </Box>
-        </>
+        </Stack>
       ) : (
         <Stack
           sx={{ height: "100%" }}
