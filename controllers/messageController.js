@@ -5,10 +5,10 @@ const mongoose = require("mongoose");
 
 const sendMessage = async (req, res) => {
   try {
-    const username = req.params.id;
+    const recipientId = req.params.id;
     const { content, userId } = req.body;
 
-    const recipient = await User.findOne({ username });
+    const recipient = await User.findById(recipientId);
 
     if (!recipient) {
       throw new Error("Recipient not found");
@@ -34,6 +34,7 @@ const sendMessage = async (req, res) => {
 
     return res.json({ success: true });
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };

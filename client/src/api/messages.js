@@ -26,9 +26,9 @@ const getMessages = async (user, conversationId) => {
   }
 };
 
-const sendMessage = async (user, message) => {
+const sendMessage = async (user, message, recipientId) => {
   try {
-    const res = await fetch(BASE_URL + "api/messages", {
+    const res = await fetch(BASE_URL + "api/messages/" + recipientId, {
       method: "POST",
       headers: {
         Accept: "application/json",

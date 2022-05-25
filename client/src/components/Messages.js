@@ -41,7 +41,6 @@ const Messages = (props) => {
 
   const fetchMessages = async () => {
     if (conversation) {
-      console.log(conversation._id);
       const data = await getMessages(user, conversation._id);
 
       console.log(data);
@@ -93,6 +92,7 @@ const Messages = (props) => {
 
           <SendMessage
             messages={messages}
+            recipient={conversation.recipient}
             setMessages={setMessages}
             scrollToBottom={scrollToBottom}
           />

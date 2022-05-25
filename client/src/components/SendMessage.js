@@ -8,23 +8,24 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { sendMessage } from "../api/messages";
+import { isLoggedIn } from "../helpers/authHelper";
 import HorizontalStack from "./util/HorizontalStack";
 
 const SendMessage = (props) => {
   const [content, setContent] = useState("");
+  const user = isLoggedIn();
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     const newMessage = { direction: "from", content };
     const newMessages = [...props.messages, newMessage];
 
     props.setMessages(newMessages);
 
+    await sendMessage(user, newMessage, props.recipient._id);
+
     setContent("");
   };
-
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
 
   return (
     <Stack
