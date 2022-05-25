@@ -10,15 +10,21 @@ import React from "react";
 import UserAvatar from "./UserAvatar";
 
 const UserMessengerEntry = (props) => {
+  const username = props.conversation.recipient.username;
+
+  const handleClick = () => {
+    props.setConservant(username);
+  };
+
   return (
     <>
       <ListItem disablePadding alignItems="flex-start">
-        <ListItemButton sx={{ paddingY: 2 }}>
+        <ListItemButton sx={{ paddingY: 2 }} onClick={handleClick}>
           <ListItemAvatar>
-            <UserAvatar height={45} width={45} username={props.username} />
+            <UserAvatar height={45} width={45} username={username} />
           </ListItemAvatar>
           <ListItemText
-            primary={props.username}
+            primary={username}
             secondary="Sent you a message - 1 day ago"
           />
         </ListItemButton>

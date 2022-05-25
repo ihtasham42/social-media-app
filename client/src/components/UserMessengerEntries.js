@@ -25,10 +25,10 @@ const UserMessengerEntries = (props) => {
           <Divider />
           <Box sx={{ height: "90%" }}>
             <Box sx={{ height: "100%" }}>
-              <List sx={{ padding: 0 }}>
+              <List sx={{ padding: 0, maxHeight: "100%", overflow: "auto" }}>
                 {props.conversations.map((conversation) => (
                   <UserMessengerEntry
-                    username={conversation.recipient.username}
+                    conversation={conversation}
                     key={conversation.recipient.username}
                     setConservant={props.setConservant}
                   />

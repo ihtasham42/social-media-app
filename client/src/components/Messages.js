@@ -9,8 +9,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiFillMessage } from "react-icons/ai";
+import { getMessages } from "../api/messages";
+import { isLoggedIn } from "../helpers/authHelper";
 import Loading from "./Loading";
 import Message from "./Message";
 import SendMessage from "./SendMessage";
@@ -19,12 +21,40 @@ import HorizontalStack from "./util/HorizontalStack";
 
 const Messages = (props) => {
   const messagesEndRef = useRef(null);
+
+  const user = isLoggedIn();
+
+  const [messages, setMessages] = useState(null);
+
+  const getConversation = (conversations, conservant) => {
+    for (let i = 0; i < conversations.length; i++) {
+      const conversation = conversations[i];
+      if (conversation.recipient.username === conservant) {
+        return conversation;
+      }
+    }
+  };
+
   const conversation =
-    props.conversations && props.conversations[props.conservant];
+    props.conversations &&
+    getConversation(props.conversations, props.conservant);
+
+  const fetchMessages = async () => {
+    if (conversation) {
+      console.log(conversation._id);
+      const data = await getMessages(user, conversation._id);
+
+      console.log(data);
+      if (data && !data.error) {
+        setMessages(data);
+      }
+    }
+  };
 
   useEffect(() => {
     scrollToBottom();
-  });
+    fetchMessages();
+  }, [props.conservant]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
@@ -32,12 +62,12 @@ const Messages = (props) => {
 
   return props.conservant ? (
     <>
-      {props.conversations ? (
+      {messages && conversation ? (
         <>
           <HorizontalStack
             alignItems="center"
             spacing={2}
-            sx={{ px: 2, height: "10%" }}
+            sx={{ px: 2, height: "70px" }}
           >
             <UserAvatar username={props.conservant} />
             <Typography>
@@ -47,25 +77,23 @@ const Messages = (props) => {
           <Divider />
           <Box sx={{ height: "78%" }}>
             <Box sx={{ height: "100%" }}>
-              <Stack sx={{ padding: 2, overflow: "scroll", maxHeight: "100%" }}>
-                {conversation &&
-                  conversation.messages.map((message, i) => (
-                    <Message
-                      conservant={props.conservant}
-                      message={message.content}
-                      direction={message.direction}
-                      key={i}
-                    />
-                  ))}
+              <Stack sx={{ padding: 2, overflow: "auto", maxHeight: "100%" }}>
+                {messages.map((message, i) => (
+                  <Message
+                    conservant={props.conservant}
+                    message={message.content}
+                    direction={message.direction}
+                    key={i}
+                  />
+                ))}
                 <div ref={messagesEndRef} />
               </Stack>
             </Box>
           </Box>
 
           <SendMessage
-            conversations={props.conversations}
-            setConversations={props.setConversations}
-            conservant={props.conservant}
+            messages={messages}
+            setMessages={setMessages}
             scrollToBottom={scrollToBottom}
           />
         </>

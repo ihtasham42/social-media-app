@@ -39,7 +39,6 @@ const MessengerView = () => {
   const fetchConversations = async () => {
     const data = await getConversations(user);
     setConversations(data);
-    console.log(data);
   };
 
   useEffect(() => {

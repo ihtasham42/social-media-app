@@ -14,31 +14,12 @@ const SendMessage = (props) => {
   const [content, setContent] = useState("");
 
   const handleSendMessage = () => {
-    let newConversations = { ...props.conversations };
-    let messages = newConversations[props.conservant].messages;
+    const newMessage = { direction: "from", content };
+    const newMessages = [...props.messages, newMessage];
 
-    newConversations[props.conservant].messages = [
-      ...messages,
-      { direction: "from", content },
-    ];
-
-    props.setConversations(newConversations);
+    props.setMessages(newMessages);
 
     setContent("");
-  };
-
-  const handleReceiveMessage = () => {
-    let newConversations = { ...props.conversations };
-    let messages = newConversations[props.conservant].messages;
-
-    newConversations[props.conservant].messages = [
-      ...messages,
-      { direction: "to", content },
-    ];
-
-    props.setConversations(newConversations);
-
-    props.scrollToBottom();
   };
 
   useEffect(() => {
@@ -49,7 +30,7 @@ const SendMessage = (props) => {
     <Stack
       sx={{
         p: 2,
-        height: "12%",
+        height: "70px",
       }}
       justifyContent="center"
     >

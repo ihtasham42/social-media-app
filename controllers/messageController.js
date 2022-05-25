@@ -40,20 +40,10 @@ const sendMessage = async (req, res) => {
 
 const getMessages = async (req, res) => {
   try {
-    const username = req.params.id;
+    const conversationId = req.params.id;
     const { userId } = req.body;
 
-    const recipient = await User.findOne({ username });
-
-    if (!recipient) {
-      throw new Error("Recipient not found");
-    }
-
-    const conversation = await Conversation.findOne({
-      recipients: {
-        $in: [userId, recipient._id],
-      },
-    });
+    const conversation = await Conversation.findById(conversationId);
 
     if (!conversation) {
       throw new Error("Conversation not found");
