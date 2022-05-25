@@ -27,58 +27,11 @@ const UserMessengerEntries = (props) => {
             <Box sx={{ height: "100%" }}>
               <List sx={{ padding: 0 }}>
                 {props.conversations.map((conversation) => (
-                  <>
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                    <UserMessengerEntry
-                      username={conversation.recipient.username}
-                      key={conversation.recipient.username}
-                      setConservant={props.setConservant}
-                    />
-                  </>
+                  <UserMessengerEntry
+                    username={conversation.recipient.username}
+                    key={conversation.recipient.username}
+                    setConservant={props.setConservant}
+                  />
                 ))}
               </List>
             </Box>

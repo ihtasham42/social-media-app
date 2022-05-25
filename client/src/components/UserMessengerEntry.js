@@ -10,14 +10,10 @@ import React from "react";
 import UserAvatar from "./UserAvatar";
 
 const UserMessengerEntry = (props) => {
-  const handleClick = (e) => {
-    props.setConservant(props.username);
-  };
-
   return (
     <>
       <ListItem disablePadding alignItems="flex-start">
-        <ListItemButton sx={{ paddingY: "11px" }} onClick={handleClick}>
+        <ListItemButton sx={{ paddingY: 2 }}>
           <ListItemAvatar>
             <UserAvatar height={45} width={45} username={props.username} />
           </ListItemAvatar>
