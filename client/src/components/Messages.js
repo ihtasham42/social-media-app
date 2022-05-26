@@ -97,7 +97,7 @@ const Messages = (props) => {
           <Box sx={{ height: "calc(100vh - 240px)" }}>
             <Box sx={{ height: "100%" }}>
               <Stack
-                sx={{ padding: 2, overflowY: "scroll", maxHeight: "100%" }}
+                sx={{ padding: 2, overflowY: "auto", maxHeight: "100%" }}
                 direction="column-reverse"
               >
                 <div ref={messagesEndRef} />

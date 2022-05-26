@@ -14,27 +14,11 @@ const sendMessage = async (req, res) => {
       throw new Error("Recipient not found");
     }
 
-    /*
-    const conversation = await Conversation.findOneAndUpdate(
-      {
-        recipients: {
-          $in: [userId, recipient._id],
-        },
-      },
-      {
-        recipients: [userId, recipient._id],
-      },
-      { new: true, upsert: true }
-    );
-    */
-
     let conversation = await Conversation.findOne({
       recipients: {
         $all: [userId, recipientId],
       },
     });
-
-    console.log(conversation);
 
     if (!conversation) {
       conversation = await Conversation.create({
@@ -42,13 +26,15 @@ const sendMessage = async (req, res) => {
       });
     }
 
-    console.log(conversation);
-
     await Message.create({
       conversation: conversation._id,
       sender: userId,
       content,
     });
+
+    conversation.updatedAt = Date.now();
+
+    conversation.save();
 
     return res.json({ success: true });
   } catch (err) {
@@ -91,6 +77,7 @@ const getConversations = async (req, res) => {
       },
     })
       .populate("recipients", "-password")
+      .sort("-updatedAt")
       .lean();
 
     for (let i = 0; i < conversations.length; i++) {
