@@ -15,18 +15,31 @@ const MessengerView = () => {
   const { state } = useLocation();
   const newConservant = state && state.user;
 
+  const getConversation = (conversations, conservant) => {
+    for (let i = 0; i < conversations.length; i++) {
+      const conversation = conversations[i];
+      if (conversation.recipient.username === conservant) {
+        return conversation;
+      }
+    }
+  };
+
   const fetchConversations = async () => {
-    let data = await getConversations(user);
-    if (newConservant) {
+    let conversations = await getConversations(user);
+    if (
+      newConservant &&
+      !getConversation(conversations, newConservant.username)
+    ) {
       const newConversation = {
         _id: newConservant._id,
         recipient: newConservant,
         new: true,
+        messages: [],
       };
       setConservant(newConservant.username);
-      data = [newConversation, ...data];
+      conversations = [newConversation, ...conversations];
     }
-    setConversations(data);
+    setConversations(conversations);
   };
 
   useEffect(() => {
@@ -58,6 +71,7 @@ const MessengerView = () => {
                 conservant={conservant}
                 conversations={conversations}
                 setConversations={setConversations}
+                getConversation={getConversation}
               />
             </Grid>
           </Grid>

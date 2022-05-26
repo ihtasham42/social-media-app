@@ -20,11 +20,24 @@ const SendMessage = (props) => {
     const newMessage = { direction: "from", content };
     const newMessages = [newMessage, ...props.messages];
 
+    if (props.conversation.new) {
+      props.conversation.messages = [
+        ...props.conversation.messages,
+        newMessage,
+      ];
+    }
+
     props.setMessages(newMessages);
     props.scrollToBottom();
     setContent("");
 
     await sendMessage(user, newMessage, props.recipient._id);
+  };
+
+  const handleReceiveMessage = async (content) => {
+    const newMessage = { direction: "to", content };
+    const newMessages = [newMessage, ...props.messages];
+    props.setMessages(newMessages);
   };
 
   return (

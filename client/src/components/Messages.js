@@ -23,19 +23,11 @@ const Messages = (props) => {
   const messagesEndRef = useRef(null);
   const user = isLoggedIn();
   const [messages, setMessages] = useState(null);
-
-  const getConversation = (conversations, conservant) => {
-    for (let i = 0; i < conversations.length; i++) {
-      const conversation = conversations[i];
-      if (conversation.recipient.username === conservant) {
-        return conversation;
-      }
-    }
-  };
+  const [loading, setLoading] = useState(true);
 
   const conversation =
     props.conversations &&
-    getConversation(props.conversations, props.conservant);
+    props.getConversation(props.conversations, props.conservant);
 
   const setDirection = (messages) => {
     messages.forEach((message) => {
@@ -50,18 +42,22 @@ const Messages = (props) => {
   const fetchMessages = async () => {
     if (conversation) {
       if (conversation.new) {
-        setMessages([]);
+        setLoading(false);
+        setMessages(conversation.messages);
         return;
       }
+
+      setLoading(true);
 
       const data = await getMessages(user, conversation._id);
 
       setDirection(data);
 
       if (data && !data.error) {
-        console.log(data);
         setMessages(data);
       }
+
+      setLoading(false);
     }
   };
 
@@ -81,14 +77,14 @@ const Messages = (props) => {
 
   return props.conservant ? (
     <>
-      {messages && conversation ? (
+      {messages && conversation && !loading ? (
         <>
           <HorizontalStack
             alignItems="center"
             spacing={2}
             sx={{ px: 2, height: "60px" }}
           >
-            <UserAvatar username={props.conservant} />
+            <UserAvatar username={props.conservant} height={30} width={30} />
             <Typography>
               <b>{props.conservant}</b>
             </Typography>
@@ -115,6 +111,7 @@ const Messages = (props) => {
             messages={messages}
             recipient={conversation.recipient}
             setMessages={setMessages}
+            conversation={conversation}
             scrollToBottom={scrollToBottom}
           />
         </>
