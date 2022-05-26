@@ -14,6 +14,7 @@ const sendMessage = async (req, res) => {
       throw new Error("Recipient not found");
     }
 
+    /*
     const conversation = await Conversation.findOneAndUpdate(
       {
         recipients: {
@@ -25,8 +26,25 @@ const sendMessage = async (req, res) => {
       },
       { new: true, upsert: true }
     );
+    */
 
-    const message = await Message.create({
+    let conversation = await Conversation.findOne({
+      recipients: {
+        $all: [userId, recipientId],
+      },
+    });
+
+    console.log(conversation);
+
+    if (!conversation) {
+      conversation = await Conversation.create({
+        recipients: [userId, recipientId],
+      });
+    }
+
+    console.log(conversation);
+
+    await Message.create({
       conversation: conversation._id,
       sender: userId,
       content,
