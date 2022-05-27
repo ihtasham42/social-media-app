@@ -1,4 +1,4 @@
-import { authSocketConnection, initiateSocketConnection } from "./socketHelper";
+import { initiateSocketConnection } from "./socketHelper";
 
 const isLoggedIn = () => {
   return JSON.parse(localStorage.getItem("user"));
@@ -6,7 +6,7 @@ const isLoggedIn = () => {
 
 const loginUser = (user) => {
   localStorage.setItem("user", JSON.stringify(user));
-  authSocketConnection();
+  initiateSocketConnection();
 };
 
 const logoutUser = () => {

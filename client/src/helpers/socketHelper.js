@@ -5,10 +5,6 @@ import { isLoggedIn } from "./authHelper";
 export let socket;
 
 export const initiateSocketConnection = () => {
-  socket = io(BASE_URL);
-};
-
-export const authSocketConnection = () => {
   const user = isLoggedIn();
 
   socket = io(BASE_URL, {

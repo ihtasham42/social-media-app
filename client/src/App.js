@@ -27,14 +27,16 @@ import SearchView from "./components/views/SearchView";
 import MessengerView from "./components/views/MessengerView";
 import { initiateSocketConnection, socket } from "./helpers/socketHelper";
 import { useEffect } from "react";
+import { BASE_URL } from "./config";
+import { io } from "socket.io-client";
 
 function App() {
   initiateSocketConnection();
 
   useEffect(() => {
-    socket.on("receive-message", () => {
-      "message has been received!";
-    });
+    return () => {
+      socket.disconnect();
+    };
   });
 
   return (

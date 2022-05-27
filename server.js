@@ -3,15 +3,22 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
-const bcrypt = require("bcrypt");
 const app = express();
-
+const { authSocket, socketServer } = require("./socketServer");
 const posts = require("./routes/posts");
 const users = require("./routes/users");
 const comments = require("./routes/comments");
 const messages = require("./routes/messages");
 
 dotenv.config();
+
+const httpServer = require("http").createServer(app);
+const io = require("socket.io")(httpServer, {
+  cors: { origin: "http://localhost:3000" },
+});
+
+io.use(authSocket);
+io.on("connection", (socket) => socketServer(socket));
 
 mongoose.connect(
   process.env.MONGO_URI,
@@ -21,7 +28,7 @@ mongoose.connect(
   }
 );
 
-app.listen(process.env.PORT || 4000, () => {
+httpServer.listen(process.env.PORT || 4000, () => {
   console.log("Listening");
 });
 

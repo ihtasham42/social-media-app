@@ -26,18 +26,17 @@ const MessengerView = () => {
 
   const fetchConversations = async () => {
     let conversations = await getConversations(user);
-    if (
-      newConservant &&
-      !getConversation(conversations, newConservant.username)
-    ) {
-      const newConversation = {
-        _id: newConservant._id,
-        recipient: newConservant,
-        new: true,
-        messages: [],
-      };
+    if (newConservant) {
       setConservant(newConservant.username);
-      conversations = [newConversation, ...conversations];
+      if (!getConversation(conversations, newConservant.username)) {
+        const newConversation = {
+          _id: newConservant._id,
+          recipient: newConservant,
+          new: true,
+          messages: [],
+        };
+        conversations = [newConversation, ...conversations];
+      }
     }
     setConversations(conversations);
   };
