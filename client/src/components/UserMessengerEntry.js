@@ -9,6 +9,8 @@ import { Box } from "@mui/system";
 import React from "react";
 import UserAvatar from "./UserAvatar";
 
+import moment from "moment";
+
 const UserMessengerEntry = (props) => {
   const recipient = props.conversation.recipient;
   const username = recipient.username;
@@ -24,7 +26,10 @@ const UserMessengerEntry = (props) => {
           <ListItemAvatar>
             <UserAvatar height={45} width={45} username={username} />
           </ListItemAvatar>
-          <ListItemText primary={username} />
+          <ListItemText
+            primary={username}
+            secondary={moment(props.conversation.lastMessageAt).fromNow()}
+          />
         </ListItemButton>
       </ListItem>
       <Divider />

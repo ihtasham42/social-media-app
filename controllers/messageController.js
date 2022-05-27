@@ -32,7 +32,7 @@ const sendMessage = async (req, res) => {
       content,
     });
 
-    conversation.updatedAt = Date.now();
+    conversation.lastMessageAt = Date.now();
 
     conversation.save();
 

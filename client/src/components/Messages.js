@@ -120,12 +120,14 @@ const Messages = (props) => {
       if (conversation.new) {
         conversation.messages = [newMessage, ...messagesRef.current];
       }
+      conversation.lastMessageAt = Date.now();
     } else {
       const newConversation = {
         _id: senderId,
         recipient: { _id: senderId, username },
         new: true,
         messages: [newMessage],
+        lastMessageAt: Date.now(),
       };
       props.setConversations([newConversation, ...conversationsRef.current]);
     }
