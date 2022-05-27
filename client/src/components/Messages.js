@@ -110,6 +110,10 @@ const Messages = (props) => {
       senderId
     );
 
+    if (conversation && conversation.new) {
+      conversation.messages = [newMessage, ...messagesRef.current];
+    }
+
     scrollToBottom();
   };
 
