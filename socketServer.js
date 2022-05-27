@@ -19,7 +19,6 @@ const authSocket = (socket, next) => {
 
 const socketServer = (socket) => {
   const userId = socket.decoded.userId;
-  console.log(socket.decoded);
   users.push({ userId, socketId: socket.id });
 
   socket.on("send-message", (recipientUserId, content) => {

@@ -26,6 +26,13 @@ const Messages = (props) => {
   const [messages, setMessages] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const conversationsRef = useRef(props.conversations);
+  const messagesRef = useRef(messages);
+  useEffect(() => {
+    conversationsRef.current = props.conversations;
+    messagesRef.current = messages;
+  });
+
   const conversation =
     props.conversations &&
     props.conservant &&
@@ -93,24 +100,17 @@ const Messages = (props) => {
     socket.emit("send-message", conversation.recipient._id, content);
   };
 
-  const handleReceiveMessage = async (senderId, content) => {
-    const receivingConversation = props.getConversation(
-      props.conversations,
+  const handleReceiveMessage = (senderId, content) => {
+    const newMessage = { direction: "to", content };
+
+    setMessages([newMessage, ...messagesRef.current]);
+
+    const conversation = props.getConversation(
+      conversationsRef.current,
       senderId
     );
 
-    console.log(receivingConversation);
-
-    //userId and username confusion - change getConversation to handle id instead of usernames
-    //also make setConservant set user object instead of username (to get the id from the conservant)
-
-    // if current conversatino then add message with setMessages
-    // also if conversation new then add message to messages
-
-    // else if getConversation(receivingConversation) is new then
-    // else call setConversations with new conversation object (set conversation.new = true)
-
-    console.log(content);
+    scrollToBottom();
   };
 
   useEffect(() => {
