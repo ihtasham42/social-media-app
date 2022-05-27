@@ -27,9 +27,11 @@ const Messages = (props) => {
   const [loading, setLoading] = useState(true);
 
   const conversationsRef = useRef(props.conversations);
+  const conservantRef = useRef(props.conservant);
   const messagesRef = useRef(messages);
   useEffect(() => {
     conversationsRef.current = props.conversations;
+    conservantRef.current = props.conservant;
     messagesRef.current = messages;
   });
 
@@ -97,21 +99,35 @@ const Messages = (props) => {
 
     await sendMessage(user, newMessage, conversation.recipient._id);
 
-    socket.emit("send-message", conversation.recipient._id, content);
+    socket.emit(
+      "send-message",
+      conversation.recipient._id,
+      user.username,
+      content
+    );
   };
 
-  const handleReceiveMessage = (senderId, content) => {
+  const handleReceiveMessage = (senderId, username, content) => {
     const newMessage = { direction: "to", content };
-
-    setMessages([newMessage, ...messagesRef.current]);
 
     const conversation = props.getConversation(
       conversationsRef.current,
       senderId
     );
 
-    if (conversation && conversation.new) {
-      conversation.messages = [newMessage, ...messagesRef.current];
+    if (conversation) {
+      setMessages([newMessage, ...messagesRef.current]);
+      if (conversation.new) {
+        conversation.messages = [newMessage, ...messagesRef.current];
+      }
+    } else {
+      const newConversation = {
+        _id: senderId,
+        recipient: { _id: senderId, username },
+        new: true,
+        messages: [newMessage],
+      };
+      props.setConversations([newConversation, ...conversationsRef.current]);
     }
 
     scrollToBottom();
