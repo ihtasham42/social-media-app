@@ -108,10 +108,11 @@ const Messages = (props) => {
             </Box>
           </Box>
           <SendMessage
-            messages={messages}
             recipient={conversation.recipient}
+            messages={messages}
             setMessages={setMessages}
             conversation={conversation}
+            setConversations={props.setConversations}
             scrollToBottom={scrollToBottom}
           />
         </>

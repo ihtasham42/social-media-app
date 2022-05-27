@@ -34,10 +34,10 @@ const SendMessage = (props) => {
     await sendMessage(user, newMessage, props.recipient._id);
   };
 
-  const handleReceiveMessage = async (content) => {
-    const newMessage = { direction: "to", content };
-    const newMessages = [newMessage, ...props.messages];
-    props.setMessages(newMessages);
+  const handleReceiveMessage = async (conversation, content) => {
+    // if new conversation then add message to new conversation
+    // else if same conversation then add message to messages
+    // if not, then call setConversations with new conversation object
   };
 
   return (

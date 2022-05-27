@@ -10,7 +10,6 @@ const posts = require("./routes/posts");
 const users = require("./routes/users");
 const comments = require("./routes/comments");
 const messages = require("./routes/messages");
-const User = require("./models/User");
 
 dotenv.config();
 
