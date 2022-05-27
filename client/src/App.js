@@ -33,12 +33,6 @@ import { io } from "socket.io-client";
 function App() {
   initiateSocketConnection();
 
-  useEffect(() => {
-    return () => {
-      socket.disconnect();
-    };
-  });
-
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>

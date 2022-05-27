@@ -18,8 +18,13 @@ const authSocket = (socket, next) => {
 };
 
 const socketServer = (socket) => {
-  console.log(socket.decoded);
-  socket.on("disconnect", () => {});
+  const userId = socket.decoded.userId;
+  users.push(userId);
+  socket.on("disconnect", () => {
+    users = users.filter((id) => id != userId);
+    console.log(users);
+  });
+  console.log(users);
 };
 
 module.exports = { socketServer, authSocket };
