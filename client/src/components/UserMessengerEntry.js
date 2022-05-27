@@ -10,10 +10,11 @@ import React from "react";
 import UserAvatar from "./UserAvatar";
 
 const UserMessengerEntry = (props) => {
-  const username = props.conversation.recipient.username;
+  const recipient = props.conversation.recipient;
+  const username = recipient.username;
 
   const handleClick = () => {
-    props.setConservant(username);
+    props.setConservant(recipient);
   };
 
   return (

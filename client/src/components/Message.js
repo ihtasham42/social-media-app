@@ -4,7 +4,7 @@ import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
 
 const Message = (props) => {
-  const username = props.conservant;
+  const username = props.conservant.username;
   const message = props.message;
   const theme = useTheme();
 

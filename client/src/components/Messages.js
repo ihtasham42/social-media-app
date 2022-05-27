@@ -28,7 +28,8 @@ const Messages = (props) => {
 
   const conversation =
     props.conversations &&
-    props.getConversation(props.conversations, props.conservant);
+    props.conservant &&
+    props.getConversation(props.conversations, props.conservant._id);
 
   const setDirection = (messages) => {
     messages.forEach((message) => {
@@ -98,6 +99,8 @@ const Messages = (props) => {
       senderId
     );
 
+    console.log(receivingConversation);
+
     //userId and username confusion - change getConversation to handle id instead of usernames
     //also make setConservant set user object instead of username (to get the id from the conservant)
 
@@ -123,9 +126,13 @@ const Messages = (props) => {
             spacing={2}
             sx={{ px: 2, height: "60px" }}
           >
-            <UserAvatar username={props.conservant} height={30} width={30} />
+            <UserAvatar
+              username={props.conservant.username}
+              height={30}
+              width={30}
+            />
             <Typography>
-              <b>{props.conservant}</b>
+              <b>{props.conservant.username}</b>
             </Typography>
           </HorizontalStack>
           <Divider />

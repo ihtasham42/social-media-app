@@ -15,10 +15,10 @@ const MessengerView = () => {
   const { state } = useLocation();
   const newConservant = state && state.user;
 
-  const getConversation = (conversations, conservant) => {
+  const getConversation = (conversations, conservantId) => {
     for (let i = 0; i < conversations.length; i++) {
       const conversation = conversations[i];
-      if (conversation.recipient._id === conservant._id) {
+      if (conversation.recipient._id === conservantId) {
         return conversation;
       }
     }
@@ -28,7 +28,7 @@ const MessengerView = () => {
     let conversations = await getConversations(user);
     if (newConservant) {
       setConservant(newConservant);
-      if (!getConversation(conversations, newConservant)) {
+      if (!getConversation(conversations, newConservant._id)) {
         const newConversation = {
           _id: newConservant._id,
           recipient: newConservant,
