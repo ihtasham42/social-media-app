@@ -18,7 +18,7 @@ const MessengerView = () => {
   const getConversation = (conversations, conservant) => {
     for (let i = 0; i < conversations.length; i++) {
       const conversation = conversations[i];
-      if (conversation.recipient.username === conservant) {
+      if (conversation.recipient._id === conservant._id) {
         return conversation;
       }
     }
@@ -27,8 +27,8 @@ const MessengerView = () => {
   const fetchConversations = async () => {
     let conversations = await getConversations(user);
     if (newConservant) {
-      setConservant(newConservant.username);
-      if (!getConversation(conversations, newConservant.username)) {
+      setConservant(newConservant);
+      if (!getConversation(conversations, newConservant)) {
         const newConversation = {
           _id: newConservant._id,
           recipient: newConservant,

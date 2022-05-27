@@ -98,11 +98,14 @@ const Messages = (props) => {
       senderId
     );
 
-    //userId and username confusion
+    //userId and username confusion - change getConversation to handle id instead of usernames
+    //also make setConservant set user object instead of username (to get the id from the conservant)
 
-    // if current new conversation then add message to new conversation
-    // else if same conversation then add message to messages
-    // else call setConversations with new conversation object
+    // if current conversatino then add message with setMessages
+    // also if conversation new then add message to messages
+
+    // else if getConversation(receivingConversation) is new then
+    // else call setConversations with new conversation object (set conversation.new = true)
 
     console.log(content);
   };

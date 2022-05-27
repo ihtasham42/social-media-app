@@ -23,10 +23,7 @@ const UserMessengerEntry = (props) => {
           <ListItemAvatar>
             <UserAvatar height={45} width={45} username={username} />
           </ListItemAvatar>
-          <ListItemText
-            primary={username}
-            secondary="Sent you a message - 1 day ago"
-          />
+          <ListItemText primary={username} />
         </ListItemButton>
       </ListItem>
       <Divider />
