@@ -77,19 +77,16 @@ const Messages = (props) => {
 
   const handleSendMessage = async (content) => {
     const newMessage = { direction: "from", content };
-    const newMessages = [newMessage, ...props.messages];
+    const newMessages = [newMessage, ...messages];
 
-    if (props.conversation.new) {
-      props.conversation.messages = [
-        ...props.conversation.messages,
-        newMessage,
-      ];
+    if (conversation.new) {
+      conversation.messages = [...conversation.messages, newMessage];
     }
 
     setMessages(newMessages);
     scrollToBottom();
 
-    await sendMessage(user, newMessage, props.recipient._id);
+    await sendMessage(user, newMessage, conversation.recipient._id);
   };
 
   const handleReceiveMessage = async (conversation, content) => {
@@ -130,14 +127,7 @@ const Messages = (props) => {
               </Stack>
             </Box>
           </Box>
-          <SendMessage
-            recipient={conversation.recipient}
-            messages={messages}
-            onSendMessage={handleSendMessage}
-            setMessages={setMessages}
-            conversation={conversation}
-            scrollToBottom={scrollToBottom}
-          />
+          <SendMessage onSendMessage={handleSendMessage} />
         </>
       ) : (
         <Stack sx={{ height: "100%" }} justifyContent="center">
