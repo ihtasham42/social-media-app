@@ -11,7 +11,7 @@ import {
 import { Box } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
 import { AiFillMessage } from "react-icons/ai";
-import { getMessages } from "../api/messages";
+import { getMessages, sendMessage } from "../api/messages";
 import { isLoggedIn } from "../helpers/authHelper";
 import Loading from "./Loading";
 import Message from "./Message";
@@ -75,6 +75,29 @@ const Messages = (props) => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
   };
 
+  const handleSendMessage = async (content) => {
+    const newMessage = { direction: "from", content };
+    const newMessages = [newMessage, ...props.messages];
+
+    if (props.conversation.new) {
+      props.conversation.messages = [
+        ...props.conversation.messages,
+        newMessage,
+      ];
+    }
+
+    setMessages(newMessages);
+    scrollToBottom();
+
+    await sendMessage(user, newMessage, props.recipient._id);
+  };
+
+  const handleReceiveMessage = async (conversation, content) => {
+    // if new conversation then add message to new conversation
+    // else if same conversation then add message to messages
+    // else call setConversations with new conversation object
+  };
+
   return props.conservant ? (
     <>
       {messages && conversation && !loading ? (
@@ -110,9 +133,9 @@ const Messages = (props) => {
           <SendMessage
             recipient={conversation.recipient}
             messages={messages}
+            onSendMessage={handleSendMessage}
             setMessages={setMessages}
             conversation={conversation}
-            setConversations={props.setConversations}
             scrollToBottom={scrollToBottom}
           />
         </>

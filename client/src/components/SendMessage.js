@@ -14,30 +14,10 @@ import HorizontalStack from "./util/HorizontalStack";
 
 const SendMessage = (props) => {
   const [content, setContent] = useState("");
-  const user = isLoggedIn();
 
-  const handleSendMessage = async () => {
-    const newMessage = { direction: "from", content };
-    const newMessages = [newMessage, ...props.messages];
-
-    if (props.conversation.new) {
-      props.conversation.messages = [
-        ...props.conversation.messages,
-        newMessage,
-      ];
-    }
-
-    props.setMessages(newMessages);
-    props.scrollToBottom();
+  const handleSendMessage = () => {
+    props.onSendMessage(content);
     setContent("");
-
-    await sendMessage(user, newMessage, props.recipient._id);
-  };
-
-  const handleReceiveMessage = async (conversation, content) => {
-    // if new conversation then add message to new conversation
-    // else if same conversation then add message to messages
-    // else call setConversations with new conversation object
   };
 
   return (
