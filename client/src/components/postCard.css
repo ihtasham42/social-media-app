@@ -7,3 +7,7 @@
   -webkit-mask-image: linear-gradient(black 70px, transparent 125px);
   mask-image: linear-gradient(black 70px, transparent 125px);
 }
+
+html {
+  overflow-y: scroll;
+}

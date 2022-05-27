@@ -37,7 +37,7 @@ const SendMessage = (props) => {
   const handleReceiveMessage = async (conversation, content) => {
     // if new conversation then add message to new conversation
     // else if same conversation then add message to messages
-    // if not, then call setConversations with new conversation object
+    // else call setConversations with new conversation object
   };
 
   return (
