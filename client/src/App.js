@@ -25,8 +25,18 @@ import ExploreView from "./components/views/ExploreView";
 import PrivateRoute from "./components/PrivateRoute";
 import SearchView from "./components/views/SearchView";
 import MessengerView from "./components/views/MessengerView";
+import { initiateSocketConnection, socket } from "./helpers/socketHelper";
+import { useEffect } from "react";
 
 function App() {
+  initiateSocketConnection();
+
+  useEffect(() => {
+    socket.on("receive-message", () => {
+      "message has been received!";
+    });
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
