@@ -19,12 +19,18 @@ const authSocket = (socket, next) => {
 
 const socketServer = (socket) => {
   const userId = socket.decoded.userId;
-  users.push(userId);
-  socket.on("disconnect", () => {
-    users = users.filter((id) => id != userId);
-    console.log(users);
+  users.push({ userId, socketId: socket.id });
+
+  socket.on("send-message", (recipientUserId, content) => {
+    const recipient = users.find((user) => user.userId == recipientUserId);
+    if (recipient) {
+      socket.to(recipient.socketId).emit("receive-message", userId, content);
+    }
   });
-  console.log(users);
+
+  socket.on("disconnect", () => {
+    users = users.filter((user) => user.userId != userId);
+  });
 };
 
 module.exports = { socketServer, authSocket };

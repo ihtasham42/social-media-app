@@ -13,6 +13,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AiFillMessage } from "react-icons/ai";
 import { getMessages, sendMessage } from "../api/messages";
 import { isLoggedIn } from "../helpers/authHelper";
+import { socket } from "../helpers/socketHelper";
 import Loading from "./Loading";
 import Message from "./Message";
 import SendMessage from "./SendMessage";
@@ -87,13 +88,28 @@ const Messages = (props) => {
     scrollToBottom();
 
     await sendMessage(user, newMessage, conversation.recipient._id);
+
+    socket.emit("send-message", conversation.recipient._id, content);
   };
 
-  const handleReceiveMessage = async (conversation, content) => {
+  const handleReceiveMessage = async (senderId, content) => {
+    const receivingConversation = props.getConversation(
+      props.conversations,
+      senderId
+    );
+
+    //userId and username confusion
+
     // if current new conversation then add message to new conversation
     // else if same conversation then add message to messages
     // else call setConversations with new conversation object
+
+    console.log(content);
   };
+
+  useEffect(() => {
+    socket.on("receive-message", handleReceiveMessage);
+  }, []);
 
   return props.conservant ? (
     <>
