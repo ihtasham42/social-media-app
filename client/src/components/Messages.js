@@ -94,6 +94,14 @@ const Messages = (props) => {
       conversation.messages = [...conversation.messages, newMessage];
     }
 
+    let newConversations = props.conversations.filter(
+      (conversationCompare) => conversation._id !== conversationCompare._id
+    );
+
+    newConversations.unshift(conversation);
+
+    props.setConversations(newConversations);
+
     setMessages(newMessages);
     scrollToBottom();
 
@@ -121,6 +129,14 @@ const Messages = (props) => {
         conversation.messages = [newMessage, ...messagesRef.current];
       }
       conversation.lastMessageAt = Date.now();
+
+      let newConversations = conversationsRef.current.filter(
+        (conversationCompare) => conversation._id !== conversationCompare._id
+      );
+
+      newConversations.unshift(conversation);
+
+      props.setConversations(newConversations);
     } else {
       const newConversation = {
         _id: senderId,
