@@ -18,7 +18,7 @@ PostIt is a social media web application, built with the MERN stack. You can vis
 
 ## Screenshots
 Explore view
-<img width="720" alt="image" src="https://user-images.githubusercontent.com/76620777/170821905-a0ae366c-f769-4306-8706-0d0e625e20a4.png">
+![image](https://user-images.githubusercontent.com/76620777/170822011-d690c1b3-48ba-4e15-8a42-d847e1b801e7.png)
 
 Post view
 ![image](https://user-images.githubusercontent.com/76620777/170821940-453809ca-28ca-4174-9c85-502acfb884d5.png)
