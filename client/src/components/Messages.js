@@ -122,10 +122,18 @@ const Messages = (props) => {
       senderId
     );
 
+    console.log(username + " " + content);
+
     if (conversation) {
-      setMessages([newMessage, ...messagesRef.current]);
+      let newMessages = [newMessage];
+      if (messagesRef.current) {
+        newMessages = [...newMessages, ...messagesRef.current];
+      }
+
+      setMessages(newMessages);
+
       if (conversation.new) {
-        conversation.messages = [newMessage, ...messagesRef.current];
+        conversation.messages = newMessages;
       }
       conversation.lastMessageAt = Date.now();
 
