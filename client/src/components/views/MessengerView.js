@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 
 const MessengerView = () => {
   const [conservant, setConservant] = useState(null);
-  const [conversations, setConversations] = useState([]);
+  const [conversations, setConversations] = useState(null);
   const user = isLoggedIn();
   const { state } = useLocation();
   const newConservant = state && state.user;
@@ -61,6 +61,7 @@ const MessengerView = () => {
               sx={{ borderRight: 1, borderColor: "divider", height: "100%" }}
             >
               <UserMessengerEntries
+                conservant={conservant}
                 conversations={conversations}
                 setConservant={setConservant}
               />

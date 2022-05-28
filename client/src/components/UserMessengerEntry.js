@@ -4,6 +4,7 @@ import {
   ListItemAvatar,
   ListItemButton,
   ListItemText,
+  MenuItem,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
@@ -21,7 +22,15 @@ const UserMessengerEntry = (props) => {
 
   return (
     <>
-      <ListItem disablePadding alignItems="flex-start">
+      <MenuItem
+        disablePadding
+        alignItems="flex-start"
+        divider
+        disableGutters
+        selected={
+          props.conservant && props.conservant.username === recipient.username
+        }
+      >
         <ListItemButton sx={{ paddingY: 2 }} onClick={handleClick}>
           <ListItemAvatar>
             <UserAvatar height={45} width={45} username={username} />
@@ -31,8 +40,7 @@ const UserMessengerEntry = (props) => {
             secondary={moment(props.conversation.lastMessageAt).fromNow()}
           />
         </ListItemButton>
-      </ListItem>
-      <Divider />
+      </MenuItem>
     </>
   );
 };

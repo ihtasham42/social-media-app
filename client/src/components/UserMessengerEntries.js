@@ -28,6 +28,7 @@ const UserMessengerEntries = (props) => {
               <List sx={{ padding: 0, maxHeight: "100%", overflowY: "auto" }}>
                 {props.conversations.map((conversation) => (
                   <UserMessengerEntry
+                    conservant={props.conservant}
                     conversation={conversation}
                     key={conversation.recipient.username}
                     setConservant={props.setConservant}
