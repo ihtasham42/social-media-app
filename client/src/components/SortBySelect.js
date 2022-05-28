@@ -1,11 +1,14 @@
-import { MenuItem, Select, Typography } from "@mui/material";
+import { FormControl, MenuItem, Select, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { BiNoEntry } from "react-icons/bi";
 import HorizontalStack from "./util/HorizontalStack";
 
 const SortBySelect = ({ onSortBy, sortBy }) => {
   return (
     <HorizontalStack spacing={1}>
-      <Typography>Sort by:</Typography>
+      <Typography color="text.secondary" variant="subtitle2">
+        Sort by:
+      </Typography>
       <Select
         size="small"
         value={sortBy}

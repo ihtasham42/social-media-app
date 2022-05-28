@@ -41,7 +41,8 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  const mobile = width < 600;
+  const mobile = width < 500;
+  const navbarWidth = width < 600;
 
   const updateDimensions = () => {
     const width = window.innerWidth;
@@ -76,7 +77,7 @@ const Navbar = () => {
           pt: 2,
           pb: 0,
         }}
-        spacing={2}
+        spacing={!mobile ? 2 : 0}
       >
         <HorizontalStack>
           <AiFillFileText
@@ -84,16 +85,19 @@ const Navbar = () => {
             color={theme.palette.primary.main}
             onClick={() => navigate("/")}
           />
-          {!mobile && (
-            <Typography variant="h4" mr={1} color={theme.palette.primary.main}>
-              <Link href="/" color="inherit" underline="none">
-                PostIt
-              </Link>
-            </Typography>
-          )}
+          <Typography
+            sx={{ display: mobile ? "none" : "block" }}
+            variant={navbarWidth ? "h6" : "h4"}
+            mr={1}
+            color={theme.palette.primary.main}
+          >
+            <Link href="/" color="inherit" underline="none">
+              PostIt
+            </Link>
+          </Typography>
         </HorizontalStack>
 
-        {!mobile && (
+        {!navbarWidth && (
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
               size="small"
@@ -112,15 +116,14 @@ const Navbar = () => {
             </IconButton>
           )}
 
-          <IconButton href="/messenger">
-            <AiFillMessage />
-          </IconButton>
-
           <IconButton href="/">
             <AiFillHome />
           </IconButton>
           {user ? (
             <>
+              <IconButton href="/messenger">
+                <AiFillMessage />
+              </IconButton>
               <IconButton href={"/users/" + username}>
                 <UserAvatar width={30} height={30} username={user.username} />
               </IconButton>
@@ -138,7 +141,7 @@ const Navbar = () => {
           )}
         </HorizontalStack>
       </Stack>
-      {mobile && searchIcon && (
+      {navbarWidth && searchIcon && (
         <Box component="form" onSubmit={handleSubmit} mt={2}>
           <TextField
             size="small"
