@@ -83,7 +83,7 @@ const Messages = (props) => {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
+    messagesEndRef.current?.scrollIntoView();
   };
 
   const handleSendMessage = async (content) => {
@@ -103,7 +103,6 @@ const Messages = (props) => {
     props.setConversations(newConversations);
 
     setMessages(newMessages);
-    scrollToBottom();
 
     await sendMessage(user, newMessage, conversation.recipient._id);
 
@@ -172,6 +171,9 @@ const Messages = (props) => {
             <Typography>
               <b>{props.conservant.username}</b>
             </Typography>
+            {props.mobile && (
+              <Button onClick={() => props.setConservant(null)}>Back</Button>
+            )}
           </HorizontalStack>
           <Divider />
           <Box sx={{ height: "calc(100vh - 240px)" }}>
@@ -192,6 +194,7 @@ const Messages = (props) => {
             </Box>
           </Box>
           <SendMessage onSendMessage={handleSendMessage} />
+          {scrollToBottom()}
         </>
       ) : (
         <Stack sx={{ height: "100%" }} justifyContent="center">

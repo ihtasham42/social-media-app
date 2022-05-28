@@ -11,6 +11,8 @@ import { useLocation } from "react-router-dom";
 const MessengerView = () => {
   const [conservant, setConservant] = useState(null);
   const [conversations, setConversations] = useState(null);
+  const [width, setWindowWidth] = useState(0);
+  const mobile = width < 800;
   const user = isLoggedIn();
   const { state } = useLocation();
   const newConservant = state && state.user;
@@ -45,6 +47,18 @@ const MessengerView = () => {
     fetchConversations();
   }, []);
 
+  useEffect(() => {
+    updateDimensions();
+
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  const updateDimensions = () => {
+    const width = window.innerWidth;
+    setWindowWidth(width);
+  };
+
   return (
     <Container>
       <Navbar />
@@ -55,25 +69,61 @@ const MessengerView = () => {
             sx={{ height: "calc(100vh - 110px)" }}
             alignItems="stretch"
           >
-            <Grid
-              item
-              xs={5}
-              sx={{ borderRight: 1, borderColor: "divider", height: "100%" }}
-            >
-              <UserMessengerEntries
-                conservant={conservant}
-                conversations={conversations}
-                setConservant={setConservant}
-              />
-            </Grid>
-            <Grid item xs={7} sx={{ height: "100%" }}>
-              <Messages
-                conservant={conservant}
-                conversations={conversations}
-                setConversations={setConversations}
-                getConversation={getConversation}
-              />
-            </Grid>
+            {!mobile ? (
+              <>
+                <Grid
+                  item
+                  xs={5}
+                  sx={{
+                    borderRight: 1,
+                    borderColor: "divider",
+                    height: "100%",
+                  }}
+                >
+                  <UserMessengerEntries
+                    conservant={conservant}
+                    conversations={conversations}
+                    setConservant={setConservant}
+                  />
+                </Grid>
+                <Grid item xs={7} sx={{ height: "100%" }}>
+                  <Messages
+                    conservant={conservant}
+                    conversations={conversations}
+                    setConservant={setConservant}
+                    setConversations={setConversations}
+                    getConversation={getConversation}
+                  />
+                </Grid>
+              </>
+            ) : !conservant ? (
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  borderRight: 1,
+                  borderColor: "divider",
+                  height: "100%",
+                }}
+              >
+                <UserMessengerEntries
+                  conservant={conservant}
+                  conversations={conversations}
+                  setConservant={setConservant}
+                />
+              </Grid>
+            ) : (
+              <Grid item xs={12} sx={{ height: "100%" }}>
+                <Messages
+                  conservant={conservant}
+                  conversations={conversations}
+                  setConservant={setConservant}
+                  setConversations={setConversations}
+                  getConversation={getConversation}
+                  mobile
+                />
+              </Grid>
+            )}
           </Grid>
         </Card>
       </Box>

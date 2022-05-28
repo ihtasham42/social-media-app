@@ -36,6 +36,11 @@ const SendMessage = (props) => {
           value={content}
           autoComplete="off"
           size="small"
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && content.length > 0) {
+              handleSendMessage();
+            }
+          }}
         />
 
         <Button onClick={handleSendMessage} disabled={content.length === 0}>
