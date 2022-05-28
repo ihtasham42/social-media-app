@@ -80,6 +80,7 @@ const ProfileView = () => {
               editing={editing}
               handleSubmit={handleSubmit}
               handleEditing={handleEditing}
+              handleMessage={handleMessage}
               validate={validate}
             />
             <Stack spacing={2}>
