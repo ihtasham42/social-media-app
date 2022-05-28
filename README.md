@@ -7,6 +7,7 @@ PostIt is a social media web application, built with the MERN stack. You can vis
 - Create, reply to, read, update and delete nested comments
 - Markdown for posts and comments
 - Sign up and login using JWT for authentication
+- Private message users in real-time using socket.io
 - View profiles of users and browse through posts they have made
 - Infinite scrolling 
 - Sort posts by attributes such as like count, comment count and date created
