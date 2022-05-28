@@ -27,7 +27,6 @@ const UserMessengerEntry = (props) => {
       <MenuItem
         onClick={handleClick}
         sx={{ padding: 2 }}
-        alignItems="flex-start"
         divider
         disableGutters
         selected={selected}
@@ -38,8 +37,6 @@ const UserMessengerEntry = (props) => {
         <ListItemText
           primary={username}
           secondary={moment(props.conversation.lastMessageAt).fromNow()}
-          primaryTypographyProps={false && { fontWeight: 800 }}
-          secondaryTypographyProps={false && { fontWeight: 800 }}
         />
       </MenuItem>
     </>
