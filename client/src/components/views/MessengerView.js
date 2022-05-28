@@ -89,6 +89,7 @@ const MessengerView = () => {
                     loading={loading}
                   />
                 </Grid>
+
                 <Grid item xs={7} sx={{ height: "100%" }}>
                   <Messages
                     conservant={conservant}
@@ -115,6 +116,15 @@ const MessengerView = () => {
                   setConservant={setConservant}
                   loading={loading}
                 />
+                <Box sx={{ display: "none" }}>
+                  <Messages
+                    conservant={conservant}
+                    conversations={conversations}
+                    setConservant={setConservant}
+                    setConversations={setConversations}
+                    getConversation={getConversation}
+                  />
+                </Box>
               </Grid>
             ) : (
               <Grid item xs={12} sx={{ height: "100%" }}>
