@@ -18,19 +18,19 @@ PostIt is a social media web application, built with the MERN stack. You can vis
 
 ## Screenshots
 Explore view
-![image](https://user-images.githubusercontent.com/76620777/170822011-d690c1b3-48ba-4e15-8a42-d847e1b801e7.png)
+![image](https://user-images.githubusercontent.com/76620777/170822044-44c5f2e6-879f-4b16-8059-f9e331ba57de.png)
 
 Post view
-![image](https://user-images.githubusercontent.com/76620777/170821940-453809ca-28ca-4174-9c85-502acfb884d5.png)
+![image](https://user-images.githubusercontent.com/76620777/170822055-ac686a28-7d5b-4d44-b8d3-a028521534d8.png)
 
 Nested comments
-![image](https://user-images.githubusercontent.com/76620777/170821933-8224e56e-eb17-4b8c-a2cf-5f0a297ebe5b.png)
+![image](https://user-images.githubusercontent.com/76620777/170822065-64622f43-5f70-48c2-9503-0e1b80575fd2.png)
 
 Profile view
-![image](https://user-images.githubusercontent.com/76620777/170821949-ee2f855b-5bc5-401d-bd67-cbec8217641d.png)
+![image](https://user-images.githubusercontent.com/76620777/170822076-18741eef-ba2b-4750-b468-e7e9561a6a71.png)
 
 Real-time private messenger
-![image](https://user-images.githubusercontent.com/76620777/170821976-4b30a74d-45b4-4cce-8b8a-dd08c12741ff.png)
+![image](https://user-images.githubusercontent.com/76620777/170822084-89a9d3ac-22ed-4a92-ab58-9b0af878e03e.png)
 
 Search view
 ![image](https://user-images.githubusercontent.com/76620777/170821986-49d2a93a-5486-47fc-885e-37c0d3f628f3.png)
