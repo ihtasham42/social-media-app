@@ -10,7 +10,8 @@ import { useLocation } from "react-router-dom";
 
 const MessengerView = () => {
   const [conservant, setConservant] = useState(null);
-  const [conversations, setConversations] = useState(null);
+  const [conversations, setConversations] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [width, setWindowWidth] = useState(0);
   const mobile = width < 800;
   const user = isLoggedIn();
@@ -41,6 +42,7 @@ const MessengerView = () => {
       }
     }
     setConversations(conversations);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -84,6 +86,7 @@ const MessengerView = () => {
                     conservant={conservant}
                     conversations={conversations}
                     setConservant={setConservant}
+                    loading={loading}
                   />
                 </Grid>
                 <Grid item xs={7} sx={{ height: "100%" }}>
@@ -110,6 +113,7 @@ const MessengerView = () => {
                   conservant={conservant}
                   conversations={conversations}
                   setConservant={setConservant}
+                  loading={loading}
                 />
               </Grid>
             ) : (

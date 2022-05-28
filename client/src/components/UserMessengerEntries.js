@@ -8,7 +8,7 @@ import "react-icons/bi";
 import { BiSad } from "react-icons/bi";
 
 const UserMessengerEntries = (props) => {
-  return props.conversations ? (
+  return !props.loading ? (
     <>
       {props.conversations.length > 0 ? (
         <Stack>
