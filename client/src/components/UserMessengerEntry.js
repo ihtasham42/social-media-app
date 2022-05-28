@@ -23,7 +23,8 @@ const UserMessengerEntry = (props) => {
   return (
     <>
       <MenuItem
-        disablePadding
+        onClick={handleClick}
+        sx={{ padding: 2 }}
         alignItems="flex-start"
         divider
         disableGutters
@@ -31,15 +32,13 @@ const UserMessengerEntry = (props) => {
           props.conservant && props.conservant.username === recipient.username
         }
       >
-        <ListItemButton sx={{ paddingY: 2 }} onClick={handleClick}>
-          <ListItemAvatar>
-            <UserAvatar height={45} width={45} username={username} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={username}
-            secondary={moment(props.conversation.lastMessageAt).fromNow()}
-          />
-        </ListItemButton>
+        <ListItemAvatar>
+          <UserAvatar height={45} width={45} username={username} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={username}
+          secondary={moment(props.conversation.lastMessageAt).fromNow()}
+        />
       </MenuItem>
     </>
   );
