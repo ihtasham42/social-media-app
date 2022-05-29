@@ -1,4 +1,4 @@
-import { Container, Stack } from "@mui/material";
+import { Card, Container, Stack, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUser, updateUser } from "../../api/users";
@@ -86,6 +86,12 @@ const ProfileView = () => {
             <Stack spacing={2}>
               {profile ? (
                 <>
+                  <Card sx={{ padding: 0 }}>
+                    <Tabs value="posts" variant="scrollable">
+                      <Tab label="Posts" value="posts" />
+                      <Tab label="Liked" />
+                    </Tabs>
+                  </Card>
                   <PostBrowser author={profile.user.username} />
                 </>
               ) : (
