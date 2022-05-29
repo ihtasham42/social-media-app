@@ -23,7 +23,7 @@ const UserMessengerEntries = (props) => {
             </Typography>
           </HorizontalStack>
           <Divider />
-          <Box sx={{ height: "calc(100vh - 170px)" }}>
+          <Box sx={{ height: "calc(100vh - 171px)" }}>
             <Box sx={{ height: "100%" }}>
               <List sx={{ padding: 0, maxHeight: "100%", overflowY: "auto" }}>
                 {props.conversations.map((conversation) => (

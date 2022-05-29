@@ -2,15 +2,17 @@ import {
   Button,
   Divider,
   FormControl,
+  IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   OutlinedInput,
   Stack,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
-import { AiFillMessage } from "react-icons/ai";
+import { AiFillBackward, AiFillCaretLeft, AiFillMessage } from "react-icons/ai";
 import { getMessages, sendMessage } from "../api/messages";
 import { isLoggedIn } from "../helpers/authHelper";
 import { socket } from "../helpers/socketHelper";
@@ -171,17 +173,24 @@ const Messages = (props) => {
             spacing={2}
             sx={{ px: 2, height: "60px" }}
           >
+            {props.mobile && (
+              <IconButton
+                onClick={() => props.setConservant(null)}
+                sx={{ padding: 0 }}
+              >
+                <AiFillCaretLeft />
+              </IconButton>
+            )}
             <UserAvatar
               username={props.conservant.username}
               height={30}
               width={30}
             />
             <Typography>
-              <b>{props.conservant.username}</b>
+              <Link href={"/users/" + props.conservant.username}>
+                <b>{props.conservant.username}</b>
+              </Link>
             </Typography>
-            {props.mobile && (
-              <Button onClick={() => props.setConservant(null)}>Back</Button>
-            )}
           </HorizontalStack>
           <Divider />
           <Box sx={{ height: "calc(100vh - 240px)" }}>
