@@ -14,7 +14,7 @@ router.post("/like/:id", verifyToken, postControllers.likePost);
 router.delete("/like/:id", verifyToken, postControllers.unlikePost);
 router.get(
   "/user_liked_posts/:id",
-  verifyToken,
+  optionallyVerifyToken,
   postControllers.getUserLikedPosts
 );
 

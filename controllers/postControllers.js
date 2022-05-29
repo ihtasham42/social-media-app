@@ -132,21 +132,14 @@ const setLiked = async (posts, userId) => {
   });
 };
 
-const getLikedPosts = async (req, res) => {
+const getUserLikedPosts = async (req, res) => {
   try {
-    const { likerId, userId } = req.body;
-
+    const likerId = req.params.id;
+    const { userId } = req.body;
     let { page, sortBy } = req.query;
 
     if (!sortBy) sortBy = "-createdAt";
     if (!page) page = 1;
-
-    if (sortBy.substring(0) == "-") {
-      const sortProperty = sortBy.slice(1, sortBy.length - 1);
-      sortBy = "-postId." + sortProperty;
-    } else {
-      sortBy = "postId" + sortBy;
-    }
 
     const user = await User.findById(likerId);
 
@@ -155,19 +148,24 @@ const getLikedPosts = async (req, res) => {
     }
 
     let posts = await PostLike.find({ userId: likerId })
-      .populate("postId")
       .sort(sortBy)
+      .populate("postId")
       .lean();
-
-    const count = posts.length;
 
     posts = paginate(posts, 10, page);
 
+    const count = posts.length;
+
+    let responsePosts = [];
+    posts.forEach((post) => {
+      responsePosts.push(post.postId);
+    });
+
     if (userId) {
-      await setLiked(posts, userId);
+      await setLiked(responsePosts, userId);
     }
 
-    return res.json({ data: posts, count });
+    return res.json({ data: responsePosts, count });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
@@ -267,22 +265,6 @@ const unlikePost = async (req, res) => {
     post.save();
 
     return res.json({ success: true });
-  } catch (err) {
-    return res.status(400).json({ error: err.message });
-  }
-};
-
-const getUserLikedPosts = async (req, res) => {
-  try {
-    const userId = req.params.id;
-
-    if (req.body.userId != userId) {
-      throw new Error("Not authorized to do this");
-    }
-
-    const likedPosts = await PostLike.find({ userId });
-
-    return res.json(likedPosts);
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
