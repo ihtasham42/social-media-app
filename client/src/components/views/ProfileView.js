@@ -14,6 +14,7 @@ import MobileProfile from "../MobileProfile";
 import Navbar from "../Navbar";
 import PostBrowser from "../PostBrowser";
 import Profile from "../Profile";
+import ProfileTabs from "../ProfileTabs";
 
 const ProfileView = () => {
   const [loading, setLoading] = useState(true);
@@ -86,12 +87,7 @@ const ProfileView = () => {
             <Stack spacing={2}>
               {profile ? (
                 <>
-                  <Card sx={{ padding: 0 }}>
-                    <Tabs value="posts" variant="scrollable">
-                      <Tab label="Posts" value="posts" />
-                      <Tab label="Liked" />
-                    </Tabs>
-                  </Card>
+                  <ProfileTabs />
                   <PostBrowser author={profile.user.username} />
                 </>
               ) : (

@@ -132,11 +132,52 @@ const setLiked = async (posts, userId) => {
   });
 };
 
+const getLikedPosts = async (req, res) => {
+  try {
+    const { likerId, userId } = req.body;
+
+    let { page, sortBy } = req.query;
+
+    if (!sortBy) sortBy = "-createdAt";
+    if (!page) page = 1;
+
+    if (sortBy.substring(0) == "-") {
+      const sortProperty = sortBy.slice(1, sortBy.length - 1);
+      sortBy = "-postId." + sortProperty;
+    } else {
+      sortBy = "postId" + sortBy;
+    }
+
+    const user = await User.findById(likerId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    let posts = await PostLike.find({ userId: likerId })
+      .populate("postId")
+      .sort(sortBy)
+      .lean();
+
+    const count = posts.length;
+
+    posts = paginate(posts, 10, page);
+
+    if (userId) {
+      await setLiked(posts, userId);
+    }
+
+    return res.json({ data: posts, count });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
 const getPosts = async (req, res) => {
   try {
     const { userId } = req.body;
 
-    let { page, sortBy, author, search } = req.query;
+    let { page, sortBy, author, search, liked } = req.query;
 
     if (!sortBy) sortBy = "-createdAt";
     if (!page) page = 1;

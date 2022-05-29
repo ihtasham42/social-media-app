@@ -4,10 +4,9 @@ import React from "react";
 const ProfileTabs = () => {
   return (
     <Card sx={{ padding: 0 }}>
-      <Tabs variant="fullWidth" value={"posts"}>
-        <Tab value="posts" label="Posts" />
-        <Tab value="comments" label="Comments" />
-        <Tab value="liked" label="Liked" />
+      <Tabs value="posts" variant="scrollable">
+        <Tab label="Posts" value="posts" />
+        <Tab label="Liked" />
       </Tabs>
     </Card>
   );
