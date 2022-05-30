@@ -45,8 +45,6 @@ const PostBrowser = (props) => {
 
       data = await getPosts(user && user.token, query);
     } else if (props.contentType === "liked") {
-      console.log(props.profileUser._id, user && user.token, query);
-
       data = await getUserLikedPosts(
         props.profileUser._id,
         user && user.token,
