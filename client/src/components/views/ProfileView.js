@@ -20,6 +20,7 @@ const ProfileView = () => {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [tab, setTab] = useState("posts");
   const user = isLoggedIn();
   const [error, setError] = useState("");
   const params = useParams();
@@ -87,7 +88,7 @@ const ProfileView = () => {
             <Stack spacing={2}>
               {profile ? (
                 <>
-                  <ProfileTabs />
+                  <ProfileTabs tab={tab} setTab={setTab} />
                   <PostBrowser author={profile.user.username} />
                 </>
               ) : (
