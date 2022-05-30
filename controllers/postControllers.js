@@ -141,15 +141,9 @@ const getUserLikedPosts = async (req, res) => {
     if (!sortBy) sortBy = "-createdAt";
     if (!page) page = 1;
 
-    const user = await User.findById(likerId);
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-
     let posts = await PostLike.find({ userId: likerId })
       .sort(sortBy)
-      .populate("postId")
+      .populate({ path: "postId", populate: { path: "poster" } })
       .lean();
 
     posts = paginate(posts, 10, page);
@@ -161,12 +155,15 @@ const getUserLikedPosts = async (req, res) => {
       responsePosts.push(post.postId);
     });
 
+    console.log(responsePosts);
+
     if (userId) {
       await setLiked(responsePosts, userId);
     }
 
     return res.json({ data: responsePosts, count });
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ error: err.message });
   }
 };

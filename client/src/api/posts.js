@@ -190,6 +190,7 @@ export {
   updatePost,
   deletePost,
   getPosts,
+  getUserLikedPosts,
   getComments,
   createComment,
   deleteComment,

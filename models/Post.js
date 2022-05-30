@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const filter = require("../util/filter");
+const PostLike = require("./PostLike");
 
 const PostSchema = new mongoose.Schema(
   {
@@ -43,6 +44,11 @@ PostSchema.pre("save", function (next) {
     this.content = filter.clean(this.content);
   }
 
+  next();
+});
+
+PostSchema.post("delete", async function (next) {
+  await PostLike.deleteMany({ postId: this._id });
   next();
 });
 

@@ -73,8 +73,20 @@ const ProfileView = () => {
   let tabs;
   if (profile) {
     tabs = {
-      posts: <PostBrowser author={profile.user.username} contentType="posts" />,
-      liked: <PostBrowser author={profile.user.username} contentType="liked" />,
+      posts: (
+        <PostBrowser
+          profileUser={profile.user}
+          contentType="posts"
+          key="posts"
+        />
+      ),
+      liked: (
+        <PostBrowser
+          profileUser={profile.user}
+          contentType="liked"
+          key="liked"
+        />
+      ),
     };
   }
 

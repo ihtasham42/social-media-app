@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { MdSettingsInputAntenna } from "react-icons/md";
 import { useLocation, useSearchParams } from "react-router-dom";
-import { getPosts } from "../api/posts";
+import { getPosts, getUserLikedPosts } from "../api/posts";
 import { isLoggedIn } from "../helpers/authHelper";
 import CreatePost from "./CreatePost";
 import Loading from "./Loading";
@@ -37,10 +37,23 @@ const PostBrowser = (props) => {
       sortBy,
     };
 
-    if (props.author) query.author = props.author;
-    if (searchExists) query.search = search.get("search");
+    let data;
 
-    const data = await getPosts(user && user.token, query);
+    if (props.contentType === "posts") {
+      if (props.profileUser) query.author = props.profileUser.username;
+      if (searchExists) query.search = search.get("search");
+
+      data = await getPosts(user && user.token, query);
+    } else if (props.contentType === "liked") {
+      console.log(props.profileUser._id, user && user.token, query);
+
+      data = await getUserLikedPosts(
+        props.profileUser._id,
+        user && user.token,
+        query
+      );
+    }
+
     if (data.data.length < 10) {
       setEnd(true);
     }
@@ -67,10 +80,7 @@ const PostBrowser = (props) => {
     const newSortName = e.target.value;
     let newSortBy;
 
-    console.log(newSortName);
-
     Object.keys(sorts).forEach((sortName) => {
-      console.log(sortName);
       if (sorts[sortName] === newSortName) newSortBy = sortName;
     });
 
@@ -94,6 +104,8 @@ const PostBrowser = (props) => {
   const contentTypeSorts = {
     posts: {
       "-createdAt": "Latest",
+      likeCount: "Likes",
+      commentCount: "Comments",
       createdAt: "Earliest",
     },
     liked: {
