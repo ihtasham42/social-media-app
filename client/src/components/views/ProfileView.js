@@ -70,6 +70,14 @@ const ProfileView = () => {
     return error;
   };
 
+  let tabs;
+  if (profile) {
+    tabs = {
+      posts: <PostBrowser author={profile.user.username} contentType="posts" />,
+      liked: <PostBrowser author={profile.user.username} contentType="liked" />,
+    };
+  }
+
   return (
     <Container>
       <Navbar />
@@ -89,7 +97,8 @@ const ProfileView = () => {
               {profile ? (
                 <>
                   <ProfileTabs tab={tab} setTab={setTab} />
-                  <PostBrowser author={profile.user.username} />
+
+                  {tabs[tab]}
                 </>
               ) : (
                 <Loading />

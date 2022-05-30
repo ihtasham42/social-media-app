@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { BiNoEntry } from "react-icons/bi";
 import HorizontalStack from "./util/HorizontalStack";
 
-const SortBySelect = ({ onSortBy, sortBy }) => {
+const SortBySelect = ({ onSortBy, sortBy, sorts }) => {
   return (
     <HorizontalStack spacing={1}>
       <Typography color="text.secondary" variant="subtitle2">
@@ -15,10 +15,11 @@ const SortBySelect = ({ onSortBy, sortBy }) => {
         sx={{ minWidth: 150 }}
         onChange={onSortBy}
       >
-        <MenuItem value={"-createdAt"}>Latest</MenuItem>
-        <MenuItem value={"-likeCount"}>Likes</MenuItem>
-        <MenuItem value={"-commentCount"}>Comments</MenuItem>
-        <MenuItem value={"createdAt"}>Oldest</MenuItem>
+        {Object.keys(sorts).map((sortName) => (
+          <MenuItem value={sorts[sortName]} key={sorts[sortName]}>
+            {sortName}
+          </MenuItem>
+        ))}
       </Select>
     </HorizontalStack>
   );

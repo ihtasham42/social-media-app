@@ -17,11 +17,11 @@ const PostBrowser = (props) => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [end, setEnd] = useState(false);
-  const [sortBy, setSortBy] = useState("-createdAt");
+  const [sortBy, setSortBy] = useState("Latest");
   const [count, setCount] = useState(0);
   const user = isLoggedIn();
 
-  const [search, setSearchParams] = useSearchParams();
+  const [search] = useSearchParams();
   const [effect, setEffect] = useState(false);
 
   const searchExists =
@@ -82,13 +82,30 @@ const PostBrowser = (props) => {
     });
   };
 
+  const sorts = {
+    posts: {
+      Latest: "-createdAt",
+      Likes: "likeCount",
+      Comments: "commentCount",
+      Earliest: "createdAt",
+    },
+    liked: {
+      Latest: "-createdAt",
+      Earliest: "createdAt",
+    },
+  };
+
   return (
     <>
       <Stack spacing={2}>
         <Card>
           <HorizontalStack justifyContent="space-between">
             {props.createPost && <CreatePost />}
-            <SortBySelect onSortBy={handleSortBy} sortBy={sortBy} />
+            <SortBySelect
+              onSortBy={handleSortBy}
+              sortBy={sortBy}
+              sorts={sorts[props.contentType]}
+            />
           </HorizontalStack>
         </Card>
 
