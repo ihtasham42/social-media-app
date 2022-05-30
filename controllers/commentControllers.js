@@ -1,6 +1,7 @@
 const Comment = require("../models/Comment");
 const mongoose = require("mongoose");
 const Post = require("../models/Post");
+const paginate = require("../util/paginate");
 const cooldown = new Set();
 
 const createComment = async (req, res) => {
@@ -80,7 +81,14 @@ const getUserComments = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    const comments = await Comment.find({ commenter: userId });
+    let { page, sortBy } = req.query;
+
+    if (!sortBy) sortBy = "-createdAt";
+    if (!page) page = 1;
+
+    let comments = await Comment.find({ commenter: userId }).sort(sortBy);
+
+    comments = paginate(comments, 10, page);
 
     return res.json(comments);
   } catch (err) {

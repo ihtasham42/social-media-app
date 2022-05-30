@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUser, updateUser } from "../../api/users";
 import { isLoggedIn } from "../../helpers/authHelper";
+import CommentBrowser from "../CommentBrowser";
 
 import ErrorAlert from "../ErrorAlert";
 import FindUsers from "../FindUsers";
@@ -87,6 +88,7 @@ const ProfileView = () => {
           key="liked"
         />
       ),
+      comments: <CommentBrowser />,
     };
   }
 
