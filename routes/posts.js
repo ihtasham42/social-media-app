@@ -13,7 +13,7 @@ router.delete("/:id", verifyToken, postControllers.deletePost);
 router.post("/like/:id", verifyToken, postControllers.likePost);
 router.delete("/like/:id", verifyToken, postControllers.unlikePost);
 router.get(
-  "/user_liked_posts/:id",
+  "/liked/:id",
   optionallyVerifyToken,
   postControllers.getUserLikedPosts
 );
