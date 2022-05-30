@@ -100,7 +100,17 @@ const deletePost = async (postId, user) => {
 const getComments = async (params) => {
   try {
     const { id } = params;
-    const res = await fetch(BASE_URL + "api/comments/post_comments/" + id);
+    const res = await fetch(BASE_URL + "api/comments/post/" + id);
+    return res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getUserComments = async (params) => {
+  try {
+    const { id } = params;
+    const res = await fetch(BASE_URL + "api/comments/user/" + id);
     return res.json();
   } catch (err) {
     console.log(err);
@@ -190,6 +200,7 @@ export {
   updatePost,
   deletePost,
   getPosts,
+  getUserComments,
   getUserLikedPosts,
   getComments,
   createComment,

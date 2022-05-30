@@ -88,7 +88,7 @@ const ProfileView = () => {
           key="liked"
         />
       ),
-      comments: <CommentBrowser />,
+      comments: <CommentBrowser profileUser={profile.user} />,
     };
   }
 

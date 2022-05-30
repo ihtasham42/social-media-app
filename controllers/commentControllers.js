@@ -86,7 +86,9 @@ const getUserComments = async (req, res) => {
     if (!sortBy) sortBy = "-createdAt";
     if (!page) page = 1;
 
-    let comments = await Comment.find({ commenter: userId }).sort(sortBy);
+    let comments = await Comment.find({ commenter: userId })
+      .sort(sortBy)
+      .populate("post");
 
     comments = paginate(comments, 10, page);
 

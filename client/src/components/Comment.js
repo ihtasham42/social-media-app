@@ -1,5 +1,5 @@
-import { Button, IconButton, Typography, useTheme } from "@mui/material";
-import { Box } from "@mui/system";
+import { Button, IconButton, Link, Typography, useTheme } from "@mui/material";
+import { Box, compose } from "@mui/system";
 import React, { useState } from "react";
 import { AiFillEdit, AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import Markdown from "./Markdown";
 import { MdCancel } from "react-icons/md";
 import { BiReply, BiTrash } from "react-icons/bi";
 import { BsReply, BsReplyFill } from "react-icons/bs";
+import Moment from "react-moment";
 
 const Comment = (props) => {
   const theme = useTheme();
@@ -77,63 +78,78 @@ const Comment = (props) => {
           pr: 1,
         }}
       >
-        <HorizontalStack justifyContent="space-between">
-          <HorizontalStack>
-            <ContentDetails
-              username={comment.commenter.username}
-              createdAt={comment.createdAt}
-              edited={comment.edited}
-            />
+        {props.profile ? (
+          <Box>
+            <Typography variant="h6">
+              <Link underline="hover" href={"/posts/" + comment.post._id}>
+                {comment.post.title}
+              </Link>
+            </Typography>
+            <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+              <Moment fromNow>{comment.createdAt}</Moment>{" "}
+              {comment.edited && <>(Edited)</>}
+            </Typography>
+          </Box>
+        ) : (
+          <HorizontalStack justifyContent="space-between">
+            <HorizontalStack>
+              <ContentDetails
+                username={comment.commenter.username}
+                createdAt={comment.createdAt}
+                edited={comment.edited}
+              />
 
-            <IconButton
-              color="primary"
-              onClick={() => setMinimised(!minimised)}
-            >
-              {minimised ? (
-                <AiOutlinePlus size={15} />
-              ) : (
-                <AiOutlineLine size={15} />
-              )}
-            </IconButton>
-          </HorizontalStack>
-          {!minimised && (
-            <HorizontalStack spacing={1}>
               <IconButton
-                variant="text"
-                size="small"
-                onClick={handleSetReplying}
+                color="primary"
+                onClick={() => setMinimised(!minimised)}
               >
-                {!replying ? (
-                  <BsReplyFill color={iconColor} />
+                {minimised ? (
+                  <AiOutlinePlus size={15} />
                 ) : (
-                  <MdCancel color={iconColor} />
+                  <AiOutlineLine size={15} />
                 )}
               </IconButton>
-              {user && (isAuthor || user.isAdmin) && (
-                <HorizontalStack spacing={1}>
-                  <IconButton
-                    variant="text"
-                    size="small"
-                    onClick={() => setEditing(!editing)}
-                  >
-                    {editing ? (
-                      <MdCancel color={iconColor} />
-                    ) : (
-                      <AiFillEdit color={iconColor} />
-                    )}
-                  </IconButton>
-                  <IconButton
-                    variant="text"
-                    size="small"
-                    onClick={handleDelete}
-                  >
-                    <BiTrash color={theme.palette.error.main} />
-                  </IconButton>
-                </HorizontalStack>
-              )}
             </HorizontalStack>
-          )}
-        </HorizontalStack>
+            {!minimised && (
+              <HorizontalStack spacing={1}>
+                <IconButton
+                  variant="text"
+                  size="small"
+                  onClick={handleSetReplying}
+                >
+                  {!replying ? (
+                    <BsReplyFill color={iconColor} />
+                  ) : (
+                    <MdCancel color={iconColor} />
+                  )}
+                </IconButton>
+                {user && (isAuthor || user.isAdmin) && (
+                  <HorizontalStack spacing={1}>
+                    <IconButton
+                      variant="text"
+                      size="small"
+                      onClick={() => setEditing(!editing)}
+                    >
+                      {editing ? (
+                        <MdCancel color={iconColor} />
+                      ) : (
+                        <AiFillEdit color={iconColor} />
+                      )}
+                    </IconButton>
+                    <IconButton
+                      variant="text"
+                      size="small"
+                      onClick={handleDelete}
+                    >
+                      <BiTrash color={theme.palette.error.main} />
+                    </IconButton>
+                  </HorizontalStack>
+                )}
+              </HorizontalStack>
+            )}
+          </HorizontalStack>
+        )}
+
         {!minimised && (
           <Box sx={{ mt: 1 }} overflow="hidden">
             {!editing ? (
