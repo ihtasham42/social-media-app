@@ -17,7 +17,7 @@ const PostBrowser = (props) => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [end, setEnd] = useState(false);
-  const [sortBy, setSortBy] = useState("Latest");
+  const [sortBy, setSortBy] = useState("-createdAt");
   const [count, setCount] = useState(0);
   const user = isLoggedIn();
 
@@ -64,7 +64,16 @@ const PostBrowser = (props) => {
   }, [search]);
 
   const handleSortBy = (e) => {
-    const newSortBy = e.target.value;
+    const newSortName = e.target.value;
+    let newSortBy;
+
+    console.log(newSortName);
+
+    Object.keys(sorts).forEach((sortName) => {
+      console.log(sortName);
+      if (sorts[sortName] === newSortName) newSortBy = sortName;
+    });
+
     setPosts([]);
     setPage(0);
     setEnd(false);
@@ -82,18 +91,18 @@ const PostBrowser = (props) => {
     });
   };
 
-  const sorts = {
+  const contentTypeSorts = {
     posts: {
-      Latest: "-createdAt",
-      Likes: "likeCount",
-      Comments: "commentCount",
-      Earliest: "createdAt",
+      "-createdAt": "Latest",
+      createdAt: "Earliest",
     },
     liked: {
-      Latest: "-createdAt",
-      Earliest: "createdAt",
+      "-createdAt": "Latest",
+      createdAt: "Earliest",
     },
   };
+
+  const sorts = contentTypeSorts[props.contentType];
 
   return (
     <>
@@ -104,7 +113,7 @@ const PostBrowser = (props) => {
             <SortBySelect
               onSortBy={handleSortBy}
               sortBy={sortBy}
-              sorts={sorts[props.contentType]}
+              sorts={sorts}
             />
           </HorizontalStack>
         </Card>

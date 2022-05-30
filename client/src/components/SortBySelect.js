@@ -11,13 +11,13 @@ const SortBySelect = ({ onSortBy, sortBy, sorts }) => {
       </Typography>
       <Select
         size="small"
-        value={sortBy}
+        value={sorts[sortBy]}
         sx={{ minWidth: 150 }}
         onChange={onSortBy}
       >
-        {Object.keys(sorts).map((sortName) => (
-          <MenuItem value={sorts[sortName]} key={sorts[sortName]}>
-            {sortName}
+        {Object.keys(sorts).map((sortName, i) => (
+          <MenuItem value={sorts[sortName]} key={i}>
+            {sorts[sortName]}
           </MenuItem>
         ))}
       </Select>
