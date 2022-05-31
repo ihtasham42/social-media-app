@@ -19,13 +19,13 @@ Deployed at: https://post-it-heroku.herokuapp.com/
 - Fully responsive layout
 
 ## Installation
-1) Clone this repository
+1) Clone this repository  
 ``git clone https://github.com/ihtasham42/social-media-app.git``
-2) Install dependencies
-``cd social-media-app``
-``npm install``
-``cd client``
-``npm install``
+2) Install dependencies  
+``cd social-media-app``  
+``npm install``  
+``cd client``  
+``npm install``  
 3) Create .env in root directory
 ``cd ..``
 ``touch .env``
