@@ -20,7 +20,7 @@ Deployed at: https://post-it-heroku.herokuapp.com/
 - Search for posts by their title
 - Fully responsive layout
 
-## Installation
+## Installation and usage
 1) Clone this repository  
 ```
 git clone https://github.com/ihtasham42/social-media-app.git
