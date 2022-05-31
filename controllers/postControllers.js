@@ -155,8 +155,6 @@ const getUserLikedPosts = async (req, res) => {
       responsePosts.push(post.postId);
     });
 
-    console.log(responsePosts);
-
     if (userId) {
       await setLiked(responsePosts, userId);
     }
