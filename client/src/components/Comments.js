@@ -28,24 +28,26 @@ const Comments = () => {
   }, []);
 
   const findComment = (id) => {
+    let commentToFind;
+
     const recurse = (comment, id) => {
+      console.log(comment);
       if (comment._id === id) {
-        return comment;
+        commentToFind = comment;
       } else {
         for (let i = 0; i < comment.children.length; i++) {
           const commentToSearch = comment.children[i];
-          return recurse(commentToSearch, id);
+          recurse(commentToSearch, id);
         }
       }
     };
 
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i];
-      const returnedComment = recurse(comment, id);
-      if (returnedComment) {
-        return returnedComment;
-      }
+      recurse(comment, id);
     }
+
+    return commentToFind;
   };
 
   const removeComment = (removedComment) => {
@@ -82,6 +84,7 @@ const Comments = () => {
 
   const addComment = (comment) => {
     if (comment.parent) {
+      console.log(comment.parent);
       const parentComment = findComment(comment.parent);
       parentComment.children = [comment, ...parentComment.children];
 
