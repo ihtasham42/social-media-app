@@ -39,12 +39,11 @@ MONGO_URI=<YOUR_MONGO_URI>
 TOKEN_KEY=<YOUR_TOKEN_KEY>
 PORT=4000
 ```
-5) Run server and client
+5) Run the server
 ```
 npm run server
-
 ```
-Create a new terminal for the client
+6) Start a new terminal and run react's development server
 ```
 cd social-media-app
 cd client
