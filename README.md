@@ -20,21 +20,15 @@ Deployed at: https://post-it-heroku.herokuapp.com/
 
 ## Installation
 1) Clone this repository
-```
-git clone https://github.com/ihtasham42/social-media-app.git
-```
+``git clone https://github.com/ihtasham42/social-media-app.git``
 2) Install dependencies
-```
-cd social-media-app
-npm install
-cd client
-npm install
-``` 
+``cd social-media-app``
+``npm install``
+``cd client``
+``npm install``
 3) Create .env in root directory
-```
-cd ..
-touch .env
-```
+``cd ..``
+``touch .env``
 4) Configure environment variables. To acquire your MONGO_URI, create a cluster for free over at https://www.mongodb.com/
 ```
 MONGO_URI=<YOUR_MONGO_URI>
@@ -42,15 +36,11 @@ TOKEN_KEY=<YOUR_TOKEN_KEY>
 PORT=4000
 ```
 5) Run the server
-```
-npm run server
-```
+``npm run server``
 6) Start a new terminal and run react's development server
-```
-cd social-media-app
-cd client
-npm start
-```
+``cd social-media-app``
+``cd client``
+``npm start``
 
 ## Screenshots
 ### Explore view
