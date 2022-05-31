@@ -16,6 +16,36 @@ PostIt is a social media web application, built with the MERN stack. You can vis
 - Search for posts by their title
 - Fully responsive layout
 
+### Installation
+1) Clone this repository
+```
+git clone https://github.com/ihtasham42/social-media-app.git
+```
+2) Install dependencies
+```
+cd social-media-app
+npm install
+cd client
+npm install
+``` 
+3) Create .env in root directory
+```
+cd ..
+touch .env
+```
+4) Configure environment variables. To acquire your MONGO_URI, create a cluster for free over at https://www.mongodb.com/
+```
+MONGO_URI=<YOUR_MONGO_URI>
+TOKEN_KEY=<YOUR_TOKEN_KEY>
+PORT=4000
+```
+5) Run server and client
+```
+npm run server
+cd client
+npm start
+```
+
 ## Screenshots
 ### Explore view
 ![image](https://user-images.githubusercontent.com/76620777/170822044-44c5f2e6-879f-4b16-8059-f9e331ba57de.png)
