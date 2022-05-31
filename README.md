@@ -12,7 +12,7 @@ Deployed at: https://post-it-heroku.herokuapp.com/
 - Markdown for posts and comments
 - Sign up and login using JWT for authentication
 - Private message users in real-time using socket.io
-- View profiles of users and browse through posts they have made
+- View profiles of users and browse through their posts, liked posts and comments
 - Infinite scrolling 
 - Sort posts by attributes such as like count, comment count and date created
 - Profanity filtering and posting/commenting cooldowns
