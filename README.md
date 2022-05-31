@@ -1,5 +1,7 @@
 # PostIt
-PostIt is a social media web application, built with the MERN stack. You can visit it [here](https://post-it-heroku.herokuapp.com/).
+PostIt is a social media web application, built with the MERN stack.  
+
+Deployed at: https://post-it-heroku.herokuapp.com/
 
 ## Features
 - Create, read, update and delete posts
