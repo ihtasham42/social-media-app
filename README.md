@@ -17,6 +17,8 @@ PostIt is a social media web application, built with the MERN stack. You can vis
 - Fully responsive layout
 
 ### Installation
+Must have Node.js installed
+
 1) Clone this repository
 ```
 git clone https://github.com/ihtasham42/social-media-app.git
