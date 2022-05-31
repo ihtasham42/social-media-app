@@ -90,8 +90,6 @@ const getUserComments = async (req, res) => {
       .sort(sortBy)
       .populate("post");
 
-    comments = paginate(comments, 10, page);
-
     return res.json(comments);
   } catch (err) {
     return res.status(400).json(err.message);

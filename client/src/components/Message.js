@@ -37,6 +37,7 @@ const Message = (props) => {
           backgroundColor: styles.messageColor,
           borderWidth: "1px",
           paddingY: "12px",
+          maxWidth: "70%",
           paddingX: 2,
         }}
       >

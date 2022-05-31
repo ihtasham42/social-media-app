@@ -109,8 +109,10 @@ const getComments = async (params) => {
 
 const getUserComments = async (params) => {
   try {
-    const { id } = params;
-    const res = await fetch(BASE_URL + "api/comments/user/" + id);
+    const { id, query } = params;
+    const res = await fetch(
+      BASE_URL + "api/comments/user/" + id + "?" + new URLSearchParams(query)
+    );
     return res.json();
   } catch (err) {
     console.log(err);
