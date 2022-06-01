@@ -37,9 +37,9 @@ npm install
 cd ..
 touch .env
 ```
-4) Configure environment variables. To acquire your MONGO_URI, create a cluster for free over at https://www.mongodb.com/
+4) Configure environment variables. To acquire your MONGO_URI, create a cluster for free over at https://www.mongodb.com/. The TOKEN_KEY is a secret key of your choice.
 ```
-MONGO_URI=<YOUR_MONGO_URI>
+MONGO_URI=<YOUR_MONGO_URI> 
 TOKEN_KEY=<YOUR_TOKEN_KEY>
 PORT=4000
 ```
