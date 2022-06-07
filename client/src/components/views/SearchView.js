@@ -13,7 +13,7 @@ const SearchView = () => {
       <GridLayout
         left={
           <Stack spacing={2}>
-            <PostBrowser createPost />
+            <PostBrowser createPost contentType="posts" />
           </Stack>
         }
         right={<Sidebar />}
