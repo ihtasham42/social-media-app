@@ -1,8 +1,8 @@
-import { Button, IconButton, Link, Typography, useTheme } from "@mui/material";
+import { Button, IconButton, Typography, useTheme } from "@mui/material";
 import { Box, compose } from "@mui/system";
 import React, { useState } from "react";
 import { AiFillEdit, AiOutlineLine, AiOutlinePlus } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn } from "../helpers/authHelper";
 import CommentEditor from "./CommentEditor";
 import ContentDetails from "./ContentDetails";
@@ -81,7 +81,7 @@ const Comment = (props) => {
         {props.profile ? (
           <Box>
             <Typography variant="h6">
-              <Link underline="hover" href={"/posts/" + comment.post._id}>
+              <Link underline="hover" to={"/posts/" + comment.post._id}>
                 {comment.post.title}
               </Link>
             </Typography>

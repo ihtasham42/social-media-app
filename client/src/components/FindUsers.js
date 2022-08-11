@@ -3,13 +3,13 @@ import {
   Card,
   Divider,
   IconButton,
-  Link,
   Stack,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdRefresh } from "react-icons/md";
+import { Link } from "react-router-dom";
 import { getRandomUsers } from "../api/users";
 import Loading from "./Loading";
 import UserAvatar from "./UserAvatar";
@@ -63,7 +63,7 @@ const FindUsers = () => {
                 <UserAvatar width={30} height={30} username={user.username} />
                 <Typography>{user.username}</Typography>
               </HorizontalStack>
-              <Link href={"/users/" + user.username}>View</Link>
+              <Link to={"/users/" + user.username}>View</Link>
             </HorizontalStack>
           ))
         )}

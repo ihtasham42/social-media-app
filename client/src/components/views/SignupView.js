@@ -75,7 +75,7 @@ const SignupView = () => {
     <Container maxWidth={"xs"} sx={{ mt: { xs: 2, md: 6 } }}>
       <Stack alignItems="center">
         <Typography variant="h2" color="text.secondary" sx={{ mb: 6 }}>
-          <Link href="/" color="inherit" underline="none">
+          <Link to="/" color="inherit" underline="none">
             PostIt
           </Link>
         </Typography>
@@ -83,7 +83,7 @@ const SignupView = () => {
           Sign Up
         </Typography>
         <Typography color="text.secondary">
-          Already have an account? <Link href="/login">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField

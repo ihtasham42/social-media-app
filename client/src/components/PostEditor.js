@@ -66,9 +66,9 @@ const PostEditor = () => {
         )}
 
         <Typography>
-          <Link href="https://commonmark.org/help/" target="_blank">
+          <a href="https://commonmark.org/help/" target="_blank">
             Markdown Help
-          </Link>
+          </a>
         </Typography>
 
         <Box component="form" onSubmit={handleSubmit}>

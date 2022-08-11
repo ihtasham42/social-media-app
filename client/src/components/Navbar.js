@@ -5,7 +5,6 @@ import {
   Stack,
   TextField,
   Typography,
-  Link,
   Button,
   InputAdornment,
 } from "@mui/material";
@@ -19,7 +18,7 @@ import {
   AiFillMessage,
   AiOutlineSearch,
 } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn, logoutUser } from "../helpers/authHelper";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
@@ -91,9 +90,9 @@ const Navbar = () => {
             mr={1}
             color={theme.palette.primary.main}
           >
-            <Link href="/" color="inherit" underline="none">
+            {/* <Link to="/" color="inherit"> */}
               PostIt
-            </Link>
+            {/* </Link> */}
           </Typography>
         </HorizontalStack>
 
@@ -116,15 +115,15 @@ const Navbar = () => {
             </IconButton>
           )}
 
-          <IconButton href="/">
+          <IconButton component={Link} to={"/"}>
             <AiFillHome />
           </IconButton>
           {user ? (
             <>
-              <IconButton href="/messenger">
+              <IconButton component={Link} to={"/messenger"}>
                 <AiFillMessage />
               </IconButton>
-              <IconButton href={"/users/" + username}>
+              <IconButton component={Link}  to={"/users/" + username}>
                 <UserAvatar width={30} height={30} username={user.username} />
               </IconButton>
               <Button onClick={handleLogout}>Logout</Button>

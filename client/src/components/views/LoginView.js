@@ -4,14 +4,13 @@ import {
   Checkbox,
   Container,
   FormControlLabel,
-  Link,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../api/users";
 import ErrorAlert from "../ErrorAlert";
 import { loginUser } from "../../helpers/authHelper";
@@ -47,7 +46,7 @@ const LoginView = () => {
     <Container maxWidth={"xs"} sx={{ mt: 6 }}>
       <Stack alignItems="center">
         <Typography variant="h2" color="text.secondary" sx={{ mb: 6 }}>
-          <Link href="/" color="inherit" underline="none">
+          <Link to="/" color="inherit" underline="none">
             PostIt
           </Link>
         </Typography>
@@ -55,7 +54,7 @@ const LoginView = () => {
           Login
         </Typography>
         <Typography color="text.secondary">
-          Don't have an account yet? <Link href="/signup">Sign Up</Link>
+          Don't have an account yet? <Link to="/signup">Sign Up</Link>
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField

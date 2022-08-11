@@ -5,7 +5,6 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
-  Link,
   OutlinedInput,
   Stack,
   Typography,
@@ -13,6 +12,7 @@ import {
 import { Box } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
 import { AiFillBackward, AiFillCaretLeft, AiFillMessage } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { getMessages, sendMessage } from "../api/messages";
 import { isLoggedIn } from "../helpers/authHelper";
 import { socket } from "../helpers/socketHelper";
@@ -187,7 +187,7 @@ const Messages = (props) => {
               width={30}
             />
             <Typography>
-              <Link href={"/users/" + props.conservant.username}>
+              <Link to={"/users/" + props.conservant.username}>
                 <b>{props.conservant.username}</b>
               </Link>
             </Typography>
