@@ -257,7 +257,7 @@ const unlikePost = async (req, res) => {
 
     post.likeCount = (await PostLike.find({ postId })).length;
 
-    post.save();
+    await post.save();
 
     return res.json({ success: true });
   } catch (err) {
