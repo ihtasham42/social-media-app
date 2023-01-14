@@ -66,8 +66,9 @@ const Navbar = () => {
     setSearchIcon(!searchIcon);
   };
 
+
   return (
-    <Stack mb={2}>
+    <Stack sx={{ borderBottom: 1}} mb={2}>
       <Stack
         direction="row"
         alignItems="center"
@@ -91,7 +92,7 @@ const Navbar = () => {
             color={theme.palette.primary.main}
           >
             {/* <Link to="/" color="inherit"> */}
-              PostIt
+              data={PostIt}
             {/* </Link> */}
           </Typography>
         </HorizontalStack>
