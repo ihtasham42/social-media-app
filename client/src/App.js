@@ -6,6 +6,7 @@ import "react-icons/bs";
 import "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
+// import styled from "styled-components";
 
 import {
   BrowserRouter,
@@ -34,10 +35,12 @@ function App() {
   initiateSocketConnection();
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} padding={0}>
       <BrowserRouter>
-        <CssBaseline />
+      <CssBaseline />
+        
         <Routes>
+
           <Route path="/" element={<ExploreView />} />
           <Route path="/posts/:id" element={<PostView />} />
           <Route

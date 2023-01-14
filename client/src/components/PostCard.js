@@ -91,7 +91,7 @@ const PostCard = (props) => {
   };
 
   return (
-    <Card sx={{ padding: 0 }} className="post-card">
+    <Card sx={{ padding: 0 }} style={{ boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.3)", borderRadius: "12px"}} className="post-card">
       <Box className={preview}>
         <HorizontalStack spacing={0} alignItems="initial">
           <Stack

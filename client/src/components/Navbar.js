@@ -22,12 +22,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { isLoggedIn, logoutUser } from "../helpers/authHelper";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
+import theme from "./themestyle/ThemeStyle";
 import { RiContrast2Line } from "react-icons/ri";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const user = isLoggedIn();
-  const theme = useTheme();
+  const themes = useTheme();
   const username = user && isLoggedIn().username;
   const [search, setSearch] = useState("");
   const [searchIcon, setSearchIcon] = useState(false);
@@ -68,7 +69,7 @@ const Navbar = () => {
 
 
   return (
-    <Stack sx={{ borderBottom: 1}} mb={2}>
+    <Stack theme={theme} mb={2}>
       <Stack
         direction="row"
         alignItems="center"
@@ -82,7 +83,7 @@ const Navbar = () => {
         <HorizontalStack>
           <AiFillFileText
             size={33}
-            color={theme.palette.primary.main}
+            color={themes.palette.primary.main}
             onClick={() => navigate("/")}
           />
           <Typography
@@ -92,7 +93,7 @@ const Navbar = () => {
             color={theme.palette.primary.main}
           >
             {/* <Link to="/" color="inherit"> */}
-              data={PostIt}
+              PostIt
             {/* </Link> */}
           </Typography>
         </HorizontalStack>

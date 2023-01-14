@@ -1,4 +1,4 @@
-import { Button, Card, Container, Stack, Typography } from "@mui/material";
+import { Button, Card, Container, Stack, Typography} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { getPosts } from "../../api/posts";
@@ -12,11 +12,14 @@ import PostCard from "../PostCard";
 import Sidebar from "../Sidebar";
 import HorizontalStack from "../util/HorizontalStack";
 import PostBrowser from "../PostBrowser";
+import CardHeros from "../CardHeros";
 
 const ExploreView = () => {
+
   return (
-    <Container>
+    <Container maxWidth="xl">
       <Navbar />
+      <CardHeros />
       <GridLayout
         left={<PostBrowser createPost contentType="posts" />}
         right={<Sidebar />}
