@@ -168,21 +168,18 @@ const getUserLikedPosts = async (req, res) => {
 
 const getPosts = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId.isAdmin } = req.body;
 
     let { page, sortBy, author, search, liked } = req.query;
 
     if (!sortBy) sortBy = "-createdAt";
     if (!page) page = 1;
+    if(!author) author = 'Houdaghgh';
 
     let posts = await Post.find()
-      .populate("poster", "-password")
+    .populate({path: "poster" , match: {username: author ,"-password"}})
       .sort(sortBy)
       .lean();
-
-    if (author) {
-      posts = posts.filter((post) => post.poster.username == author);
-    }
 
     if (search) {
       posts = posts.filter((post) =>

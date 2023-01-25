@@ -16,7 +16,8 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import theme from "./theme";
-
+import Dashboard from "./master";
+import PostTab from "./master/post/PostTab";
 import PostView from "./components/views/PostView";
 import CreatePostView from "./components/views/CreatePostView";
 import ProfileView from "./components/views/ProfileView";
@@ -30,7 +31,6 @@ import { initiateSocketConnection, socket } from "./helpers/socketHelper";
 import { useEffect } from "react";
 import { BASE_URL } from "./config";
 import { io } from "socket.io-client";
-
 function App() {
   initiateSocketConnection();
 
@@ -40,7 +40,8 @@ function App() {
       <CssBaseline />
         
         <Routes>
-
+          <Route path="/master" element={<Dashboard />} />
+          <Route path="/master/posts/create" element={<PostTab />} />
           <Route path="/" element={<ExploreView />} />
           <Route path="/posts/:id" element={<PostView />} />
           <Route

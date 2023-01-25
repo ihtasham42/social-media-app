@@ -11,6 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.5",
+    "axios": "^1.2.2",
     "bad-words": "^3.0.3",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
