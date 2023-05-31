@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
       throw new Error("No token provided");
     }
 
-    const { userId, isAdmin } = jwt.decode(token, process.env.TOKEN_KEY);
+    const { userId, isAdmin } = jwt.verify(token, process.env.TOKEN_KEY);
 
     req.body = {
       ...req.body,
@@ -28,7 +28,7 @@ const optionallyVerifyToken = (req, res, next) => {
 
     if (!token) return next();
 
-    const decoded = jwt.decode(token, process.env.TOKEN_KEY);
+    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
     req.body.userId = decoded.userId;
 
     next();
