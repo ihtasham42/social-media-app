@@ -10,9 +10,7 @@ const CommentBrowser = (props) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
-  const [end, setEnd] = useState(false);
   const [sortBy, setSortBy] = useState("-createdAt");
-  const user = isLoggedIn();
 
   const fetchComments = async () => {
     setLoading(true);
@@ -43,7 +41,6 @@ const CommentBrowser = (props) => {
 
     setComments([]);
     setPage(0);
-    setEnd(false);
     setSortBy(newSortBy);
   };
 

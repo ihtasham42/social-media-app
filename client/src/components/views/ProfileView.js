@@ -1,6 +1,6 @@
 import { Card, Container, Stack, Tab, Tabs } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getUser, updateUser } from "../../api/users";
 import { isLoggedIn } from "../../helpers/authHelper";
 import CommentBrowser from "../CommentBrowser";
@@ -26,6 +26,7 @@ const ProfileView = () => {
   const [error, setError] = useState("");
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const fetchUser = async () => {
     setLoading(true);
@@ -59,7 +60,7 @@ const ProfileView = () => {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [location]);
 
   const validate = (content) => {
     let error = "";
