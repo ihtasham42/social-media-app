@@ -1,10 +1,4 @@
-import {
-  Button,
-  Card,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Card, Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -60,9 +54,11 @@ const CommentEditor = ({ label, comment, addComment, setReplying }) => {
           <Typography variant="h5">
             {comment ? <>Reply</> : <>Comment</>}
           </Typography>
-          <Link to="https://commonmark.org/help/" target="_blank">
-            Markdown Help
-          </Link>
+          <Typography>
+            <a href="https://commonmark.org/help/" target="_blank">
+              Markdown Help
+            </a>
+          </Typography>
         </HorizontalStack>
 
         <Box component="form" onSubmit={handleSubmit}>
