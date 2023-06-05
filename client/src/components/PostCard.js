@@ -26,6 +26,7 @@ import "./postCard.css";
 import { MdCancel } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { BsReplyFill } from "react-icons/bs";
+import UserLikePreview from "./UserLikePreview";
 
 const PostCard = (props) => {
   const { preview, removePost } = props;
@@ -119,32 +120,34 @@ const PostCard = (props) => {
                 preview={preview === "secondary"}
               />
               <Box>
-                {user && (isAuthor || user.isAdmin) && preview !== "secondary" && (
-                  <HorizontalStack>
-                    <IconButton
-                      disabled={loading}
-                      size="small"
-                      onClick={handleEditPost}
-                    >
-                      {editing ? (
-                        <MdCancel color={iconColor} />
-                      ) : (
-                        <AiFillEdit color={iconColor} />
-                      )}
-                    </IconButton>
-                    <IconButton
-                      disabled={loading}
-                      size="small"
-                      onClick={handleDeletePost}
-                    >
-                      {confirm ? (
-                        <AiFillCheckCircle color={theme.palette.error.main} />
-                      ) : (
-                        <BiTrash color={theme.palette.error.main} />
-                      )}
-                    </IconButton>
-                  </HorizontalStack>
-                )}
+                {user &&
+                  (isAuthor || user.isAdmin) &&
+                  preview !== "secondary" && (
+                    <HorizontalStack>
+                      <IconButton
+                        disabled={loading}
+                        size="small"
+                        onClick={handleEditPost}
+                      >
+                        {editing ? (
+                          <MdCancel color={iconColor} />
+                        ) : (
+                          <AiFillEdit color={iconColor} />
+                        )}
+                      </IconButton>
+                      <IconButton
+                        disabled={loading}
+                        size="small"
+                        onClick={handleDeletePost}
+                      >
+                        {confirm ? (
+                          <AiFillCheckCircle color={theme.palette.error.main} />
+                        ) : (
+                          <BiTrash color={theme.palette.error.main} />
+                        )}
+                      </IconButton>
+                    </HorizontalStack>
+                  )}
               </Box>
             </HorizontalStack>
 
@@ -173,15 +176,20 @@ const PostCard = (props) => {
                 </Box>
               ))}
 
-            <HorizontalStack sx={{ mt: 1 }}>
-              <AiFillMessage />
-              <Typography
-                variant="subtitle2"
-                color="text.secondary"
-                sx={{ fontWeight: "bold" }}
-              >
-                {post.commentCount}
-              </Typography>
+            <HorizontalStack sx={{ mt: 2 }} justifyContent="space-between">
+              <HorizontalStack>
+                <AiFillMessage />
+                <Typography
+                  variant="subtitle2"
+                  color="text.secondary"
+                  sx={{ fontWeight: "bold" }}
+                >
+                  {post.commentCount}
+                </Typography>
+              </HorizontalStack>
+              <Box>
+                <UserLikePreview preview={preview} />
+              </Box>
             </HorizontalStack>
           </PostContentBox>
         </HorizontalStack>
