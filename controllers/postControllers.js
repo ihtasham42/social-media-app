@@ -132,6 +132,24 @@ const setLiked = async (posts, userId) => {
   });
 };
 
+const enrichWithUserLikePreview = async (posts) => {
+  const postMap = posts.reduce((result, post) => {
+    result.set(post._id, post);
+  }, new Map());
+
+  const postLikes = await PostLike.find({
+    _id: { $in: postMap.keys() },
+  }).populate("userId", "username");
+
+  postLikes.forEach((postLike) => {
+    const post = postMap[postLike.postId];
+    if (!post.userLikePreview) {
+      post.userLikePreview = [];
+    }
+    post.userLikePreview.push(postLike.userId);
+  });
+};
+
 const getUserLikedPosts = async (req, res) => {
   try {
     const likerId = req.params.id;
