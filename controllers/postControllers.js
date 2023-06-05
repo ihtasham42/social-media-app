@@ -134,12 +134,15 @@ const setLiked = async (posts, userId) => {
 
 const enrichWithUserLikePreview = async (posts) => {
   const postMap = posts.reduce((result, post) => {
-    result.set(post._id, post);
-  }, new Map());
+    result[post._id] = post;
+    return result;
+  }, {});
 
   const postLikes = await PostLike.find({
-    _id: { $in: postMap.keys() },
-  }).populate("userId", "username");
+    postId: { $in: Object.keys(postMap) },
+  })
+    .limit(200)
+    .populate("userId", "username");
 
   postLikes.forEach((postLike) => {
     const post = postMap[postLike.postId];
@@ -176,6 +179,8 @@ const getUserLikedPosts = async (req, res) => {
     if (userId) {
       await setLiked(responsePosts, userId);
     }
+
+    await enrichWithUserLikePreview(posts);
 
     return res.json({ data: responsePosts, count });
   } catch (err) {
@@ -216,8 +221,11 @@ const getPosts = async (req, res) => {
       await setLiked(posts, userId);
     }
 
+    await enrichWithUserLikePreview(posts);
+
     return res.json({ data: posts, count });
   } catch (err) {
+    console.log(err.message);
     return res.status(400).json({ error: err.message });
   }
 };
