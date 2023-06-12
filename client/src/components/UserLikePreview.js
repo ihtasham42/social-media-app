@@ -1,39 +1,36 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Button,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Avatar, AvatarGroup, Button, Typography } from "@mui/material";
 import React from "react";
 import HorizontalStack from "./util/HorizontalStack";
-import { AiFillLike, AiOutlineMore } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
 
-const UserLikePreview = ({ preview }) => {
+const UserLikePreview = ({ preview, userLikePreview }) => {
+  let userLikes;
+  if (userLikePreview) {
+    userLikes = userLikePreview.slice(0, 3);
+  }
+
   return (
-    <Button
-      variant="outlined"
-      size="small"
-      startIcon={<AiFillLike />}
-      color="primary"
-    >
-      <HorizontalStack>
-        <AvatarGroup>
-          <Avatar
-            src="https://robohash.org/a"
-            sx={{ backgroundColor: "lightgray", width: 30, height: 30 }}
-          />
-          <Avatar
-            src="https://robohash.org/b"
-            sx={{ backgroundColor: "lightgray", width: 30, height: 30 }}
-          />
-          <Avatar
-            src="https://robohash.org/c"
-            sx={{ backgroundColor: "lightgray", width: 30, height: 30 }}
-          />
-        </AvatarGroup>
-      </HorizontalStack>
-    </Button>
+    userLikes && (
+      <Button
+        variant="outlined"
+        size="small"
+        startIcon={<AiFillLike />}
+        color="primary"
+      >
+        <HorizontalStack>
+          <AvatarGroup>
+            {userLikes &&
+              userLikes.map((userLike) => (
+                <Avatar
+                  src={`https://robohash.org/${userLike._id}`}
+                  sx={{ backgroundColor: "lightgray", width: 30, height: 30 }}
+                  key={userLike._id}
+                />
+              ))}
+          </AvatarGroup>
+        </HorizontalStack>
+      </Button>
+    )
   );
 };
 

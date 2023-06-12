@@ -188,7 +188,10 @@ const PostCard = (props) => {
                 </Typography>
               </HorizontalStack>
               <Box>
-                <UserLikePreview preview={preview} />
+                <UserLikePreview
+                  preview={preview}
+                  userLikePreview={post.userLikePreview}
+                />
               </Box>
             </HorizontalStack>
           </PostContentBox>
