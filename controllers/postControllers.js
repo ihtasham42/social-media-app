@@ -293,6 +293,19 @@ const unlikePost = async (req, res) => {
   }
 };
 
+const getLikes = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { anchor } = req.query;
+
+    const likes = await PostLike.find({ postId: postId });
+
+    return likes;
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getPost,
   getPosts,
@@ -302,4 +315,5 @@ module.exports = {
   likePost,
   unlikePost,
   getUserLikedPosts,
+  getLikes,
 };
