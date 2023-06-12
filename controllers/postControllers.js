@@ -182,7 +182,7 @@ const getUserLikedPosts = async (req, res) => {
       await setLiked(responsePosts, userId);
     }
 
-    await enrichWithUserLikePreview(posts);
+    await enrichWithUserLikePreview(responsePosts);
 
     return res.json({ data: responsePosts, count });
   } catch (err) {
@@ -293,14 +293,16 @@ const unlikePost = async (req, res) => {
   }
 };
 
-const getLikes = async (req, res) => {
+const getUserLikes = async (req, res) => {
   try {
     const { postId } = req.params;
     const { anchor } = req.query;
 
-    const likes = await PostLike.find({ postId: postId });
+    const userLikes = (
+      await PostLike.find({ postId: postId }).populate("userId", "username")
+    ).map((like) => like.userId.username);
 
-    return likes;
+    return res.status(400).json({ userLikes: userLikes, success: true });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
@@ -315,5 +317,5 @@ module.exports = {
   likePost,
   unlikePost,
   getUserLikedPosts,
-  getLikes,
+  getUserLikes,
 };

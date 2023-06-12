@@ -189,7 +189,7 @@ const PostCard = (props) => {
               </HorizontalStack>
               <Box>
                 <UserLikePreview
-                  preview={preview}
+                  postId={post._id}
                   userLikePreview={post.userLikePreview}
                 />
               </Box>
