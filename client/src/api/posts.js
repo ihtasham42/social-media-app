@@ -49,6 +49,16 @@ const getPost = async (postId, token) => {
   }
 };
 
+const getUserLikes = async (postId) => {
+  try {
+    const res = await fetch(BASE_URL + "api/posts/like/" + postId + "/users");
+
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const createPost = async (post, user) => {
   try {
     const res = await fetch(BASE_URL + "api/posts", {
@@ -210,4 +220,5 @@ export {
   updateComment,
   likePost,
   unlikePost,
+  getUserLikes,
 };
