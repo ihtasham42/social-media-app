@@ -40,13 +40,12 @@ const UserLikeModal = ({ postId, open, setOpen }) => {
     }
 
     const data = await getUserLikes(postId, anchor);
-    setTimeout(() => {
-      setLoading(false);
-      if (data.success) {
-        setUserLikes([...userLikes, ...data.userLikes]);
-        setHasMorePages(data.hasMorePages);
-      }
-    }, 1000);
+
+    setLoading(false);
+    if (data.success) {
+      setUserLikes([...userLikes, ...data.userLikes]);
+      setHasMorePages(data.hasMorePages);
+    }
   };
 
   useEffect(() => {
