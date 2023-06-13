@@ -17,6 +17,7 @@ Deployed at: https://post-it-heroku.herokuapp.com/
 - Profanity filtering and posting/commenting cooldowns
 - Update bio which can be viewed by other users
 - Search for posts by their title
+- View the users who liked a particular post
 - Fully responsive layout
 
 ## Installation and usage
