@@ -50,7 +50,12 @@ const UserLikeModal = ({ postId, open, setOpen }) => {
       BackdropComponent={Backdrop}
       BackdropProps={{ onClick: handleBackdropClick }}
     >
-      <Box sx={styles.container}>
+      <Box
+        sx={styles.container}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <Card>
           <Typography variant="h5" mb={2}>
             Liked by
