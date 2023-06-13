@@ -6,6 +6,8 @@ const PostLike = require("../models/PostLike");
 const paginate = require("../util/paginate");
 const cooldown = new Set();
 
+USER_LIKES_PAGE_SIZE = 9;
+
 const createPost = async (req, res) => {
   try {
     const { title, content, userId } = req.body;
@@ -298,11 +300,26 @@ const getUserLikes = async (req, res) => {
     const { postId } = req.params;
     const { anchor } = req.query;
 
-    const userLikes = (
-      await PostLike.find({ postId: postId }).populate("userId", "username")
-    ).map((like) => like.userId.username);
+    const postLikesQuery = PostLike.find({ postId: postId })
+      .sort("_id")
+      .limit(USER_LIKES_PAGE_SIZE + 1)
+      .populate("userId", "username");
 
-    return res.status(400).json({ userLikes: userLikes, success: true });
+    if (anchor) {
+      postLikesQuery.where("_id").gt(anchor);
+    }
+
+    const postLikes = await postLikesQuery.exec();
+
+    const hasMorePages = postLikes.length > USER_LIKES_PAGE_SIZE;
+
+    if (hasMorePages) postLikes.pop();
+
+    const userLikes = postLikes.map((like) => like.userId.username);
+
+    return res
+      .status(400)
+      .json({ userLikes: userLikes, hasMorePages, success: true });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }

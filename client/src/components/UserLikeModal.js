@@ -1,5 +1,5 @@
 import { Backdrop, Box, Card, Modal, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getUserLikes } from "../api/posts";
 import Loading from "./Loading";
 import UserEntry from "./UserEntry";
@@ -18,8 +18,9 @@ const styles = {
 };
 
 const UserLikeModal = ({ postId, open, setOpen }) => {
-  const [userLikes, setUserLikes] = useState([]);
+  const [userLikes, setUserLikes] = useState(null);
   const [loading, setLoading] = useState(true);
+  const scrollBoxRef = useRef(null);
 
   const handleClose = () => setOpen(false);
   const handleBackdropClick = (event) => {
@@ -33,7 +34,6 @@ const UserLikeModal = ({ postId, open, setOpen }) => {
     setLoading(false);
     if (data.success) {
       setUserLikes(data.userLikes);
-      console.log(data.userLikes);
     }
   };
 
@@ -42,6 +42,29 @@ const UserLikeModal = ({ postId, open, setOpen }) => {
       fetchUserLikes();
     }
   }, [open]);
+
+  const handleScroll = () => {
+    const scrollBox = scrollBoxRef.current;
+    console.log(scrollBox.scrollTop + scrollBox.clientHeight);
+    if (
+      scrollBox.scrollTop + scrollBox.clientHeight ===
+      scrollBox.scrollHeight
+    ) {
+      console.log("scroll end");
+    }
+  };
+
+  useEffect(() => {
+    if (!scrollBoxRef.current) {
+      return;
+    }
+    const scrollBox = scrollBoxRef.current;
+    scrollBox.addEventListener("scroll", handleScroll);
+
+    return () => {
+      scrollBox.removeEventListener("scroll", handleScroll);
+    };
+  }, [userLikes]);
 
   return (
     <Modal
@@ -52,6 +75,7 @@ const UserLikeModal = ({ postId, open, setOpen }) => {
     >
       <Box
         sx={styles.container}
+        ref={scrollBoxRef}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -60,15 +84,15 @@ const UserLikeModal = ({ postId, open, setOpen }) => {
           <Typography variant="h5" mb={2}>
             Liked by
           </Typography>
-          {loading ? (
-            <Loading />
-          ) : (
+          <Stack>
             <Stack spacing={2}>
-              {userLikes.map((username) => (
-                <UserEntry username={username} key={username} />
-              ))}
+              {userLikes &&
+                userLikes.map((username) => (
+                  <UserEntry username={username} key={username} />
+                ))}
             </Stack>
-          )}
+            {loading && <Loading />}
+          </Stack>
         </Card>
       </Box>
     </Modal>

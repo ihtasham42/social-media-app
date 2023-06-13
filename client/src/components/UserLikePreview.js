@@ -40,7 +40,9 @@ const UserLikePreview = ({ postId, userLikePreview }) => {
             </AvatarGroup>
           </HorizontalStack>
         </Button>
-        <UserLikeModal open={open} setOpen={setOpen} postId={postId} />
+        {open && (
+          <UserLikeModal open={open} setOpen={setOpen} postId={postId} />
+        )}
       </>
     )
   );
