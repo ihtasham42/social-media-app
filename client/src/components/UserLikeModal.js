@@ -18,8 +18,9 @@ const styles = {
 };
 
 const UserLikeModal = ({ postId, open, setOpen }) => {
-  const [userLikes, setUserLikes] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [userLikes, setUserLikes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [hasMorePages, setHasMorePages] = useState(true);
   const scrollBoxRef = useRef(null);
 
   const handleClose = () => setOpen(false);
@@ -29,12 +30,23 @@ const UserLikeModal = ({ postId, open, setOpen }) => {
   };
 
   const fetchUserLikes = async () => {
+    if (loading || !hasMorePages) return;
+
     setLoading(true);
-    const data = await getUserLikes(postId);
-    setLoading(false);
-    if (data.success) {
-      setUserLikes(data.userLikes);
+
+    let anchor = "";
+    if (userLikes && userLikes.length > 0) {
+      anchor = userLikes[userLikes.length - 1].id;
     }
+
+    const data = await getUserLikes(postId, anchor);
+    setTimeout(() => {
+      setLoading(false);
+      if (data.success) {
+        setUserLikes([...userLikes, ...data.userLikes]);
+        setHasMorePages(data.hasMorePages);
+      }
+    }, 1000);
   };
 
   useEffect(() => {
@@ -45,12 +57,12 @@ const UserLikeModal = ({ postId, open, setOpen }) => {
 
   const handleScroll = () => {
     const scrollBox = scrollBoxRef.current;
-    console.log(scrollBox.scrollTop + scrollBox.clientHeight);
+
     if (
-      scrollBox.scrollTop + scrollBox.clientHeight ===
-      scrollBox.scrollHeight
+      scrollBox.scrollTop + scrollBox.clientHeight >
+      scrollBox.scrollHeight - 12
     ) {
-      console.log("scroll end");
+      fetchUserLikes();
     }
   };
 
@@ -87,11 +99,11 @@ const UserLikeModal = ({ postId, open, setOpen }) => {
           <Stack>
             <Stack spacing={2}>
               {userLikes &&
-                userLikes.map((username) => (
-                  <UserEntry username={username} key={username} />
+                userLikes.map((like) => (
+                  <UserEntry username={like.username} key={like.username} />
                 ))}
             </Stack>
-            {loading && <Loading />}
+            {loading ? <Loading /> : hasMorePages && <Box py={6}></Box>}
           </Stack>
         </Card>
       </Box>

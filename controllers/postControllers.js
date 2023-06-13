@@ -315,7 +315,12 @@ const getUserLikes = async (req, res) => {
 
     if (hasMorePages) postLikes.pop();
 
-    const userLikes = postLikes.map((like) => like.userId.username);
+    const userLikes = postLikes.map((like) => {
+      return {
+        id: like._id,
+        username: like.userId.username,
+      };
+    });
 
     return res
       .status(400)
