@@ -1,0 +1,43 @@
+name: Dockerize the social-media-app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Build Docker Image
+        run: |
+          docker build -t my-node-app:${{ github.sha }} .
+          docker images
+
+      - name: Run Docker Container
+        run: |
+          docker run -d -p 3000:3000 my-node-app:${{ github.sha }}
+          docker ps
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERID}}
+          password: ${{ secrets.DOCKERPASSWORD}}
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: public  # The folder where the build artifacts are located
