@@ -40,4 +40,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: public  # The folder where the build artifacts are located
+          FOLDER: src # The folder where the build artifacts are located
