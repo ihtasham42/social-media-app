@@ -6,7 +6,7 @@ on:
       - main
   workflow_dispatch:
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: '16'
 
+  dockerize:
+    runs-on: ubuntu-latest
+    steps:
       - name: Build Docker Image
         run: |
           docker build -t my-node-app:${{ github.sha }} .
